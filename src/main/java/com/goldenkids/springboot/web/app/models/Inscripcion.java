@@ -8,12 +8,14 @@ import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Inscripcion {
 
 	@Id
 	@GeneratedValue(generator = "uuid")
+        @GenericGenerator(name="system-uuid", strategy = "uuid")
 	private String id;
 
 	@Temporal(TemporalType.DATE)

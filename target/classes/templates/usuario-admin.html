@@ -85,7 +85,7 @@
                 </div>  
                 <div class="form-group" id="salita">
                     <label>Tipo de Docente: </label>
-                    <select name="selectSalita" id="selectSalita" >
+                    <select name="selectSalitaId" id="selectSalitaId" >
                         <option selected="selected"></option>
                         <!--                        <option selected="selected" th:value="${docente.tipoDocente}"
                                                         th:text="${docente.tipoDocente}">
@@ -136,7 +136,7 @@
                 $("#salita").show();
             } else {
                 $("#salita").hide();
-                $("#selectSalita").val("");
+                $("#selectSalitaId").val("");
             }
         }
     </script>

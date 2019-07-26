@@ -6,7 +6,6 @@
 package com.goldenkids.springboot.web.app.services;
 
 import com.goldenkids.springboot.web.app.models.Salita;
-import com.goldenkids.springboot.web.app.models.Usuario;
 import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.EntityManager;
@@ -27,10 +26,13 @@ public class SalitaService {
     @PersistenceContext
     private EntityManager em;
 
+    public Salita buscarSalita(String id) {
+        return em.find(Salita.class, id);
+    }
+
     public List<Salita> buscarSalitas() {
         List<Salita> salitas = new ArrayList<>();
         salitas = em.createQuery("SELECT s FROM Salita s").getResultList();
-        log.info(salitas.get(0).getNombre());
         return salitas;
     }
 }

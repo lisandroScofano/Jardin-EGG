@@ -39,6 +39,8 @@ public class UsuarioController {
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
+    Logger log = LoggerFactory.getLogger(UsuarioController.class);
+
     @RequestMapping("/listarusuarios")
     public String listar(@RequestParam(required = false) String q, Model modelo) {
 
@@ -59,7 +61,7 @@ public class UsuarioController {
 
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("usuario") @RequestParam String nombre, String apellido, String password,
-            String mail, String telefono, String nombreUsuario, int dni, TipoPerfil tipoPerfil, String accion, String selectSalita, TipoDocente selectTipoDocente) {
+            String mail, String telefono, String nombreUsuario, int dni, TipoPerfil tipoPerfil, String accion, String selectSalitaId, TipoDocente selectTipoDocente) {
         ModelAndView modelo = new ModelAndView();
 
         if (accion.equals("crear")) {
@@ -72,8 +74,10 @@ public class UsuarioController {
             usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);
         }
 
-        if (tipoPerfil.equals("Docente")) {
-            docenteService.crearDocente(usuarioServicio.buscarUsuario(dni), selectSalita, selectTipoDocente);
+        log.info(tipoPerfil.toString());
+
+        if (tipoPerfil.toString().equals("DOCENTE")) {
+            docenteService.crearDocente(usuarioServicio.buscarUsuario(dni), selectSalitaId, selectTipoDocente);
         }
 
         List<Usuario> usuarios = usuarioRepositorio.findAll();
