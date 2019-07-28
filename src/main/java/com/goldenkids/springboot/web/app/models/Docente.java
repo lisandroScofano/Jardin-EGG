@@ -1,31 +1,32 @@
 package com.goldenkids.springboot.web.app.models;
 
-import java.util.UUID;
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Docente {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
     @ManyToOne
     private Usuario usuario;
 
-    @OneToOne
+    @ManyToOne
     private Salita salita;
 
     @Enumerated(value = EnumType.STRING)
     private TipoDocente tipoDocente;
+
+    public Docente() {
+    }
 
     public Usuario getUsuario() {
         return usuario;
@@ -51,11 +52,11 @@ public class Docente {
         this.tipoDocente = tipoDocente;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

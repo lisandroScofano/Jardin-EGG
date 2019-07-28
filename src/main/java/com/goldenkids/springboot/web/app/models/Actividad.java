@@ -1,7 +1,6 @@
 package com.goldenkids.springboot.web.app.models;
 
 import java.util.Date;
-import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
@@ -17,9 +16,9 @@ import org.hibernate.annotations.GenericGenerator;
 public class Actividad {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
@@ -37,6 +36,9 @@ public class Actividad {
 
     @ManyToOne
     private Alumno alumno;
+
+    public Actividad() {
+    }
 
     public Date getInicio() {
         return inicio;
@@ -102,11 +104,11 @@ public class Actividad {
         this.alumno = alumno;
     }
 
-    public UUID getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
     }
 

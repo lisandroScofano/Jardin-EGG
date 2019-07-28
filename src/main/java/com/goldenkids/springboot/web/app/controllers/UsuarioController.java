@@ -1,5 +1,7 @@
 package com.goldenkids.springboot.web.app.controllers;
 
+import com.goldenkids.springboot.web.app.models.Docente;
+import com.goldenkids.springboot.web.app.models.Salita;
 import com.goldenkids.springboot.web.app.models.TipoDocente;
 import java.util.List;
 
@@ -55,36 +57,61 @@ public class UsuarioController {
 
         modelo.addAttribute("q", q);
         modelo.addAttribute("usuarios", usuarios);
+        modelo.addAttribute("titulo", "Administracion de Usuarios");
+
+        return "usuario-listado";
+    }
+
+    @RequestMapping("/listarusuarioseliminados")
+    public String listarEliminados(Model modelo) {
+
+        modelo.addAttribute("titulo", "Listado de Usuarios: ");
+
+        List<Usuario> usuariosEliminados = usuarioServicio.buscarUsuariosEliminados();
+
+        modelo.addAttribute("usuarios", usuariosEliminados);
+        modelo.addAttribute("titulo", "Administracion de Usuarios");
 
         return "usuario-listado";
     }
 
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute("usuario") @RequestParam String nombre, String apellido, String password,
+    public ModelAndView guardar(@ModelAttribute("usuario") @RequestParam String nombre, String apellido, String password,
             String mail, String telefono, String nombreUsuario, int dni, TipoPerfil tipoPerfil, String accion, String selectSalitaId, TipoDocente selectTipoDocente) {
         ModelAndView modelo = new ModelAndView();
-
         if (accion.equals("crear")) {
             if (usuarioServicio.buscarUsuario(dni) == null) {
                 usuarioServicio.crearUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);
+                if (tipoPerfil.toString().equals("DOCENTE")) {
+                    docenteService.crearDocente(usuarioServicio.buscarUsuario(dni), selectSalitaId, selectTipoDocente);
+                }
             } else {
-                modelo.addObject("error", "El usuario ya existe");
+                modelo.addObject("error", "El usuario ingresado ya existe. Por favor revise el DNI.");//ver porque no sale
+                log.error("Ya existe un usuario ingresado con ese DNI");
             }
         } else if (accion.equals("modificar")) {
-            usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);
-        }
+            Usuario usuarioOriginal = usuarioServicio.buscarUsuario(dni);
+            String perfilOriginal = usuarioOriginal.getTipoPerfil().toString();
 
-        log.info(tipoPerfil.toString());
+            if ((perfilOriginal.equals("PADRE")) || (perfilOriginal.equals("DIRECTIVO")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio de padre o directivo a docente
+                docenteService.modificarNoDocenteADocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
+            }
+            if ((perfilOriginal.equals("DOCENTE")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio entre tipos de docente
+                docenteService.modificarTipoDocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
+            }
+            if ((perfilOriginal.equals("DOCENTE")) && ((tipoPerfil.toString().equals("PADRE")) || (tipoPerfil.toString().equals("DIRECTIVO")))) {// si cambia de docente a no docente
+                docenteService.modificarDocenteANoDocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
+            }
 
-        if (tipoPerfil.toString().equals("DOCENTE")) {
-            docenteService.crearDocente(usuarioServicio.buscarUsuario(dni), selectSalitaId, selectTipoDocente);
+            usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);//puede cambiar entre padre y directivo
         }
 
         List<Usuario> usuarios = usuarioRepositorio.findAll();
 
         modelo.addObject("usuarios", usuarios);
+        modelo.setViewName("usuario-listado.html");
 
-        return "redirect:/usuario/listarusuarios";
+        return modelo;
     }
 
     @GetMapping("/modificar")
@@ -94,9 +121,18 @@ public class UsuarioController {
             Usuario usuario = usuarioServicio.buscarUsuario(dni);
             model.put("usuario", usuario);
             model.put("accion", "modificar");
+// SI el usuario es docente y titular, busco su salita guardada
+            if (usuario.getTipoPerfil().toString().equals("DOCENTE")) {
+                model.put("docente", docenteService.buscarDocentePorUsuario(usuario));
+                if (docenteService.buscarDocentePorUsuario(usuario).getTipoDocente().toString().equals("TITULAR")) {
+                    Salita salitaDocente = salitaService.buscarSalita(docenteService.buscarDocentePorUsuario(usuario).getSalita().getId());
+                    model.put("salitaDocente", salitaDocente);
+                }
+            }
             model.put("salitas", salitaService.buscarSalitas());
         } else {
             model.put("usuario", new Usuario());
+            model.put("docente", new Docente());
             model.put("accion", "crear");
             model.put("salitas", salitaService.buscarSalitas());
         }
@@ -110,6 +146,7 @@ public class UsuarioController {
         Usuario usuario = new Usuario();
 
         modelMap.put("usuario", usuario);
+        modelMap.put("docente", new Docente());
         modelMap.put("accion", "crear");
         modelMap.put("salitas", salitaService.buscarSalitas());
 
@@ -117,18 +154,6 @@ public class UsuarioController {
 
     }
 
-//    @GetMapping("/eliminar")
-//    public String eliminar(@RequestParam Integer dni) {
-//
-//        try {
-//            usuarioServicio.eliminar(dni);
-//        } catch (Exception e) {
-//            e.printStackTrace();
-//        }
-//
-//        return "redirect:/usuario/listarusuarios";
-//
-//    }
     @GetMapping("/baja")
     public String darBaja(@RequestParam Integer dni) {
 

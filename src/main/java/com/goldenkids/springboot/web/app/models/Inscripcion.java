@@ -13,52 +13,55 @@ import org.hibernate.annotations.GenericGenerator;
 @Entity
 public class Inscripcion {
 
-	@Id
-	@GeneratedValue(generator = "uuid")
-        @GenericGenerator(name="system-uuid", strategy = "uuid")
-	private String id;
+    @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
 
-	@Temporal(TemporalType.DATE)
-	private Date fechaAlta;
+    @Temporal(TemporalType.DATE)
+    private Date fechaAlta;
 
-	@Temporal(TemporalType.DATE)
-	private Date fechaBaja;
+    @Temporal(TemporalType.DATE)
+    private Date fechaBaja;
 
-	@ManyToOne
-	private Alumno alumno;
-	@ManyToOne
-	private Salita salita;
+    @ManyToOne
+    private Alumno alumno;
+    @ManyToOne
+    private Salita salita;
 
-	public Date getFechaAlta() {
-		return fechaAlta;
-	}
+    public Inscripcion() {
+    }
 
-	public void setFechaAlta(Date fechaAlta) {
-		this.fechaAlta = fechaAlta;
-	}
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
 
-	public Date getFechaBaja() {
-		return fechaBaja;
-	}
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
 
-	public void setFechaBaja(Date fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
 
-	public Alumno getAlumno() {
-		return alumno;
-	}
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
 
-	public void setAlumno(Alumno alumno) {
-		this.alumno = alumno;
-	}
+    public Alumno getAlumno() {
+        return alumno;
+    }
 
-	public Salita getSalita() {
-		return salita;
-	}
+    public void setAlumno(Alumno alumno) {
+        this.alumno = alumno;
+    }
 
-	public void setSalita(Salita salita) {
-		this.salita = salita;
-	}
+    public Salita getSalita() {
+        return salita;
+    }
+
+    public void setSalita(Salita salita) {
+        this.salita = salita;
+    }
 
 }

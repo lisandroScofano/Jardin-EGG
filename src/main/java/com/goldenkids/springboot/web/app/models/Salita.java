@@ -1,14 +1,10 @@
 package com.goldenkids.springboot.web.app.models;
 
 import java.util.Date;
-import java.util.List;
-import java.util.UUID;
 
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
-import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import org.hibernate.annotations.GenericGenerator;
@@ -17,31 +13,24 @@ import org.hibernate.annotations.GenericGenerator;
 public class Salita {
 
     @Id
-    @GeneratedValue(generator = "UUID")
-    @GenericGenerator(name = "UUID", strategy = "org.hibernate.id.UUIDGenerator")
-    private UUID id;
-    @OneToOne(mappedBy = "salita")
-    private Docente docente;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     private String nombre;
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaEntrada;
     @Temporal(TemporalType.TIMESTAMP)
     private Date horaSalida;
 
-    public UUID getId() {
+    public Salita() {
+    }
+
+    public String getId() {
         return id;
     }
 
-    public void setId(UUID id) {
+    public void setId(String id) {
         this.id = id;
-    }
-
-    public Docente getDocente() {
-        return docente;
-    }
-
-    public void setDocente(Docente docente) {
-        this.docente = docente;
     }
 
     public String getNombre() {

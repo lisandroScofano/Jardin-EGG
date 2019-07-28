@@ -1,5 +1,6 @@
 package com.goldenkids.springboot.web.app.models;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -25,6 +26,12 @@ public class Alumno {
 	private List<Usuario> contacto;
         @ManyToOne
         private Salita salita;
+
+    public Alumno() {
+        this.contacto = new ArrayList<>();
+    }
+        
+        
 
 	public int getDni() {
 		return dni;
@@ -72,6 +79,10 @@ public class Alumno {
 
     public void setSalita(Salita salita) {
         this.salita = salita;
+    }
+    
+    public void agregarPadre(Usuario padre){
+        this.contacto.add(padre);
     }
         
         

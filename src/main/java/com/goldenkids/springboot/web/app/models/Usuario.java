@@ -8,7 +8,6 @@ import javax.persistence.Enumerated;
 import javax.persistence.Id;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
 public class Usuario {

@@ -1,23 +1,16 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
-
-    <head>
-        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
-        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-        <title>Agregar Usuarios a Golden Kids</title>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    </head>
-
+    <head th:replace="/layout :: head"></head>
     <body>
-        <div class="jumbotron">
-            <h1 class="display-4">Administración de Usuarios</h1>
-            <p class="lead">Utilice este modulo para administrar la base de
-                datos de los usuarios.</p>
-            <hr class="my-4">
-        </div>
+        <header th:replace="/layout :: header"></header>
+        <div th:fragment="errordisplay" name="errordisplay" id="errordisplay" class="alert alert-danger" role="alert" th:if="${error != null}"
+             th:text="${error}"></div>
+        <!--        <div class="jumbotron">
+                    <h1 class="display-4">Administración de Usuarios</h1>
+                    <p class="lead">Utilice este modulo para administrar la base de
+                        datos de los usuarios.</p>
+                    <hr class="my-4">
+                </div>-->
 
         <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
 
@@ -49,7 +42,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>Contraseña: </label> <input type="password" class="form-control" name="password"
+                    <label>Contraseña: </label> <input type="text" class="form-control" name="password"
                                                        th:value="${usuario.password}" />
                 </div>
 
@@ -61,7 +54,7 @@
                 <div class="form-group">
                     <label>Tipo de Perfil: </label>
                     <select name="tipoPerfil" id="tipoPerfil" onchange="ocultarTipoDocente();">
-                        <option selected="selected" th:value="${usuario.tipoPerfil}"
+                        <option th:if="${usuario.tipoPerfil != null}" selected="selected" th:value="${usuario.tipoPerfil}"
                                 th:text="${usuario.tipoPerfil}">
                         </option>
                         <option th:each="perfiles : ${T(com.goldenkids.springboot.web.app.models.TipoPerfil).values()}"
@@ -73,10 +66,9 @@
                 <div class="form-group" id="tipoDocente">
                     <label>Tipo de Docente: </label>
                     <select name="selectTipoDocente" id="selectTipoDocente" onchange="ocultarSalita();">
-                        <option selected="selected"></option>
-                        <!--                        <option selected="selected" th:value="${docente.tipoDocente}"
-                                                        th:text="${docente.tipoDocente}">
-                                                </option>TENGO QUE PASAR EL DOCENTE AL MODELO PARA CARGARLO-->
+                        <option th:if="${docente != null}" selected="selected" th:value="${docente.tipoDocente}"
+                                th:text="${docente.tipoDocente}">
+                        </option>
                         <option th:each="perfiles : ${T(com.goldenkids.springboot.web.app.models.TipoDocente).values()}"
                                 th:value="${perfiles}"
                                 th:text="${perfiles}">      
@@ -84,12 +76,11 @@
                     </select>
                 </div>  
                 <div class="form-group" id="salita">
-                    <label>Tipo de Docente: </label>
+                    <label>Salita: </label>
                     <select name="selectSalitaId" id="selectSalitaId" >
-                        <option selected="selected"></option>
-                        <!--                        <option selected="selected" th:value="${docente.tipoDocente}"
-                                                        th:text="${docente.tipoDocente}">
-                                                </option>TENGO QUE PASAR EL DOCENTE AL MODELO PARA CARGARLO-->
+                        <option th:if="${salitaDocente != null}" selected="selected" th:value="${salitaDocente.id}"
+                                th:text="${salitaDocente.nombre}">
+                        </option>
                         <option th:each="salita : ${salitas}"
                                 th:value="${salita.id}"
                                 th:text="${salita.nombre}">      
@@ -97,48 +88,12 @@
                     </select>
                 </div> 
                 <button style="float: right; margin: 5px;" type="submit" class="btn btn-primary" form="formulario"
-                        formaction="/usuario/guardar" formmethod="POST">Crear
-                    Usuario</button>
+                        formaction="/usuario/guardar" formmethod="POST">Guardar</button>
                 <button style="float: right; margin: 5px;" type="submit" class="btn btn-danger" form="formulario"
                         formaction="/usuario/listarusuarios">Volver</button>
                 <input type="hidden" th:value="${accion}" name="accion"/>
             </form>
         </div>
+        <footer th:replace="/layout :: footer"> </footer>
     </body>
-
-    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
-            integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous">
-    </script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-            integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous">
-    </script>
-    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-            integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous">
-    </script>
-
-    <script>//muestro el campo de tipo docente solo si el perfil seleccionado es docente
-        $(document).ready(function () {
-            $("#tipoDocente").hide();
-            $("#salita").hide();
-        });
-        function ocultarTipoDocente() {
-            var perfil = document.getElementById("tipoPerfil").value;
-            if (perfil === "DOCENTE") {
-                $("#tipoDocente").show();
-            } else {
-                $("#tipoDocente").hide();
-                $("#selectTipoDocente").val("");
-            }
-        }
-        function ocultarSalita() {//muestro el campo de salita solo si el perfil seleccionado es docente titular
-            var tipoDocente = document.getElementById("selectTipoDocente").value;
-            if (tipoDocente === "TITULAR") {
-                $("#salita").show();
-            } else {
-                $("#salita").hide();
-                $("#selectSalitaId").val("");
-            }
-        }
-    </script>
-
 </html>

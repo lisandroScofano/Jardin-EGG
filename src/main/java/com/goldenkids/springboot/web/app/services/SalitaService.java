@@ -5,6 +5,7 @@
  */
 package com.goldenkids.springboot.web.app.services;
 
+import com.goldenkids.springboot.web.app.models.Docente;
 import com.goldenkids.springboot.web.app.models.Salita;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,12 +28,21 @@ public class SalitaService {
     private EntityManager em;
 
     public Salita buscarSalita(String id) {
-        return em.find(Salita.class, id);
+        Salita salita = em.find(Salita.class, id);
+        if (salita != null) {
+            return salita;
+        } else {
+            return null;
+        }
     }
 
     public List<Salita> buscarSalitas() {
         List<Salita> salitas = new ArrayList<>();
         salitas = em.createQuery("SELECT s FROM Salita s").getResultList();
         return salitas;
+    }
+
+    public void eliminarSalita(Salita salita) {
+        em.remove(salita);
     }
 }

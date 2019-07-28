@@ -99,4 +99,9 @@ public class UsuarioService {
         return em.createQuery("SELECT c FROM Usuario c WHERE c.fechaBaja is null").getResultList();
     }
 
+    @SuppressWarnings("unchecked")
+    public List<Usuario> buscarUsuariosEliminados() {
+        return em.createQuery("SELECT c FROM Usuario c WHERE c.fechaBaja is not null").getResultList();
+    }
+
 }
