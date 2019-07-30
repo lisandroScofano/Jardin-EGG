@@ -1,130 +1,144 @@
 package com.goldenkids.springboot.web.app.models;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
 @Entity
 public class Usuario {
 
-	@Id
-	private int dni;
+    @Id
+    private int dni;
 
-	@Enumerated(value = EnumType.STRING)
-	private TipoPerfil tipoPerfil;
+    @Enumerated(value = EnumType.STRING)
+    private TipoPerfil tipoPerfil;
 
-	private String nombreUsuario;
-	private String password;
+    @OneToMany
+    private List<Rol> roles = new ArrayList<>();
 
-	@Temporal(TemporalType.DATE)
-	private Date fechaAlta;
-	@Temporal(TemporalType.DATE)
-	private Date fechaBaja;
+    private String nombreUsuario;
+    private String password;
 
-	private String nombre;
-	private String apellido;
-	private String mail;
-	private String telefono;
+    @Temporal(TemporalType.DATE)
+    private Date fechaAlta;
+    @Temporal(TemporalType.DATE)
+    private Date fechaBaja;
 
-	public Usuario() {
+    private String nombre;
+    private String apellido;
+    private String mail;
+    private String telefono;
 
-	}
+    public Usuario() {
 
-	public Usuario(int dni, TipoPerfil tipoPerfil, String nombreUsuario, String password, String nombre,
-			String apellido, String mail, String telefono) {
-		this.dni = dni;
-		this.tipoPerfil = tipoPerfil;
-		this.nombreUsuario = nombreUsuario;
-		this.password = password;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.mail = mail;
-		this.telefono = telefono;
-	}
+    }
 
-	public TipoPerfil getTipoPerfil() {
-		return tipoPerfil;
-	}
+    public Usuario(int dni, TipoPerfil tipoPerfil, String nombreUsuario, String password, String nombre,
+            String apellido, String mail, String telefono) {
+        this.dni = dni;
+        this.tipoPerfil = tipoPerfil;
+        this.nombreUsuario = nombreUsuario;
+        this.password = password;
+        this.nombre = nombre;
+        this.apellido = apellido;
+        this.mail = mail;
+        this.telefono = telefono;
+    }
 
-	public void setTipoPerfil(TipoPerfil tipoPerfil) {
-		this.tipoPerfil = tipoPerfil;
-	}
+    public TipoPerfil getTipoPerfil() {
+        return tipoPerfil;
+    }
 
-	public String getNombreUsuario() {
-		return nombreUsuario;
-	}
+    public void setTipoPerfil(TipoPerfil tipoPerfil) {
+        this.tipoPerfil = tipoPerfil;
+    }
 
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
-	}
+    public String getNombreUsuario() {
+        return nombreUsuario;
+    }
 
-	public String getPassword() {
-		return password;
-	}
+    public void setNombreUsuario(String nombreUsuario) {
+        this.nombreUsuario = nombreUsuario;
+    }
 
-	public void setPassword(String password) {
-		this.password = password;
-	}
+    public String getPassword() {
+        return password;
+    }
 
-	public int getDni() {
-		return dni;
-	}
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
+    public int getDni() {
+        return dni;
+    }
 
-	public Date getFechaAlta() {
-		return fechaAlta;
-	}
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
 
-	public void setFechaAlta(Date fechaAlta) {
-		this.fechaAlta = fechaAlta;
-	}
+    public Date getFechaAlta() {
+        return fechaAlta;
+    }
 
-	public Date getFechaBaja() {
-		return fechaBaja;
-	}
+    public void setFechaAlta(Date fechaAlta) {
+        this.fechaAlta = fechaAlta;
+    }
 
-	public void setFechaBaja(Date fechaBaja) {
-		this.fechaBaja = fechaBaja;
-	}
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    public String getApellido() {
+        return apellido;
+    }
 
-	public String getMail() {
-		return mail;
-	}
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-	public void setMail(String mail) {
-		this.mail = mail;
-	}
+    public String getMail() {
+        return mail;
+    }
 
-	public String getTelefono() {
-		return telefono;
-	}
+    public void setMail(String mail) {
+        this.mail = mail;
+    }
 
-	public void setTelefono(String telefono) {
-		this.telefono = telefono;
-	}
+    public String getTelefono() {
+        return telefono;
+    }
+
+    public void setTelefono(String telefono) {
+        this.telefono = telefono;
+    }
+
+    public List<Rol> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Rol> roles) {
+        this.roles = roles;
+    }
 
 }

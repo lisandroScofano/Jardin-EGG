@@ -6,9 +6,6 @@
         <header th:replace="/layout :: header"></header>
         <div th:fragment="errordisplay" name="errordisplay" id="errordisplay" class="alert alert-danger" role="alert" th:if="${error != null}"
              th:text="${error}"></div>
-        <div>
-            <a th:href="@{/usuario/formulario}" class="btn btn-primary">Agregar Usuario</a>
-        </div>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
