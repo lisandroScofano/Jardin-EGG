@@ -52,10 +52,8 @@
                         formaction="/autorizados/guardar" formmethod="POST">Guardar</button>
                 <button style="float: right; margin: 5px;" type="submit"
                         class="btn btn-danger" form="formulario"
-                        formaction="/autorizados/listarusuarios">Volver</button>
-
+                        formaction="/autorizados/listarautorizados">Volver</button>
                 <input type="hidden" th:value="${accion}" name="accion"></input>
-
             </form>
         </div>
         <footer th:replace="/layout :: footer"> </footer>

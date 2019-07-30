@@ -24,78 +24,79 @@ import com.goldenkids.springboot.web.app.services.SalitaService;
 @RequestMapping("/salita")
 public class SalitaController {
 
-	@Autowired
-	private SalitaService salitaService;
+    @Autowired
+    private SalitaService salitaService;
 
-	@Autowired
-	private SalitaRepositorio salitaRepositorio;
+    @Autowired
+    private SalitaRepositorio salitaRepositorio;
 
-	@RequestMapping("/listarsalitas")
-	public String listar(@RequestParam(required = false) String q, Model model) {
-		List<Salita> salitas;
-		if (q != null) {
-			salitas = salitaService.buscarSalitas(q);
-		} else {
-			salitas = salitaService.buscarSalitas();
-		}
+    @RequestMapping("/listarsalitas")
+    public String listar(@RequestParam(required = false) String q, Model model) {
+        List<Salita> salitas;
+        if (q != null) {
+            salitas = salitaService.buscarSalitas(q);
+        } else {
+            salitas = salitaService.buscarSalitas();
+        }
 
-		model.addAttribute("salitas", salitas);
-		model.addAttribute("q", q);
+        model.addAttribute("salitas", salitas);
+        model.addAttribute("q", q);
 
-		return "salita-listado";
-	}
+        return "salita-listado";
+    }
 
-	@PostMapping("/guardar")
-	public String guardar(@ModelAttribute("salita") @RequestParam String nombre, String horaEntrada, String horaSalida,
-			String accion) throws ParseException {
+    @PostMapping("/guardar")
+    public String guardar(@ModelAttribute("salita") @RequestParam String nombre, String horaEntrada, String horaSalida,
+            String accion, String salitaId) throws ParseException {
+        ModelAndView modelo = new ModelAndView();
 
-		SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
-		
-		Date horaEntradaFormateada = formatter.parse(horaEntrada);
-		Date horaSalidaFormateada = formatter.parse(horaSalida);
+        SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
-		if (accion.equals("crear")) {
-			salitaService.crearSalita(nombre, horaEntradaFormateada, horaSalidaFormateada);
-		} else if (accion.equals("modificar")) {
-			salitaService.modificarSalita(nombre, horaEntradaFormateada, horaSalidaFormateada);
-		}
+        Date horaEntradaFormateada = formatter.parse(horaEntrada);
+        Date horaSalidaFormateada = formatter.parse(horaSalida);
 
-		ModelAndView modelo = new ModelAndView();
+        if (accion.equals("crear")) {
+            salitaService.crearSalita(nombre, horaEntradaFormateada, horaSalidaFormateada);
+            modelo.addObject("success", "La Salita ha sido creada con éxito.");
+        } else if (accion.equals("modificar")) {
+            salitaService.modificarSalita(nombre, horaEntradaFormateada, horaSalidaFormateada, salitaId);
+            modelo.addObject("success", "La Salita ha sido modificada con éxito.");
+        }
 
-		List<Salita> salitas = salitaRepositorio.findAll();
+        List<Salita> salitas = salitaRepositorio.findAll();
 
-		modelo.addObject("salitas", salitas);
+        modelo.addObject("salitas", salitas);
 
-		return "redirect:/salita/listarsalitas";
-	}
+        return "salita-listado";
+    }
 
-	@GetMapping("/modificar")
-	public String modificar(@RequestParam String id, ModelMap model) {
+    @GetMapping("/modificar")
+    public String modificar(@RequestParam String id, ModelMap model) {
 
-		if (id != null) {
-			Salita salita = salitaService.buscarSalita(id);
-			model.put("salita", salita);
-			model.put("accion", "modificar");
-			model.put("salitas", salitaService);
-		} else {
-			model.put("salita", new Salita());
-			model.put("accion", "modificar");
-			model.put("salitas", salitaService);
-		}
+        if (id != null) {
+            Salita salita = salitaService.buscarSalita(id);
+            model.put("salita", salita);
+            model.put("accion", "modificar");
+            model.put("salitas", salitaService);
+        } else {
+            model.put("salita", new Salita());
+            model.put("accion", "modificar");
+            model.put("salitas", salitaService);
+        }
 
-		return "salita-admin";
-	}
+        return "salita-admin";
+    }
 
-	@GetMapping("/formulario")
-	public String abrirSalita(ModelMap modelMap) {
+    @GetMapping("/formulario")
+    public String abrirSalita(ModelMap modelMap) {
 
-		Salita salita = new Salita();
+        Salita salita = new Salita();
 
-		modelMap.put("salita", salita);
-		modelMap.put("accion", "crear");
-		modelMap.put("salitas", salitaService.buscarSalitas());
+        modelMap.put("salita", salita);
+        modelMap.put("accion", "crear");
+        modelMap.put("salitas", salitaService.buscarSalitas());
 
-		return "salita-admin";
-	}
+        return "salita-admin";
+    }
 
 }

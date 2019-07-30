@@ -35,8 +35,8 @@ public class SalitaService {
     }
 
     @Transactional
-    public void modificarSalita(String nombre, Date horaEntradaFormateada, Date horaSalidaFormateada) {
-        Salita salita = new Salita();
+    public void modificarSalita(String nombre, Date horaEntradaFormateada, Date horaSalidaFormateada, String salitaId) {
+        Salita salita = buscarSalita(salitaId);
 
         salita.setHoraEntrada(horaEntradaFormateada);
         salita.setHoraSalida(horaSalidaFormateada);

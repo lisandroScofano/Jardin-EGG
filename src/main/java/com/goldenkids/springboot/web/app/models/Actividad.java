@@ -22,22 +22,32 @@ public class Actividad {
 
     @Temporal(TemporalType.TIMESTAMP)
     private Date inicio;
+
     @Temporal(TemporalType.TIMESTAMP)
     private Date fin;
 
-    private String tipo1;
-    private String tipo2;
-    private String tipo3;
+    private Integer cantidadLeche;
 
     @Enumerated(value = EnumType.STRING)
     private TipoActividad tipoActividad;
+
+    @Enumerated(value = EnumType.STRING)
+    private TipoCantidad cantidad;
+
+    @Enumerated(value = EnumType.STRING)
+    private TipoPanial tipoPanial;
 
     private String observacion;
 
     @ManyToOne
     private Alumno alumno;
 
-    public Actividad() {
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
     public Date getInicio() {
@@ -56,28 +66,12 @@ public class Actividad {
         this.fin = fin;
     }
 
-    public String getTipo1() {
-        return tipo1;
+    public Integer getCantidadLeche() {
+        return cantidadLeche;
     }
 
-    public void setTipo1(String tipo1) {
-        this.tipo1 = tipo1;
-    }
-
-    public String getTipo2() {
-        return tipo2;
-    }
-
-    public void setTipo2(String tipo2) {
-        this.tipo2 = tipo2;
-    }
-
-    public String getTipo3() {
-        return tipo3;
-    }
-
-    public void setTipo3(String tipo3) {
-        this.tipo3 = tipo3;
+    public void setCantidadLeche(Integer cantidadLeche) {
+        this.cantidadLeche = cantidadLeche;
     }
 
     public TipoActividad getTipoActividad() {
@@ -86,6 +80,22 @@ public class Actividad {
 
     public void setTipoActividad(TipoActividad tipoActividad) {
         this.tipoActividad = tipoActividad;
+    }
+
+    public TipoCantidad getCantidad() {
+        return cantidad;
+    }
+
+    public void setCantidad(TipoCantidad cantidad) {
+        this.cantidad = cantidad;
+    }
+
+    public TipoPanial getTipoPanial() {
+        return tipoPanial;
+    }
+
+    public void setTipoPanial(TipoPanial tipoPanial) {
+        this.tipoPanial = tipoPanial;
     }
 
     public String getObservacion() {
@@ -102,14 +112,6 @@ public class Actividad {
 
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
     }
 
 }

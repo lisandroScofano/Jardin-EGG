@@ -32,8 +32,9 @@
                     <label>Nombre Salita: </label> <select name="selectSalitaId"
                                                            id="selectSalitaId">
                         <option selected="selected"></option>
-                        <option th:each="salita : ${salitas}" th:value="${salita.id}"
-                                th:text="${salita.nombre}"></option>
+                        <option th:if="${salitaActual != null}"  selected="selected" th:value="${salitaActual.id}" th:text="${salitaActual.nombre}"></option>
+                        <option th:each="salitaLoop : ${salitas}" th:value="${salitaLoop.id}"
+                                th:text="${salitaLoop.nombre}"></option>
                     </select>
                 </div>
                 <button style="float: right; margin: 5px;" type="submit"
@@ -41,7 +42,7 @@
                         formaction="/alumno/guardar" formmethod="POST">Guardar</button>
                 <button style="float: right; margin: 5px;" type="submit"
                         class="btn btn-danger" form="formulario"
-                        formaction="/usuario/listarusuarios">Volver</button>
+                        formaction="/alumno/listaralumnos">Volver</button>
                 <input type="hidden" th:value="${accion}" name="accion"></input>
             </form>
         </div>

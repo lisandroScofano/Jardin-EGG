@@ -29,7 +29,7 @@ public class AutorizadosController {
 
     @Autowired
     private AutorizadosRepositorio autorizadosRepositorio;
-    
+
     @Autowired
     private AlumnoService alumnoService;
 
@@ -49,14 +49,15 @@ public class AutorizadosController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("autorizados") @RequestParam String nombre, String apellido, String telefono1,
             String telefono2, int dni, String parentesco, String accion, String error) throws Exception {
+        ModelAndView modelo = new ModelAndView();
 
         if (accion.equals("crear")) {
             autorizadosServicio.crearAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error);
+            modelo.addObject("success", "La Autorizacion ha sido creada con éxito.");
         } else if (accion.equals("modificar")) {
             autorizadosServicio.modificarAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error);
+            modelo.addObject("success", "La Autorizacion ha sido modificada con éxito.");
         }
-
-        ModelAndView modelo = new ModelAndView();
 
         List<Autorizados> autorizados = autorizadosRepositorio.findAll();
 

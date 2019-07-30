@@ -85,8 +85,9 @@ public class UsuarioController {
                 if (tipoPerfil.toString().equals("DOCENTE")) {
                     docenteService.crearDocente(usuarioServicio.buscarUsuario(dni), selectSalitaId, selectTipoDocente);
                 }
+                modelo.addObject("success", "El usuario ha sido guardado con éxito.");
             } else {
-                modelo.addObject("error", "El usuario ingresado ya existe. Por favor revise el DNI.");//ver porque no sale
+                modelo.addObject("error", "El usuario ingresado ya existe. Por favor revise el DNI.");
                 log.error("Ya existe un usuario ingresado con ese DNI");
             }
         } else if (accion.equals("modificar")) {
@@ -104,6 +105,7 @@ public class UsuarioController {
             }
 
             usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);//puede cambiar entre padre y directivo
+            modelo.addObject("success", "El usuario ha sido modificado con éxito.");
         }
 
         List<Usuario> usuarios = usuarioRepositorio.findAll();

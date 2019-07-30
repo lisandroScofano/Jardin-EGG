@@ -4,8 +4,8 @@
     <head th:replace="/layout :: head"></head>
     <body>
         <header th:replace="/layout :: header"></header>
-        <div class="alert alert-danger" role="alert" th:if="${error != null}"
-             th:text="${error}"></div>
+        <div th:replace="/layout :: errordisplay"></div>
+        <div th:replace="/layout :: successdisplay"></div>
         <table class="table">
             <thead class="thead-dark">
                 <tr>

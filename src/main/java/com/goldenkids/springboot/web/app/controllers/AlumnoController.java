@@ -24,78 +24,80 @@ import com.goldenkids.springboot.web.app.services.SalitaService;
 @RequestMapping("/alumno")
 public class AlumnoController {
 
-	@Autowired
-	private SalitaService salitaService;
+    @Autowired
+    private SalitaService salitaService;
 
-	@Autowired
-	private AlumnoService alumnoServicio;
+    @Autowired
+    private AlumnoService alumnoServicio;
 
-	@Autowired
-	private AlumnoRepositorio alumnoRepositorio;
+    @Autowired
+    private AlumnoRepositorio alumnoRepositorio;
 
-	@RequestMapping("/listaralumnos")
-	public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
+    @RequestMapping("/listaralumnos")
+    public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
 
-		List<Alumno> alumnos;
-		if (q != null) {
-			alumnos = alumnoServicio.buscarAlumnos(q);
-		} else {
-			alumnos = alumnoServicio.buscarAlumnos();
-		}
+        List<Alumno> alumnos;
+        if (q != null) {
+            alumnos = alumnoServicio.buscarAlumnos(q);
+        } else {
+            alumnos = alumnoServicio.buscarAlumnos();
+        }
 
-		modelo.addAttribute("alumnos", alumnos);
-		modelo.addAttribute("q", q);
+        modelo.addAttribute("alumnos", alumnos);
+        modelo.addAttribute("q", q);
 
-		return "alumno-listado";
-	}
+        return "alumno-listado";
+    }
 
-	@PostMapping("/guardar")
-	public String guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
-			@DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaNacimiento, String accion, String selectSalitaId) {
+    @PostMapping("/guardar")
+    public String guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
+            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaNacimiento, String accion, String selectSalitaId) {
+        ModelAndView modelo = new ModelAndView();
 
-		if (accion.equals("crear")) {
-			alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId);
-		} else if (accion.equals("modificar")) {
-			alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId);
-		}
+        if (accion.equals("crear")) {
+            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId);
+            modelo.addObject("success", "El Alumno ha sido creado con éxito.");
+        } else if (accion.equals("modificar")) {
+            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId);
+            modelo.addObject("success", "El Alumno ha sido modificado con éxito.");
+        }
 
-		ModelAndView modelo = new ModelAndView();
+        List<Alumno> alumnos = alumnoRepositorio.findAll();
 
-		List<Alumno> alumnos = alumnoRepositorio.findAll();
+        modelo.addObject("alumnos", alumnos);
 
-		modelo.addObject("alumnos", alumnos);
+        return "redirect:/alumno/listaralumnos";
+    }
 
-		return "redirect:/alumno/listaralumnos";
-	}
+    @GetMapping("/modificar")
+    public String modificar(@RequestParam Integer dni, ModelMap model) {
 
-	@GetMapping("/modificar")
-	public String modificar(@RequestParam Integer dni, ModelMap model) {
+        if (dni != null) {
+            Alumno alumno = alumnoServicio.buscarAlumno(dni);
+            model.put("alumno", alumno);
+            model.put("accion", "modificar");
+            model.put("salitas", salitaService.buscarSalitas());
+            model.put("salitaActual", alumno.getSalita());
+        } else {
+            model.put("alumno", new Alumno());
+            model.put("accion", "crear");
+            model.put("salitas", salitaService.buscarSalitas());
+        }
 
-		if (dni != null) {
-			Alumno alumno = alumnoServicio.buscarAlumno(dni);
-			model.put("alumno", alumno);
-			model.put("accion", "modificar");
-			model.put("salitas", salitaService.buscarSalitas());
-		} else {
-			model.put("alumno", new Alumno());
-			model.put("accion", "crear");
-			model.put("salitas", salitaService.buscarSalitas());
-		}
+        return "alumno-admin";
+    }
 
-		return "alumno-admin";
-	}
+    @GetMapping("/formulario")
+    public String abrirAlumno(ModelMap modelMap) {
 
-	@GetMapping("/formulario")
-	public String abrirAlumno(ModelMap modelMap) {
+        Alumno alumno = new Alumno();
 
-		Alumno alumno = new Alumno();
+        modelMap.put("alumno", alumno);
+        modelMap.put("accion", "crear");
+        modelMap.put("salitas", salitaService.buscarSalitas());
 
-		modelMap.put("alumno", alumno);
-		modelMap.put("accion", "crear");
-		modelMap.put("salitas", salitaService.buscarSalitas());
+        return "alumno-admin";
 
-		return "alumno-admin";
-
-	}
+    }
 
 }

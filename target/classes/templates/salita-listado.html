@@ -4,6 +4,8 @@
     <head th:replace="/layout :: head"></head>
     <body>
         <header th:replace="/layout :: header"></header>	
+        <div th:replace="/layout :: errordisplay"></div>
+        <div th:replace="/layout :: successdisplay"></div>
         <table class="table">
             <thead class="thead-dark">
                 <tr>
@@ -11,6 +13,7 @@
                     <th>Hora de Entrada</th>
                     <th>Hora de Salida</th>
                     <th>Id Salita</th>
+                    <th></th>
                 </tr>
             </thead>
             <tbody>

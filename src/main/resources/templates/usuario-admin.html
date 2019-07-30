@@ -3,11 +3,6 @@
     <head th:replace="/layout :: head"></head>
     <body>
         <header th:replace="/layout :: header"></header>
-        <div th:fragment="errordisplay" name="errordisplay" id="errordisplay" class="alert alert-danger" role="alert" th:if="${error != null}"
-             th:text="${error}"></div>
-
-        <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
-
         <div class="col-sm-12">
             <form class="form" id="formulario" method="post" action="">
 
