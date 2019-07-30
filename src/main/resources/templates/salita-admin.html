@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="/layout :: head"></head>
+    <body>
+        <header th:replace="/layout :: header"></header>
+        <div class="col-sm-12">
+            <form class="form" id="formulario" method="post" action="">
+
+                <div class="form-group">
+                    <label>Nombre: </label> <input type="text" class="form-control"
+                                                   name="nombre" th:value="${salita.nombre}" />
+                </div>
+
+                <div class="form-group">
+                    <label>Hora de Entrada: </label> <input type="time" class="form-control"
+                                                            name="horaEntrada" th:value="${salita.horaEntrada}" />
+                </div>
+
+                <div class="form-group">
+                    <label>Hora de Salida: </label> <input type="time" class="form-control"
+                                                           name="horaSalida" th:value="${salita.horaSalida}" />
+                </div>
+
+                <button style="float: right; margin: 5px;" type="submit"
+                        class="btn btn-primary" form="formulario"
+                        formaction="/salita/guardar" formmethod="POST">Guardar</button>
+                <button style="float: right; margin: 5px;" type="submit"
+                        class="btn btn-danger" form="formulario"
+                        formaction="/salita/listarusuarios">Volver</button>
+                <input type="hidden" th:value="${accion}" name="accion"></input>
+            </form>
+        </div>
+        <footer th:replace="/layout :: footer"> </footer>
+    </body>
+</html>

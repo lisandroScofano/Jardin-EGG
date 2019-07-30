@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org" lang="es">
+    <head th:replace="/layout :: head"></head>
+    <body>
+        <header th:replace="/layout :: header"></header>
+        <div class="alert alert-danger" role="alert" th:if="${error != null}"
+             th:text="${error}"></div>
+
+        <div class="col-sm-12">
+            <form class="form" id="formulario" method="post" action="">
+
+
+                <div class="form-group">
+                    <label>Nombre: </label> <input type="text" class="form-control"
+                                                   name="nombre" th:value="${autorizados.nombre}" />
+                </div>
+
+                <div class="form-group">
+                    <label>Apellido: </label> <input type="text" class="form-control"
+                                                     name="apellido" th:value="${autorizados.apellido}" />
+                </div>
+
+                <div class="form-group">
+                    <label>DNI: </label> <input type="number" class="form-control"
+                                                name="dni" th:value="${autorizados.dni}" />
+                </div>
+
+
+                <div class="form-group">
+                    <label>Parentesco: </label> <input type="text" class="form-control"
+                                                       name="parentesco" th:value="${autorizados.parentesco}" />
+                </div>
+                <div class="form-group">
+                    <label>Telefono Uno: </label> <input type="text" class="form-control"
+                                                         name="telefono1" th:value="${autorizados.telefono1}" />
+                </div>
+                <div class="form-group">
+                    <label>Telefono Dos: </label> <input type="text" class="form-control"
+                                                         name="telefono2" th:value="${autorizados.telefono2}" />
+                </div>
+                <div class="form-group">
+                    <label>Seleccione alumnos a retirar: </label> 
+                    <input list="browsers" class="form-control" />
+                        <datalist id="browsers" th:each="alumno : ${alumnos}">
+                            <option th:text="${alumno.nombre}" th:value="${alumno.dni}">
+                        </datalist>
+                </div>                
+
+                <button style="float: right; margin: 5px;" type="submit"
+                        class="btn btn-primary" form="formulario"
+                        formaction="/autorizados/guardar" formmethod="POST">Guardar</button>
+                <button style="float: right; margin: 5px;" type="submit"
+                        class="btn btn-danger" form="formulario"
+                        formaction="/autorizados/listarusuarios">Volver</button>
+
+                <input type="hidden" th:value="${accion}" name="accion"></input>
+
+            </form>
+        </div>
+        <footer th:replace="/layout :: footer"> </footer>
+    </body>
+</html>

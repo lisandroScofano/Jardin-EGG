@@ -17,9 +17,9 @@ public class Salita {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
     private String nombre;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaEntrada;
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.TIME)
     private Date horaSalida;
 
     public Salita() {

@@ -1,79 +1,84 @@
 package com.goldenkids.springboot.web.app.models;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.Transient;
 
 @Entity
 public class Autorizados {
 
-	@Id
-	private int dni;
+    @Id
+    private int dni;
 
-	@ManyToMany
-	private List<Alumno> alumno;
-	private String telefono1;
-	private String telefono2;
-	private String apellido;
-	private String nombre;
-	private String parentesco;
+    @ManyToMany
+    private List<Alumno> alumno;
+    private String telefono1;
+    private String telefono2;
+    private String apellido;
+    private String nombre;
+    private String parentesco;
 
-	public List<Alumno> getAlumno() {
-		return alumno;
-	}
+    @Transient
+    private List<Integer> alumnosSeleccionados = new ArrayList<>();
 
-	public void setAlumno(List<Alumno> alumno) {
-		this.alumno = alumno;
-	}
+    public List<Alumno> getAlumno() {
+        return alumno;
+    }
 
-	public int getDni() {
-		return dni;
-	}
+    public void setAlumno(List<Alumno> alumno) {
+        this.alumno = alumno;
+    }
 
-	public void setDni(int dni) {
-		this.dni = dni;
-	}
+    public int getDni() {
+        return dni;
+    }
 
-	public String getTelefono1() {
-		return telefono1;
-	}
+    public void setDni(int dni) {
+        this.dni = dni;
+    }
 
-	public void setTelefono1(String telefono1) {
-		this.telefono1 = telefono1;
-	}
+    public String getTelefono1() {
+        return telefono1;
+    }
 
-	public String getTelefono2() {
-		return telefono2;
-	}
+    public void setTelefono1(String telefono1) {
+        this.telefono1 = telefono1;
+    }
 
-	public void setTelefono2(String telefono2) {
-		this.telefono2 = telefono2;
-	}
+    public String getTelefono2() {
+        return telefono2;
+    }
 
-	public String getApellido() {
-		return apellido;
-	}
+    public void setTelefono2(String telefono2) {
+        this.telefono2 = telefono2;
+    }
 
-	public void setApellido(String apellido) {
-		this.apellido = apellido;
-	}
+    public String getApellido() {
+        return apellido;
+    }
 
-	public String getNombre() {
-		return nombre;
-	}
+    public void setApellido(String apellido) {
+        this.apellido = apellido;
+    }
 
-	public void setNombre(String nombre) {
-		this.nombre = nombre;
-	}
+    public String getNombre() {
+        return nombre;
+    }
 
-	public String getParentesco() {
-		return parentesco;
-	}
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
 
-	public void setParentesco(String parentesco) {
-		this.parentesco = parentesco;
-	}
+    public String getParentesco() {
+        return parentesco;
+    }
+
+    public void setParentesco(String parentesco) {
+        this.parentesco = parentesco;
+    }
 
 }

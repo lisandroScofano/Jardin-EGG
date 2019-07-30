@@ -5,12 +5,6 @@
         <header th:replace="/layout :: header"></header>
         <div th:fragment="errordisplay" name="errordisplay" id="errordisplay" class="alert alert-danger" role="alert" th:if="${error != null}"
              th:text="${error}"></div>
-        <!--        <div class="jumbotron">
-                    <h1 class="display-4">Administración de Usuarios</h1>
-                    <p class="lead">Utilice este modulo para administrar la base de
-                        datos de los usuarios.</p>
-                    <hr class="my-4">
-                </div>-->
 
         <div class="alert alert-danger" role="alert" th:if="${error != null}" th:text="${error}"></div>
 
@@ -95,5 +89,6 @@
             </form>
         </div>
         <footer th:replace="/layout :: footer"> </footer>
+        <script th:src="@{/js/docente.js}"></script>
     </body>
 </html>

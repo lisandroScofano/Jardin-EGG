@@ -10,19 +10,18 @@
     </head>
     <body>
         <header th:fragment="header">
-           		<div class="container-fluid p-0">
-
-			<nav class="navbar navbar-expand-lg">
-				<a class="navbar-brand" href="#"> <i
-					class="fas fa-book-reader fa-3x mx-3"></i> <img
-					th:src="@{/images/logo.png}" alt="Golden Kids" height="130px"
-					width="170px">
-				</a>
-				<button class="navbar-toggler" type="button" data-toggle="collapse"
-					data-target="#navbarNav" aria-controls="navbarNav"
-					aria-expanded="false" aria-label="Toggle navigation">
-					<i class="fas fa-align-right"></i>
-				</button>
+            <div class="container-fluid p-0">
+                <nav class="navbar navbar-expand-lg">
+                    <a class="navbar-brand" href="#"> <i
+                            class="fas fa-book-reader fa-3x mx-3"></i> <img
+                            th:src="@{/images/logo.png}" alt="Golden Kids" height="130px"
+                            width="170px">
+                    </a>
+                    <button class="navbar-toggler" type="button" data-toggle="collapse"
+                            data-target="#navbarNav" aria-controls="navbarNav"
+                            aria-expanded="false" aria-label="Toggle navigation">
+                        <i class="fas fa-align-right"></i>
+                    </button>
                     <div class="collapse navbar-collapse" id="navbarNav">
                         <div class="mr-auto"></div>
                         <ul class="navbar-nav">
@@ -36,68 +35,56 @@
                                     </div>
                                 </div>
                             </li>
-                           	<li class="nav-item dropdown">
-							<div class="dropdown">
-								<a href="#" class="nav-link">Alumnos</a>
-								<div class="dropdown-content">
-									<a href="/alumno/formulario">Registrar Alumnos</a> <a
-										href="/alumno/listaralumnos">Ver Alumnos</a>
-								</div>
-							</div>
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <a href="#" class="nav-link">Alumnos</a>
+                                    <div class="dropdown-content">
+                                        <a href="/alumno/formulario">Registrar Alumnos</a> <a
+                                            href="/alumno/listaralumnos">Ver Alumnos</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <a href="#" class="nav-link">Salita</a>
+                                    <div class="dropdown-content">
+                                        <a href="/salita/formulario">Crear Salita</a> <a
+                                            href="/salita/listarsalitas">Ver Salita</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <a href="#" class="nav-link">Autorizados</a>
+                                    <div class="dropdown-content">
+                                        <a href="/autorizados/formulario">Crear Autorizados</a> <a
+                                            href="/autorizados/listarautorizados">Ver Autorizados</a>
+                                    </div>
+                                </div>
+                            </li>
+                            <nav class="navbar navbar-expand-lg navbar-light">
 
-						</li>
-						<li class="nav-item dropdown">
-							<div class="dropdown">
-								<a href="#" class="nav-link">Salita</a>
-								<div class="dropdown-content">
-									<a href="/salita/formulario">Crear Salita</a> <a
-										href="/salita/listaralumnos">Ver Salita</a>
-								</div>
-							</div>
-
-						</li>
-						<li class="nav-item dropdown">
-							<div class="dropdown">
-								<a href="#" class="nav-link">Autorizados</a>
-								<div class="dropdown-content">
-									<a href="/autorizados/formulario">Crear Autorizados</a> <a
-										href="/autorizados/listaralumnos">Ver Autorizados</a>
-								</div>
-							</div>
-
-						</li>
-
-						<nav class="navbar navbar-expand-lg navbar-light">
-
-							<form class="form-inline my-2 my-lg-0" action="" method="GET">
-								<input class="form-control mr-sm-2" type="search"
-									placeholder="Buscar" aria-label="Buscar" name="q"
-									th:value="${q}">
-								<button class="btn btn-outline-success my-2 my-sm-0"
-									type="submit">
-									Buscar <i class="fa fa-search"></i>
-								</button>
-							</form>
-
-						</nav>
-
-					</ul>
-				</div>
-			</nav>
-		</div>
-
-
-		<div class="jumbotron">
-			<h1 class="display-4">Administración de Usuarios</h1>
-			<p class="lead">Utilice este modulo para administrar la base de
-				datos de los usuarios de el jardin.</p>
-			<hr class="my-4">
-
-		</div>
-	</header>
-
-
-
+                                <form class="form-inline my-2 my-lg-0" action="" method="GET">
+                                    <input class="form-control mr-sm-2" type="search"
+                                           placeholder="Buscar" aria-label="Buscar" name="q"
+                                           th:value="${q}">
+                                        <button class="btn btn-outline-success my-2 my-sm-0"
+                                                type="submit">
+                                            Buscar <i class="fa fa-search"></i>
+                                        </button>
+                                </form>
+                            </nav>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <div class="jumbotron">
+                <h1 class="display-4">Administración de Usuarios</h1>
+                <p class="lead">Utilice este modulo para administrar la base de
+                    datos de los usuarios de el jardin.</p>
+                <hr class="my-4">
+            </div>
+        </header>
         <footer th:fragment="footer">
             <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
             <script
@@ -106,7 +93,6 @@
                 crossorigin="anonymous">
             </script>
             <script th:src="@{/js/bootstrap.min.js}"></script>
-            <script th:src="@{/js/docente.js}"></script>
         </footer>
     </body>
 </html>
