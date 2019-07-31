@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />   
         <link rel="stylesheet" th:href="@{/css/style.css}" />
-<!--        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />-->
+        <!--        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />-->
     </head>
     <body>
         <header th:fragment="header">
@@ -63,6 +63,12 @@
                                         <a th:href="@{/autorizados/formulario}">Crear Autorizados</a> 
                                         <a th:href="@{/autorizados/listarautorizadoseliminados}">Ver Autorizados Eliminados</a> 
                                     </div>
+                                </div>
+                            </li>
+                            <li class="nav-item dropdown">
+                                <div class="dropdown">
+                                    <a th:href="@{/logout}" class="nav-link">Salir</a>
+                                   </div>
                                 </div>
                             </li>
                             <nav class="navbar navbar-expand-lg navbar-light">

@@ -9,12 +9,17 @@ import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.repository.UsuarioRepositorio;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 /**
  *
@@ -23,19 +28,26 @@ import org.springframework.stereotype.Service;
 @Service
 public class JpaUserSecurityService implements UserDetailsService {
 
+    Logger log = LoggerFactory.getLogger(JpaUserSecurityService.class);
+
     @Autowired
     private UsuarioRepositorio usuarioRepositorio;
 
     @Override
-    public UserDetails loadUserByUsername(String string) throws UsernameNotFoundException {
-        
-        Usuario usuario = usuarioRepositorio.findByNombreUsuario(string);
-        
-        GrantedAuthority authorities = new GrantedAuthority();
+    @Transactional(readOnly = true)
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        
-        
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        Usuario usuario = usuarioRepositorio.findByNombreUsuario(username);
+
+        if (usuario == null) {
+            log.error("Error en el Login: no existe el usuario '" + username + "' en el sistema!");
+            throw new UsernameNotFoundException("Username: " + username + " no existe en el sistema!");
+        }
+
+        List<GrantedAuthority> authorities = new ArrayList<GrantedAuthority>();
+
+        authorities.add(new SimpleGrantedAuthority(usuario.getRol().getPerfil().toString()));
+        return new User(usuario.getNombreUsuario(), usuario.getPassword(), true, true, true, true, authorities);
     }
 
 }

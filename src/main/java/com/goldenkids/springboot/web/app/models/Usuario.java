@@ -1,6 +1,5 @@
 package com.goldenkids.springboot.web.app.models;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -8,7 +7,7 @@ import javax.persistence.Entity;
 import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.Id;
-import javax.persistence.OneToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,8 +20,8 @@ public class Usuario {
     @Enumerated(value = EnumType.STRING)
     private TipoPerfil tipoPerfil;
 
-    @OneToMany
-    private List<Rol> roles = new ArrayList<>();
+    @ManyToOne
+    private Rol rol;
 
     private String nombreUsuario;
     private String password;
@@ -133,12 +132,12 @@ public class Usuario {
         this.telefono = telefono;
     }
 
-    public List<Rol> getRoles() {
-        return roles;
+    public Rol getRol() {
+        return rol;
     }
 
-    public void setRoles(List<Rol> roles) {
-        this.roles = roles;
+    public void setRol(Rol rol) {
+        this.rol = rol;
     }
 
 }

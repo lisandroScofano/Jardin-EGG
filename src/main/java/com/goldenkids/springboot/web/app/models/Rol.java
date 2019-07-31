@@ -22,7 +22,7 @@ public class Rol {
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
 
-    private String rol;
+    private TipoPerfil perfil;
 
     public String getId() {
         return id;
@@ -32,12 +32,12 @@ public class Rol {
         this.id = id;
     }
 
-    public String getRol() {
-        return rol;
+    public TipoPerfil getPerfil() {
+        return perfil;
     }
 
-    public void setRol(String rol) {
-        this.rol = rol;
+    public void setPerfil(TipoPerfil perfil) {
+        this.perfil = perfil;
     }
 
 }
