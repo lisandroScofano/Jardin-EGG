@@ -8,4 +8,5 @@ import com.goldenkids.springboot.web.app.models.Usuario;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
+    public Usuario findByNombreUsuario(String nombrUsuario);
 }
