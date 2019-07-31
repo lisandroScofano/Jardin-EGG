@@ -14,6 +14,7 @@
                     <th>DNI</th>
                     <th>Telefono Uno</th>
                     <th>Telefono Dos</th>
+                    <th>Alumno</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
@@ -24,8 +25,9 @@
                     <td th:text="${autorizados.dni}"></td>
                     <td th:text="${autorizados.telefono1}"></td>
                     <td th:text="${autorizados.telefono2}"></td>
+                    <td th:text="${autorizados.alumno.nombre} + ' ' + ${autorizados.alumno.apellido}"></td>
                     <td><a th:href="@{/autorizados/baja(dni=${autorizados.dni})}"><i
-                                class="fa fa-window-close"></i></a> -<a
+                                class="fa fa-window-close"></i></a> - <a
                             th:href="@{/autorizados/modificar(dni=${autorizados.dni})}"><i
                                 class="fa fa-edit"></i></a></td>
                 </tr>

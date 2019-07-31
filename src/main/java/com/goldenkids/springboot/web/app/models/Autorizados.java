@@ -1,12 +1,14 @@
 package com.goldenkids.springboot.web.app.models;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Date;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
-import javax.persistence.Transient;
+import javax.persistence.ManyToOne;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
 
 @Entity
 public class Autorizados {
@@ -14,22 +16,21 @@ public class Autorizados {
     @Id
     private int dni;
 
-    @ManyToMany
-    private List<Alumno> alumno;
+    @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
+    private Alumno alumno;
     private String telefono1;
     private String telefono2;
     private String apellido;
     private String nombre;
     private String parentesco;
+    @Temporal(TemporalType.DATE)
+    private Date fechaBaja;
 
-    @Transient
-    private List<Integer> alumnosSeleccionados = new ArrayList<>();
-
-    public List<Alumno> getAlumno() {
+    public Alumno getAlumno() {
         return alumno;
     }
 
-    public void setAlumno(List<Alumno> alumno) {
+    public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
     }
 
@@ -79,6 +80,14 @@ public class Autorizados {
 
     public void setParentesco(String parentesco) {
         this.parentesco = parentesco;
+    }
+
+    public Date getFechaBaja() {
+        return fechaBaja;
+    }
+
+    public void setFechaBaja(Date fechaBaja) {
+        this.fechaBaja = fechaBaja;
     }
 
 }

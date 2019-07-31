@@ -30,9 +30,6 @@ public class AlumnoController {
     @Autowired
     private AlumnoService alumnoServicio;
 
-    @Autowired
-    private AlumnoRepositorio alumnoRepositorio;
-
     @RequestMapping("/listaralumnos")
     public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
 
@@ -49,8 +46,21 @@ public class AlumnoController {
         return "alumno-listado";
     }
 
+    @RequestMapping("/listaralumnoseliminados")
+    public String listarEliminados(Model modelo) {
+
+        modelo.addAttribute("titulo", "Listado de Alumnos Eliminados : ");
+
+        List<Alumno> alumnosEliminados = alumnoServicio.buscarAlumnosEliminados();
+
+        modelo.addAttribute("alumnos", alumnosEliminados);
+        modelo.addAttribute("titulo", "Administracion de Alumnos");
+
+        return "alumno-listado";
+    }
+
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
+    public ModelAndView guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
             @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaNacimiento, String accion, String selectSalitaId) {
         ModelAndView modelo = new ModelAndView();
 
@@ -62,11 +72,12 @@ public class AlumnoController {
             modelo.addObject("success", "El Alumno ha sido modificado con éxito.");
         }
 
-        List<Alumno> alumnos = alumnoRepositorio.findAll();
+        List<Alumno> alumnos = alumnoServicio.buscarAlumnos();
 
         modelo.addObject("alumnos", alumnos);
+        modelo.setViewName("alumno-listado.html");
 
-        return "redirect:/alumno/listaralumnos";
+        return modelo;
     }
 
     @GetMapping("/modificar")
@@ -97,6 +108,19 @@ public class AlumnoController {
         modelMap.put("salitas", salitaService.buscarSalitas());
 
         return "alumno-admin";
+
+    }
+
+    @GetMapping("/baja")
+    public String darBaja(@RequestParam Integer dni) {
+
+        try {
+            alumnoServicio.darDeBaja(dni);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        return "redirect:/alumno/listaralumnos";
 
     }
 

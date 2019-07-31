@@ -7,6 +7,7 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />   
         <link rel="stylesheet" th:href="@{/css/style.css}" />
+<!--        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />-->
     </head>
     <body>
         <header th:fragment="header">
@@ -39,8 +40,9 @@
                                 <div class="dropdown">
                                     <a href="#" class="nav-link">Alumnos</a>
                                     <div class="dropdown-content">
-                                        <a href="/alumno/formulario">Registrar Alumnos</a> <a
-                                            href="/alumno/listaralumnos">Ver Alumnos</a>
+                                        <a th:href="@{/alumno/listaralumnos}">Ver Alumnos</a>
+                                        <a th:href="@{/alumno/formulario}">Registrar Alumnos</a> 
+                                        <a th:href="@{/alumno/listaralumnoseliminados}">Ver Alumnos Eliminados</a> 
                                     </div>
                                 </div>
                             </li>
@@ -48,8 +50,8 @@
                                 <div class="dropdown">
                                     <a href="#" class="nav-link">Salita</a>
                                     <div class="dropdown-content">
-                                        <a href="/salita/formulario">Crear Salita</a> <a
-                                            href="/salita/listarsalitas">Ver Salita</a>
+                                        <a  th:href="@{/salita/listarsalitas}">Ver Salita</a>
+                                        <a th:href="@{/salita/formulario}">Crear Salita</a> 
                                     </div>
                                 </div>
                             </li>
@@ -57,8 +59,9 @@
                                 <div class="dropdown">
                                     <a href="#" class="nav-link">Autorizados</a>
                                     <div class="dropdown-content">
-                                        <a href="/autorizados/formulario">Crear Autorizados</a> <a
-                                            href="/autorizados/listarautorizados">Ver Autorizados</a>
+                                        <a th:href="@{/autorizados/listarautorizados}">Ver Autorizados</a>
+                                        <a th:href="@{/autorizados/formulario}">Crear Autorizados</a> 
+                                        <a th:href="@{/autorizados/listarautorizadoseliminados}">Ver Autorizados Eliminados</a> 
                                     </div>
                                 </div>
                             </li>
@@ -97,6 +100,5 @@
                 crossorigin="anonymous">
             </script>
             <script th:src="@{/js/bootstrap.min.js}"></script>
-        </footer>
     </body>
 </html>

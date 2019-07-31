@@ -46,7 +46,7 @@ public class SalitaController {
     }
 
     @PostMapping("/guardar")
-    public String guardar(@ModelAttribute("salita") @RequestParam String nombre, String horaEntrada, String horaSalida,
+    public ModelAndView guardar(@ModelAttribute("salita") @RequestParam String nombre, String horaEntrada, String horaSalida,
             String accion, String salitaId) throws ParseException {
         ModelAndView modelo = new ModelAndView();
 
@@ -66,8 +66,9 @@ public class SalitaController {
         List<Salita> salitas = salitaRepositorio.findAll();
 
         modelo.addObject("salitas", salitas);
+        modelo.setViewName("salita-listado.html");
 
-        return "salita-listado";
+        return modelo;
     }
 
     @GetMapping("/modificar")

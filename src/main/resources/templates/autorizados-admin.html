@@ -4,58 +4,52 @@
     <head th:replace="/layout :: head"></head>
     <body>
         <header th:replace="/layout :: header"></header>
-        <div class="alert alert-danger" role="alert" th:if="${error != null}"
-             th:text="${error}"></div>
-
         <div class="col-sm-12">
-            <form class="form" id="formulario" method="post" action="">
-
-
+            <form class="form" id="formulario" method="POST" th:action="@{/autorizados/guardar}">
                 <div class="form-group">
                     <label>Nombre: </label> <input type="text" class="form-control"
-                                                   name="nombre" th:value="${autorizados.nombre}" />
+                                                   name="nombre" th:field="*{autorizados.nombre}" th:value="${autorizados.nombre}" />
                 </div>
 
                 <div class="form-group">
                     <label>Apellido: </label> <input type="text" class="form-control"
-                                                     name="apellido" th:value="${autorizados.apellido}" />
+                                                     name="apellido" th:field="*{autorizados.apellido}" th:value="${autorizados.apellido}" />
                 </div>
 
                 <div class="form-group">
                     <label>DNI: </label> <input type="number" class="form-control"
-                                                name="dni" th:value="${autorizados.dni}" />
+                                                name="dni" th:field="*{autorizados.dni}" th:value="${autorizados.dni}" />
                 </div>
 
 
                 <div class="form-group">
                     <label>Parentesco: </label> <input type="text" class="form-control"
-                                                       name="parentesco" th:value="${autorizados.parentesco}" />
+                                                       name="parentesco" th:field="*{autorizados.parentesco}" th:value="${autorizados.parentesco}" />
                 </div>
                 <div class="form-group">
                     <label>Telefono Uno: </label> <input type="text" class="form-control"
-                                                         name="telefono1" th:value="${autorizados.telefono1}" />
+                                                         name="telefono1" th:field="*{autorizados.telefono1}" th:value="${autorizados.telefono1}" />
                 </div>
                 <div class="form-group">
                     <label>Telefono Dos: </label> <input type="text" class="form-control"
-                                                         name="telefono2" th:value="${autorizados.telefono2}" />
+                                                         name="telefono2" th:field="*{autorizados.telefono2}" th:value="${autorizados.telefono2}" />
                 </div>
                 <div class="form-group">
-                    <label>Seleccione alumnos a retirar: </label> 
-                    <input list="browsers" class="form-control" />
-                        <datalist id="browsers" th:each="alumno : ${alumnos}">
-                            <option th:text="${alumno.nombre}" th:value="${alumno.dni}">
-                        </datalist>
-                </div>                
-
-                <button style="float: right; margin: 5px;" type="submit"
-                        class="btn btn-primary" form="formulario"
-                        formaction="/autorizados/guardar" formmethod="POST">Guardar</button>
-                <button style="float: right; margin: 5px;" type="submit"
-                        class="btn btn-danger" form="formulario"
-                        formaction="/autorizados/listarautorizados">Volver</button>
-                <input type="hidden" th:value="${accion}" name="accion"></input>
-            </form>
+                    <label>Seleccione el alumno a retirar: </label> 
+                    <input list="alumnoAutorizado" class="form-control" name="alumnoAutorizado"/>
+                    <datalist id="alumnoAutorizado" th:field="*{autorizados.alumno}">
+                        <option th:each="listadoAlumno : ${listadoAlumnos}" th:text="${listadoAlumno.nombre} + ' ' + ${listadoAlumno.apellido}" th:value="${listadoAlumno.dni}"></option>
+                    </datalist>
+                </div>    
         </div>
-        <footer th:replace="/layout :: footer"> </footer>
+        <input type="submit" style="float: right; margin: 5px;" 
+               class="btn btn-primary" name="guardar" id="guardar" value="Guardar"></button>
+            <button style="float: right; margin: 5px;" type="submit"
+                    class="btn btn-danger" form="formulario"
+                    formaction="/autorizados/listarautorizados">Volver</button>
+            <input type="hidden" th:value="${accion}" name="accion"></input>
+            </form>
+            </div>
+            <footer th:replace="/layout :: footer"> </footer>
     </body>
 </html>
