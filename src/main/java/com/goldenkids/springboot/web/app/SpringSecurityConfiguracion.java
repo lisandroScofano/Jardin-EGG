@@ -39,12 +39,13 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
 //                .antMatchers("/alumno/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
 //                .antMatchers("/salita/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
 //                .antMatchers("/autorizados/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
-                .anyRequest().authenticated()
+                //.anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
                 .permitAll()
                 .and()
                 .logout().permitAll();
+        http.csrf().disable();
     }
 
     @Bean
