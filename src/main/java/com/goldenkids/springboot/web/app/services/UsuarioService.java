@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 import com.goldenkids.springboot.web.app.models.TipoPerfil;
 import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.repository.UsuarioRepositorio;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UsuarioService {
@@ -22,6 +23,9 @@ public class UsuarioService {
 
     @PersistenceContext
     private EntityManager em;
+    
+    @Autowired
+    private BCryptPasswordEncoder passwordEncoder;
 
     @Transactional
     public void crearUsuario(String nombre, String apellido, String password, String mail, String telefono,
@@ -34,7 +38,9 @@ public class UsuarioService {
         usuario.setDni(dni);
         usuario.setMail(mail);
         usuario.setNombreUsuario(nombreUsuario);
-        usuario.setPassword(password);
+        
+        
+        usuario.setPassword(passwordEncoder.encode(password));
         usuario.setTelefono(telefono);
         usuario.setTipoPerfil(tipoPerfil);
 
@@ -58,7 +64,7 @@ public class UsuarioService {
         usuario.setDni(dni);
         usuario.setMail(mail);
         usuario.setNombreUsuario(nombreUsuario);
-        usuario.setPassword(password);
+        usuario.setPassword(passwordEncoder.encode(password));
         usuario.setTelefono(telefono);
         usuario.setTipoPerfil(tipoPerfil);
 

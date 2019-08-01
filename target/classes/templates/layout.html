@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">  
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">  
     <head th:fragment="head">
         <meta charset="UTF-8" />
         <title th:text="${titulo}"></title>
@@ -67,12 +67,13 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <div class="dropdown">
-                                    <a th:href="@{/logout}" class="nav-link">Salir</a>
+                                    <form id="formlogout" th:action="@{/logout}" method="POST">
+                                        <button onclick="document.getElementById('formlogout').submit();" class="nav-link dropdown-item" type="submit">Salir</button>
+                                    </form>
                                    </div>
                                 </div>
                             </li>
                             <nav class="navbar navbar-expand-lg navbar-light">
-
                                 <form class="form-inline my-2 my-lg-0" action="" method="GET">
                                     <input class="form-control mr-sm-2" type="search"
                                            placeholder="Buscar" aria-label="Buscar" name="q"
@@ -99,6 +100,9 @@
         <div th:fragment="successdisplay" name="successdisplay" id="successdisplay" class="alert alert-success" role="success" th:if="${success != null}"
              th:text="${success}"></div>
         <footer th:fragment="footer">
+            <div><span sec:authentication="name"></span></div>
+                        <div>hola</div>
+
             <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
             <script
                 th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"

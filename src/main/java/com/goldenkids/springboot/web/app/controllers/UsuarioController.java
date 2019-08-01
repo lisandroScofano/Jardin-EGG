@@ -24,6 +24,7 @@ import com.goldenkids.springboot.web.app.services.SalitaService;
 import com.goldenkids.springboot.web.app.services.UsuarioService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.security.core.Authentication;
 
 @Controller
 @RequestMapping("/usuario")
@@ -44,7 +45,7 @@ public class UsuarioController {
     Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
     @RequestMapping("/listarusuarios")
-    public String listar(@RequestParam(required = false) String q, Model modelo) {
+    public String listar(@RequestParam(required = false) String q, Model modelo, Authentication authentication) {
 
         modelo.addAttribute("titulo", "Listado de Usuarios: ");
 
@@ -55,6 +56,7 @@ public class UsuarioController {
             usuarios = usuarioServicio.buscarUsuarios();
         }
 
+//        log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
         modelo.addAttribute("q", q);
         modelo.addAttribute("usuarios", usuarios);
         modelo.addAttribute("titulo", "Administracion de Usuarios");
