@@ -102,7 +102,9 @@
         <div th:fragment="successdisplay" name="successdisplay" id="successdisplay" class="alert alert-success" role="success" th:if="${success != null}"
              th:text="${success}"></div>
         <footer th:fragment="footer">
-            <!--            <div><span sec:authentication="name"></span></div>-->
+            <div class="container-fluid p-0">
+                            <div><span class="align-middle alert alert-danger" sec:authentication="name"></span></div>
+            </div>
             <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
             <script
                 th:src="@{https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js}"

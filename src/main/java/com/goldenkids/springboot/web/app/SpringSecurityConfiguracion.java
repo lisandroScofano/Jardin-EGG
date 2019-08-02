@@ -32,13 +32,13 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/","/login", "/css/**", "/js/**", "/images/**", "/usuario/**").permitAll()//a estas paginas accede cualquier persona sin loguearse
-                .antMatchers("/salita/**", "/alumno/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())// aca restringimos el acceso segun el rol
+        http.authorizeRequests().antMatchers("/**","/login", "/css/**", "/js/**", "/images/**", "/usuario/**").permitAll()//a estas paginas accede cualquier persona sin loguearse
+                //.antMatchers("/salita/**", "/alumno/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())// aca restringimos el acceso segun el rol
 //                .antMatchers("/usuario/guardar").permitAll() // aca restringimos el acceso segun el rol
 //                .antMatchers("/alumno/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
 //                .antMatchers("/salita/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
 //                .antMatchers("/autorizados/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
-                .anyRequest().authenticated()
+               // .anyRequest().authenticated()
                 .and()
                 .formLogin().loginPage("/login")
                 .permitAll()
