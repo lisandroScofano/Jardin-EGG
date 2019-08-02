@@ -18,16 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 @Controller
 public class LoginController {
 
-    @GetMapping("/")
-    public String home() {
-        return "redirect:/login";
-    }
 
     @GetMapping("/login")
     public String login(@RequestParam(value = "error", required = false) String error, @RequestParam(value = "logout", required = false) String logout, Model model, Principal principal) {
 
         if (principal != null) {
-            return "redirect:/";//tenemos que tener una direccion raiz distinta del login
+            return "redirect:/usuario/listarusuarios";//tenemos que tener una direccion raiz distinta del login
         }
 
         if (error != null) {

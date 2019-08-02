@@ -26,7 +26,7 @@
                     <td th:text="${usuario.dni}"></td>
                     <td th:text="${usuario.mail}"></td>
                     <td th:text="${usuario.telefono}"></td>
-                    <td th:text="${usuario.tipoPerfil}"></td>
+                    <td th:text="${usuario.rol.perfil}"></td>
                     <td th:text="${#dates.format(usuario.fechaAlta,'dd/MM/YYYY')}"></td>
                     <td><a th:href="@{/usuario/baja(dni=${usuario.dni})}"><i
                                 class="fa fa-window-close"></i></a> - <a

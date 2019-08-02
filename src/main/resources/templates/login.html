@@ -33,6 +33,7 @@
                             <input type="password" class="form-control" placeholder="Contrasena" required name="password" id="password"/>
                         </div>
                         <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
+                        <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>
                     <!--                    <div class="col-12 forgot">
                                             <a href="#">Recordar contrasena?</a>

@@ -1,11 +1,10 @@
 package com.goldenkids.springboot.web.app.models;
 
 import java.util.Date;
-import java.util.List;
+import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
-import javax.persistence.Enumerated;
+
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
@@ -17,10 +16,9 @@ public class Usuario {
     @Id
     private int dni;
 
-    @Enumerated(value = EnumType.STRING)
-    private TipoPerfil tipoPerfil;
-
-    @ManyToOne
+//    @Enumerated(value = EnumType.STRING)
+//    private TipoPerfil tipoPerfil;
+    @ManyToOne(cascade = CascadeType.ALL)
     private Rol rol;
 
     private String nombreUsuario;
@@ -41,23 +39,15 @@ public class Usuario {
     }
 
     public Usuario(int dni, TipoPerfil tipoPerfil, String nombreUsuario, String password, String nombre,
-            String apellido, String mail, String telefono) {
+            String apellido, String mail, String telefono, Rol rol) {
         this.dni = dni;
-        this.tipoPerfil = tipoPerfil;
         this.nombreUsuario = nombreUsuario;
         this.password = password;
         this.nombre = nombre;
         this.apellido = apellido;
         this.mail = mail;
         this.telefono = telefono;
-    }
-
-    public TipoPerfil getTipoPerfil() {
-        return tipoPerfil;
-    }
-
-    public void setTipoPerfil(TipoPerfil tipoPerfil) {
-        this.tipoPerfil = tipoPerfil;
+        this.rol = rol;
     }
 
     public String getNombreUsuario() {

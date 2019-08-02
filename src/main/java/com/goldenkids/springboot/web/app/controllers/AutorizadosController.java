@@ -52,7 +52,7 @@ public class AutorizadosController {
 
     @PostMapping("/guardar")
     public ModelAndView guardar(@RequestParam String nombre, String apellido, String telefono1,
-            String telefono2, int dni, String parentesco, String accion, String error, int alumnoAutorizado) throws Exception {
+            String telefono2, int dni, String parentesco, String accion, String error, Integer alumnoAutorizado) throws Exception {
         ModelAndView modelo = new ModelAndView();
 
         if (accion.equals("crear")) {

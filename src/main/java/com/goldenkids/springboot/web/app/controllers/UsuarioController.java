@@ -1,6 +1,7 @@
 package com.goldenkids.springboot.web.app.controllers;
 
 import com.goldenkids.springboot.web.app.models.Docente;
+import com.goldenkids.springboot.web.app.models.Rol;
 import com.goldenkids.springboot.web.app.models.Salita;
 import com.goldenkids.springboot.web.app.models.TipoDocente;
 import java.util.List;
@@ -18,8 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenkids.springboot.web.app.models.TipoPerfil;
 import com.goldenkids.springboot.web.app.models.Usuario;
-import com.goldenkids.springboot.web.app.repository.UsuarioRepositorio;
 import com.goldenkids.springboot.web.app.services.DocenteService;
+import com.goldenkids.springboot.web.app.services.RolService;
 import com.goldenkids.springboot.web.app.services.SalitaService;
 import com.goldenkids.springboot.web.app.services.UsuarioService;
 import org.slf4j.Logger;
@@ -40,13 +41,16 @@ public class UsuarioController {
     private SalitaService salitaService;
 
     @Autowired
-    private UsuarioRepositorio usuarioRepositorio;
+    private RolService rolService;
 
     Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
     @RequestMapping("/listarusuarios")
     public String listar(@RequestParam(required = false) String q, Model modelo, Authentication authentication) {
 
+        log.info(TipoPerfil.DIRECTIVO.toString());
+        
+        
         modelo.addAttribute("titulo", "Listado de Usuarios: ");
 
         List<Usuario> usuarios;
@@ -55,6 +59,9 @@ public class UsuarioController {
         } else {
             usuarios = usuarioServicio.buscarUsuarios();
         }
+        
+        log.info(usuarios.get(1).getRol().getPerfil().toString());
+        log.info(authentication.getPrincipal().toString());
 
 //        log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
         modelo.addAttribute("q", q);
@@ -94,23 +101,24 @@ public class UsuarioController {
             }
         } else if (accion.equals("modificar")) {
             Usuario usuarioOriginal = usuarioServicio.buscarUsuario(dni);
-            String perfilOriginal = usuarioOriginal.getTipoPerfil().toString();
+            String rolOriginal = usuarioOriginal.getRol().getPerfil().toString();
 
-            if ((perfilOriginal.equals("PADRE")) || (perfilOriginal.equals("DIRECTIVO")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio de padre o directivo a docente
+            if ((rolOriginal.equals("PADRE")) || (rolOriginal.equals("DIRECTIVO")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio de padre o directivo a docente
                 docenteService.modificarNoDocenteADocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
             }
-            if ((perfilOriginal.equals("DOCENTE")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio entre tipos de docente
+            if ((rolOriginal.equals("DOCENTE")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio entre tipos de docente
                 docenteService.modificarTipoDocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
             }
-            if ((perfilOriginal.equals("DOCENTE")) && ((tipoPerfil.toString().equals("PADRE")) || (tipoPerfil.toString().equals("DIRECTIVO")))) {// si cambia de docente a no docente
+            if ((rolOriginal.equals("DOCENTE")) && ((tipoPerfil.toString().equals("PADRE")) || (tipoPerfil.toString().equals("DIRECTIVO")))) {// si cambia de docente a no docente
                 docenteService.modificarDocenteANoDocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
             }
+            
 
             usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);//puede cambiar entre padre y directivo
             modelo.addObject("success", "El usuario ha sido modificado con éxito.");
         }
 
-        List<Usuario> usuarios = usuarioRepositorio.findAll();
+        List<Usuario> usuarios = usuarioServicio.buscarUsuarios();
 
         modelo.addObject("usuarios", usuarios);
         modelo.setViewName("usuario-listado.html");
@@ -123,10 +131,12 @@ public class UsuarioController {
 
         if (dni != null) {
             Usuario usuario = usuarioServicio.buscarUsuario(dni);
+            Rol rol = rolService.buscarRol(usuario.getRol().getId());
+            model.put("rol", rol);
             model.put("usuario", usuario);
             model.put("accion", "modificar");
 // SI el usuario es docente y titular, busco su salita guardada
-            if (usuario.getTipoPerfil().toString().equals("DOCENTE")) {
+            if (usuario.getRol().getPerfil().toString().equals("DOCENTE")) {
                 model.put("docente", docenteService.buscarDocentePorUsuario(usuario));
                 if (docenteService.buscarDocentePorUsuario(usuario).getTipoDocente().toString().equals("TITULAR")) {
                     Salita salitaDocente = salitaService.buscarSalita(docenteService.buscarDocentePorUsuario(usuario).getSalita().getId());
@@ -135,6 +145,7 @@ public class UsuarioController {
             }
             model.put("salitas", salitaService.buscarSalitas());
         } else {
+            model.put("rol", new Rol());
             model.put("usuario", new Usuario());
             model.put("docente", new Docente());
             model.put("accion", "crear");
@@ -148,8 +159,10 @@ public class UsuarioController {
     public String abrirUsuario(ModelMap modelMap) {
 
         Usuario usuario = new Usuario();
+        Rol rol = new Rol();
 
         modelMap.put("usuario", usuario);
+        modelMap.put("rol", rol);
         modelMap.put("docente", new Docente());
         modelMap.put("accion", "crear");
         modelMap.put("salitas", salitaService.buscarSalitas());

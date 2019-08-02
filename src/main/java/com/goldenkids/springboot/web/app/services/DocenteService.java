@@ -90,6 +90,10 @@ public class DocenteService {
             docente.setTipoDocente(tipoDocente);
             docente.setSalita(null);
             docente.setUsuario(usuario);
+        }else if ((tipoDocenteAnterior.toString().equals("TITULAR")) && ((tipoDocente.toString().equals("TITULAR")))) {//si cambia de salita
+            docente.setTipoDocente(tipoDocente);
+            docente.setSalita(salitaService.buscarSalita(salitaId));
+            docente.setUsuario(usuario);
         }
         em.merge(docente);
     }

@@ -1,5 +1,6 @@
 package com.goldenkids.springboot.web.app.services;
 
+import com.goldenkids.springboot.web.app.models.Rol;
 import java.util.Date;
 import java.util.List;
 
@@ -32,6 +33,8 @@ public class UsuarioService {
             String nombreUsuario, int dni, TipoPerfil tipoPerfil) {
 
         Usuario usuario = new Usuario();
+        Rol rol = new Rol();
+        rol.setPerfil(tipoPerfil);
 
         usuario.setApellido(apellido);
         usuario.setNombre(nombre);
@@ -42,7 +45,7 @@ public class UsuarioService {
         
         usuario.setPassword(passwordEncoder.encode(password));
         usuario.setTelefono(telefono);
-        usuario.setTipoPerfil(tipoPerfil);
+        usuario.setRol(rol);
 
         usuario.setFechaAlta(new Date());
         usuario.setFechaBaja(null);
@@ -58,7 +61,9 @@ public class UsuarioService {
             String nombreUsuario, int dni, TipoPerfil tipoPerfil) {
 
         Usuario usuario = new Usuario();
-
+        Rol rol = new Rol();
+        rol.setPerfil(tipoPerfil);
+        
         usuario.setApellido(apellido);
         usuario.setNombre(nombre);
         usuario.setDni(dni);
@@ -66,7 +71,7 @@ public class UsuarioService {
         usuario.setNombreUsuario(nombreUsuario);
         usuario.setPassword(passwordEncoder.encode(password));
         usuario.setTelefono(telefono);
-        usuario.setTipoPerfil(tipoPerfil);
+        usuario.setRol(rol);
 
         usuario.setFechaAlta(new Date());
         usuario.setFechaBaja(null);
