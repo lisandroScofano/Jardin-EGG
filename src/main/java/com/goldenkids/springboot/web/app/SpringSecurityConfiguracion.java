@@ -32,25 +32,23 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http.authorizeRequests().antMatchers("/**","/login", "/css/**", "/js/**", "/images/**", "/usuario/**").permitAll()//a estas paginas accede cualquier persona sin loguearse
-                //.antMatchers("/salita/**", "/alumno/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())// aca restringimos el acceso segun el rol
-//                .antMatchers("/usuario/guardar").permitAll() // aca restringimos el acceso segun el rol
-//                .antMatchers("/alumno/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
-//                .antMatchers("/salita/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
-//                .antMatchers("/autorizados/**").hasAnyRole(TipoPerfil.DIRECTIVO.toString())
-               // .anyRequest().authenticated()
+        http.authorizeRequests()
+                .antMatchers("/js/**", "/css/**", "/images/**").permitAll()
+                .antMatchers("/salita/**").
+                .anyRequest().authenticated()
                 .and()
-                .formLogin().loginPage("/login")
-                .permitAll()
+                    .formLogin()
+                    .loginPage("/login").permitAll()
                 .and()
-                .logout().permitAll();
+                    .logout()
+                    .logoutSuccessUrl("/login");
+                
     }
 
     @Bean
     public BCryptPasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
-
 
     @Autowired
     public void configurerGlobal(AuthenticationManagerBuilder builder) throws Exception {
@@ -59,7 +57,7 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
                 .passwordEncoder(passwordEncoder());
 
         PasswordEncoder encoder = passwordEncoder();
-        
+
         UserBuilder users = User.builder().passwordEncoder(encoder::encode);
 
         builder.inMemoryAuthentication()

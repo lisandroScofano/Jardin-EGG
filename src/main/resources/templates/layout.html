@@ -7,7 +7,12 @@
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
         <link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />   
         <link rel="stylesheet" th:href="@{/css/style.css}" />
-        <!--        <link rel="stylesheet" th:href="@{/css/bootstrap.css}" />-->
+        <link rel="stylesheet" th:href="@{/css/footer.css}" />
+        <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+              integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous" />
+        <link href="https://fonts.googleapis.com/css?family=Acme|Lobster|Patua+One|Rubik|Sniglet&display=swap"
+              rel="stylesheet" />
+        <script src="https://kit.fontawesome.com/d2c247949d.js"></script>
     </head>
     <body>
         <header th:fragment="header">
@@ -103,7 +108,30 @@
              th:text="${success}"></div>
         <footer th:fragment="footer">
             <div class="container-fluid p-0">
-                            <div><span class="align-middle alert alert-danger" sec:authentication="name"></span></div>
+                <div class="row text-left">
+
+                    <div class="col-md-5 col-md-5">
+                        <h1 class="text-light">Sobre Nosotros</h1>
+                        <p class="text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam ipsa aut.
+                        </p>
+                        <p class="pt-4 text">
+                            Copyright &copy;2019 Todos los derechos reservados | Esta Plantilla ha sido creada por
+                            <span>Golden Kids</span>
+                        </p>
+                    </div>
+                    <div class="col-md-5">
+                    </div>
+                    <div class="col-md-2 col-sm-12">
+                        <h4 class="text-light">Seguinos</h4>
+                        <p class="text">Dejanos ser Sociables</p>
+                        <div class="column ">
+                            <i class="fab fa-facebook-f"></i>
+                            <i class="fab fa-instagram"></i>
+                            <i class="fab fa-twitter"></i>
+                            <i class="fab fa-youtube"></i>
+                        </div>
+                    </div>
+                </div>
             </div>
             <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
             <script
@@ -112,5 +140,6 @@
                 crossorigin="anonymous">
             </script>
             <script th:src="@{/js/bootstrap.min.js}"></script>
+        </footer>
     </body>
 </html>

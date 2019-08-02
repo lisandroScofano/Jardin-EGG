@@ -1,0 +1,43 @@
+footer {
+    background: #ffff;
+    background: var(--bggradient);
+    overflow-x: hidden;
+    padding: 14vmin 18vmin;
+}
+
+.text {
+    color: darkgrey;
+}
+
+footer p>span {
+    color: white;
+}
+
+footer input {
+    border: none !important;
+}
+
+footer input::placeholder {
+    color: white !important;
+}
+
+footer .input-group .input-group-text {
+    background: var(--bggradient);
+    border: none
+}
+
+footer .column i {
+    color: white;
+}
+
+footer .column i+i {
+    padding: 0 0.5em;
+}
+
+:root {
+    --Sniglet-font: "Sniglet", cursive;
+    --Rubik: "Rubik", cursive;
+    --Patua: "Patua One", cursive;
+    --Lobster: "lobster", cursive;
+    --bggradient: linear-gradient(to bottom, #373b44, #4286f4);
+}

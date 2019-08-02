@@ -60,8 +60,8 @@ public class UsuarioController {
             usuarios = usuarioServicio.buscarUsuarios();
         }
         
-        log.info(usuarios.get(1).getRol().getPerfil().toString());
-        log.info(authentication.getPrincipal().toString());
+        //log.info(usuarios.get(1).getRol().getPerfil().toString());
+       // log.info(authentication.getPrincipal().toString());
 
 //        log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
         modelo.addAttribute("q", q);

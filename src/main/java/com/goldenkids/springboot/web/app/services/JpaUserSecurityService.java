@@ -37,7 +37,7 @@ public class JpaUserSecurityService implements UserDetailsService {
     @Transactional(readOnly = true)
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 
-        Usuario usuario = usuarioRepositorio.buscarUsuarioPorNombre(username);
+        Usuario usuario = usuarioRepositorio.buscarUsuarioPorNombre(username);//agregar filtro con fecha no nula
 
         if (usuario == null) {
             log.error("Error en el Login: no existe el usuario '" + username + "' en el sistema!");
