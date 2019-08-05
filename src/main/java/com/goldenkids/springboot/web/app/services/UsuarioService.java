@@ -24,7 +24,7 @@ public class UsuarioService {
 
     @PersistenceContext
     private EntityManager em;
-    
+
     @Autowired
     private BCryptPasswordEncoder passwordEncoder;
 
@@ -41,8 +41,7 @@ public class UsuarioService {
         usuario.setDni(dni);
         usuario.setMail(mail);
         usuario.setNombreUsuario(nombreUsuario);
-        
-        
+
         usuario.setPassword(passwordEncoder.encode(password));
         usuario.setTelefono(telefono);
         usuario.setRol(rol);
@@ -63,7 +62,7 @@ public class UsuarioService {
         Usuario usuario = new Usuario();
         Rol rol = new Rol();
         rol.setPerfil(tipoPerfil);
-        
+
         usuario.setApellido(apellido);
         usuario.setNombre(nombre);
         usuario.setDni(dni);
@@ -105,9 +104,16 @@ public class UsuarioService {
                 .setParameter("q", "%" + q + "%").getResultList();
     }
 
+
     @SuppressWarnings("unchecked")
     public List<Usuario> buscarUsuarios() {
         return em.createQuery("SELECT c FROM Usuario c WHERE c.fechaBaja is null").getResultList();
+    }
+
+    public Usuario buscarUsuarioPorUserName(String user) {
+        Usuario usuario = (Usuario) em.createQuery("SELECT c FROM Usuario c WHERE c.nombreUsuario = :user")
+                .setParameter("user", user).getResultList().stream().findFirst().orElse(null);
+        return usuario;
     }
 
     @SuppressWarnings("unchecked")

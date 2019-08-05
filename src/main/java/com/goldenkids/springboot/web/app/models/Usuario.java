@@ -2,6 +2,7 @@ package com.goldenkids.springboot.web.app.models;
 
 import java.util.Date;
 import javax.persistence.CascadeType;
+import javax.persistence.Column;
 
 import javax.persistence.Entity;
 
@@ -20,7 +21,7 @@ public class Usuario {
 //    private TipoPerfil tipoPerfil;
     @ManyToOne(cascade = CascadeType.ALL)
     private Rol rol;
-
+    @Column(unique = true)
     private String nombreUsuario;
     private String password;
 

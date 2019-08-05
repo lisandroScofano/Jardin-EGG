@@ -20,12 +20,14 @@
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Inscripcion.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/TipoPanial.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/GoldenKidsApplication.java
+/Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/InscripcionService.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Autorizados.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/AutorizadosService.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/ActividadesController.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/repository/UsuarioRepositorio.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Alumno.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/TipoCantidad.java
+/Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/InscripcionController.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/LoginController.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Rol.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Actividad.java

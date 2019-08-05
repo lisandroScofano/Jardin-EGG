@@ -41,6 +41,10 @@ public class SalitaController {
 
         model.addAttribute("salitas", salitas);
         model.addAttribute("q", q);
+        model.addAttribute("pagina", "Salita");
+
+        model.addAttribute("tituloPagina", "Administración de Salitas");
+        model.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Salitas del jardin.");
 
         return "salita-listado";
     }
@@ -79,10 +83,12 @@ public class SalitaController {
             model.put("salita", salita);
             model.put("accion", "modificar");
             model.put("salitas", salitaService);
+            model.put("tituloPagina", "Registro de Salitas");
         } else {
             model.put("salita", new Salita());
             model.put("accion", "modificar");
             model.put("salitas", salitaService);
+            model.put("tituloPagina", "Registro de Salitas");
         }
 
         return "salita-admin";
@@ -96,6 +102,7 @@ public class SalitaController {
         modelMap.put("salita", salita);
         modelMap.put("accion", "crear");
         modelMap.put("salitas", salitaService.buscarSalitas());
+        modelMap.put("tituloPagina", "Registro de Salitas");
 
         return "salita-admin";
     }

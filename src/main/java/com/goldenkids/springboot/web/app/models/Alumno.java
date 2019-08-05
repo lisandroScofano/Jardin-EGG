@@ -25,6 +25,8 @@ public class Alumno {
 //    private List<Usuario> contacto;
     @ManyToOne
     private Salita salita;
+    
+    private String foto;
 
 
 
@@ -78,10 +80,20 @@ public class Alumno {
         this.fechaBaja = fechaBaja;
     }
 
+    public String getFoto() {
+        return foto;
+    }
+
+    public void setFoto(String foto) {
+        this.foto = foto;
+    }
+
     @Override
     public String toString() {
-        return "Alumno{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento + ", fechaBaja=" + fechaBaja + ", salita=" + salita + '}';
+        return "Alumno{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento + ", fechaBaja=" + fechaBaja + ", salita=" + salita + ", foto=" + foto + '}';
     }
+    
+
 
     
 }

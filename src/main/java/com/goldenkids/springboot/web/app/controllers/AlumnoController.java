@@ -16,19 +16,33 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenkids.springboot.web.app.models.Alumno;
-import com.goldenkids.springboot.web.app.repository.AlumnoRepositorio;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
 import com.goldenkids.springboot.web.app.services.SalitaService;
+import com.goldenkids.springboot.web.app.services.UploadService;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.UUID;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.multipart.MultipartFile;
 
 @Controller
 @RequestMapping("/alumno")
 public class AlumnoController {
+
+    org.slf4j.Logger log = LoggerFactory.getLogger(AlumnoController.class);
 
     @Autowired
     private SalitaService salitaService;
 
     @Autowired
     private AlumnoService alumnoServicio;
+
+    @Autowired
+    private UploadService uploadService;
 
     @RequestMapping("/listaralumnos")
     public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
@@ -42,6 +56,9 @@ public class AlumnoController {
 
         modelo.addAttribute("alumnos", alumnos);
         modelo.addAttribute("q", q);
+        modelo.addAttribute("pagina", "Alumnos");
+        modelo.addAttribute("tituloPagina", "Administración de Alumnos");
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Alumnos del jardin.");
 
         return "alumno-listado";
     }
@@ -54,21 +71,24 @@ public class AlumnoController {
         List<Alumno> alumnosEliminados = alumnoServicio.buscarAlumnosEliminados();
 
         modelo.addAttribute("alumnos", alumnosEliminados);
-        modelo.addAttribute("titulo", "Administracion de Alumnos");
+        modelo.addAttribute("tituloPagina", "Administración de Alumnos");
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Alumnos del jardin.");
 
         return "alumno-listado";
     }
 
     @PostMapping("/guardar")
     public ModelAndView guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
-            @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) Date fechaNacimiento, String accion, String selectSalitaId) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaNacimiento, String accion, String selectSalitaId, MultipartFile file) {
         ModelAndView modelo = new ModelAndView();
 
+        String uniqueFileName = uploadService.cargarArchivo(file);//cargo el archivo a la carpeta y devuelvo el nombre del archivo para persistir en la BD
+
         if (accion.equals("crear")) {
-            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId);
+            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, uniqueFileName);
             modelo.addObject("success", "El Alumno ha sido creado con éxito.");
         } else if (accion.equals("modificar")) {
-            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId);
+            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, uniqueFileName);
             modelo.addObject("success", "El Alumno ha sido modificado con éxito.");
         }
 
@@ -106,6 +126,7 @@ public class AlumnoController {
         modelMap.put("alumno", alumno);
         modelMap.put("accion", "crear");
         modelMap.put("salitas", salitaService.buscarSalitas());
+        modelMap.put("tituloPagina", "Registro de Alumnos");
 
         return "alumno-admin";
 

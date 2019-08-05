@@ -45,6 +45,7 @@ public class AutorizadosController {
         modelo.addAttribute("autorizados", autorizados);
         modelo.addAttribute("accion", "crear");
         modelo.addAttribute("listadoAlumnos", alumnoService.buscarAlumnos());
+        modelo.addAttribute("tituloPagina", "Registro de Autorizados");
 
         return "autorizados-admin";
 
@@ -120,6 +121,9 @@ public class AutorizadosController {
         modelo.addAttribute("error", error);
         modelo.addAttribute("q", q);
         modelo.addAttribute("autorizados", autorizados);
+        modelo.addAttribute("pagina", "Autorizados");
+        modelo.addAttribute("tituloPagina", "Administración de Autorizados");
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Autorizados del jardin.");
 
         return "autorizados-lista";
     }
@@ -132,7 +136,8 @@ public class AutorizadosController {
         List<Autorizados> autorizadosEliminados = autorizadosServicio.buscarAutorizadosEliminados();
 
         modelo.addAttribute("autorizados", autorizadosEliminados);
-        modelo.addAttribute("titulo", "Administracion de Autorizados");
+        modelo.addAttribute("tituloPagina", "Administración de Autorizados");
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Autorizados del jardin.");
 
         return "autorizados-lista";
     }

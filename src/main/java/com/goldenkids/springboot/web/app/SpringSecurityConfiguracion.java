@@ -33,16 +33,24 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http.authorizeRequests()
-                .antMatchers("/js/**", "/css/**", "/images/**").permitAll()
-                .antMatchers("/salita/**").
+                .antMatchers("/js/**", "/css/**", "/images/**", "/inicio").permitAll()
+                .antMatchers("/usuario/**").hasAuthority("DIRECTIVO")
+                .antMatchers("/alumno/**").hasAuthority("DIRECTIVO")
+                .antMatchers("/salita/**").hasAuthority("DIRECTIVO")
+                .antMatchers("/autorizados/**").hasAuthority("DIRECTIVO")
+                .antMatchers("/inscripciones/**").hasAuthority("DIRECTIVO")
+                .antMatchers("/actividad/**").hasAnyAuthority("DIRECTIVO", "PADRE", "DOCENTE")//ver bien las vistas de padre y docente para restringirlas
+                .antMatchers("/salita/**").hasAuthority("DIRECTIVO")
                 .anyRequest().authenticated()
                 .and()
-                    .formLogin()
-                    .loginPage("/login").permitAll()
+                .formLogin()
+                .loginPage("/login").permitAll()
                 .and()
-                    .logout()
-                    .logoutSuccessUrl("/login");
-                
+                .logout().permitAll()
+                .logoutSuccessUrl("/login")
+                .and()
+                .exceptionHandling().accessDeniedPage("/error_403");
+
     }
 
     @Bean

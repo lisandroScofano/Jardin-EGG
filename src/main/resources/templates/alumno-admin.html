@@ -5,7 +5,7 @@
     <body>
         <header th:replace="/layout :: header"></header>
         <div class="col-sm-12">
-            <form class="form" id="formulario" method="post" action="">
+            <form class="form" id="formulario" method="post" action="" enctype="multipart/form-data">
 
 
                 <div class="form-group">
@@ -36,6 +36,12 @@
                         <option th:each="salitaLoop : ${salitas}" th:value="${salitaLoop.id}"
                                 th:text="${salitaLoop.nombre}"></option>
                     </select>
+                </div>
+                <div class="form-group">
+                    <label for="file">Foto: </label> <input type="file" class="form-control" name="file" />
+                </div>
+                <div class="form-group">
+                    <img th:if="${alumno.foto !=null}" class="img-thumbnail rounded" style="max-width: 25%;" th:src="@{'/uploads/' + ${alumno.foto}}" th:alt="${alumno.foto}" />
                 </div>
                 <button style="float: right; margin: 5px;" type="submit"
                         class="btn btn-primary" form="formulario"

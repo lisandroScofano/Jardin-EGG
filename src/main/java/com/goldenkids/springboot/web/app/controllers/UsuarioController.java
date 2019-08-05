@@ -49,9 +49,6 @@ public class UsuarioController {
     public String listar(@RequestParam(required = false) String q, Model modelo, Authentication authentication) {
 
         log.info(TipoPerfil.DIRECTIVO.toString());
-        
-        
-        modelo.addAttribute("titulo", "Listado de Usuarios: ");
 
         List<Usuario> usuarios;
         if (q != null) {
@@ -59,14 +56,15 @@ public class UsuarioController {
         } else {
             usuarios = usuarioServicio.buscarUsuarios();
         }
-        
-        //log.info(usuarios.get(1).getRol().getPerfil().toString());
-       // log.info(authentication.getPrincipal().toString());
 
-//        log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
+        //log.info(usuarios.get(1).getRol().getPerfil().toString());
+        // log.info(authentication.getPrincipal().toString());
+        log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
         modelo.addAttribute("q", q);
         modelo.addAttribute("usuarios", usuarios);
         modelo.addAttribute("titulo", "Administracion de Usuarios");
+        modelo.addAttribute("tituloPagina", "Administración de Usuarios");
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Usuarios del jardin.");
 
         return "usuario-listado";
     }
@@ -80,6 +78,8 @@ public class UsuarioController {
 
         modelo.addAttribute("usuarios", usuariosEliminados);
         modelo.addAttribute("titulo", "Administracion de Usuarios");
+        modelo.addAttribute("tituloPagina", "Administración de Usuarios");
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Usuarios del jardin.");
 
         return "usuario-listado";
     }
@@ -112,7 +112,6 @@ public class UsuarioController {
             if ((rolOriginal.equals("DOCENTE")) && ((tipoPerfil.toString().equals("PADRE")) || (tipoPerfil.toString().equals("DIRECTIVO")))) {// si cambia de docente a no docente
                 docenteService.modificarDocenteANoDocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
             }
-            
 
             usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);//puede cambiar entre padre y directivo
             modelo.addObject("success", "El usuario ha sido modificado con éxito.");
@@ -166,6 +165,7 @@ public class UsuarioController {
         modelMap.put("docente", new Docente());
         modelMap.put("accion", "crear");
         modelMap.put("salitas", salitaService.buscarSalitas());
+        modelMap.put("tituloPagina", "Registro de Usuarios");
 
         return "usuario-admin";
 
