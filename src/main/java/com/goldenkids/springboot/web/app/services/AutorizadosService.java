@@ -54,7 +54,7 @@ public class AutorizadosService {
     public void modificarAutorizados(String nombre, String apellido, String telefono1, String telefono2, int dni,
             String parentesco, String error, int alumno) {
 
-        Autorizados autorizados = new Autorizados();
+        Autorizados autorizados = buscarAutorizados(dni);
 
         autorizados.setApellido(apellido);
         autorizados.setNombre(nombre);
