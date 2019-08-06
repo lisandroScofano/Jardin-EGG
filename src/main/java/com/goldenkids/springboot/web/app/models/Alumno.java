@@ -1,10 +1,12 @@
 package com.goldenkids.springboot.web.app.models;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 
@@ -21,8 +23,8 @@ public class Alumno {
     private Date fechaNacimiento;
     @Temporal(TemporalType.DATE)
     private Date fechaBaja;
-//    @ManyToMany
-//    private List<Usuario> contacto;
+    @OneToOne
+    private List<Usuario> contacto;
     @ManyToOne
     private Salita salita;
     
@@ -87,6 +89,16 @@ public class Alumno {
     public void setFoto(String foto) {
         this.foto = foto;
     }
+
+    public List<Usuario> getContacto() {
+        return contacto;
+    }
+
+    public void setContacto(List<Usuario> contacto) {
+        this.contacto = contacto;
+    }
+    
+    
 
     @Override
     public String toString() {

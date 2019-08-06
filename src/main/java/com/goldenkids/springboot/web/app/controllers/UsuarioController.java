@@ -103,7 +103,10 @@ public class UsuarioController {
             Usuario usuarioOriginal = usuarioServicio.buscarUsuario(dni);
             String rolOriginal = usuarioOriginal.getRol().getPerfil().toString();
 
-            if ((rolOriginal.equals("PADRE")) || (rolOriginal.equals("DIRECTIVO")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio de padre o directivo a docente
+            log.info("El Perfil original es: " + rolOriginal);
+            log.info("El nuevo perfil es: " + tipoPerfil.toString());
+            
+            if (((rolOriginal.equals("PADRE")) || (rolOriginal.equals("DIRECTIVO"))) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio de padre o directivo a docente
                 docenteService.modificarNoDocenteADocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
             }
             if ((rolOriginal.equals("DOCENTE")) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio entre tipos de docente

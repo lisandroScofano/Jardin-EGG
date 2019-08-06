@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org" lang="es">
+<head>
+<meta charset="UTF-8" />
+<title th:text="${titulo}"></title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+	    <script src="https://kit.fontawesome.com/d2c247949d.js"></script>
+	
+	
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/style.css}" />
+<link rel="stylesheet" th:href="@{/css/footer.css}" />
+<title>Insert title here</title>
+</head>
+<body>
+
+	<header th:fragment="header">
+		<div class="container-fluid p-0">
+			<nav class="navbar navbar-expand-lg">
+				<a class="navbar-brand" href="#"><img
+					th:src="@{/images/logo.png}" alt="Golden Kids" height="130px"
+					width="170px">
+				</a>
+				<button class="navbar-toggler" type="button" data-toggle="collapse"
+					data-target="#navbarNav" aria-controls="navbarNav"
+					aria-expanded="false" aria-label="Toggle navigation">
+					<i class="fas fa-align-right"></i>
+				</button>
+
+				<div class="dropdown">
+					<form id="formlogout" th:action="@{/logout}" method="POST">
+						<button onclick="document.getElementById('formlogout').submit();"
+							class="nav-link dropdown-item" type="submit">Salir</button>
+					</form>
+				</div>
+			</nav>
+
+		</div>
+
+
+
+		<div class="jumbotron">
+			<h1 class="display-4">Bienvenido a la administracion de
+				actividades!</h1>
+			<p class="lead">Utilice este modulo para ver las actuvudades de
+				su hijo en el jardin.</p>
+			<hr class="my-4">
+		</div>
+	</header>
+
+
+
+	<table class="table">
+		<thead class="thead-dark">
+			<tr>
+				<th>Nombre</th>
+				<th>Apellido</th>
+				<th>DNI</th>
+				<th>Fecha de Nacimiento</th>
+				<th>Salita</th>
+				<th>Acciones</th>
+			</tr>
+		</thead>
+		<tbody>
+			<tr th:each="alumno : ${alumnos}">
+				<td th:text="${alumno.nombre}"></td>
+				<td th:text="${alumno.apellido}"></td>
+				<td th:text="${alumno.dni}"></td>
+				<td th:text="${#dates.format(alumno.fechaNacimiento,'dd/MM/YYYY')}"></td>
+				<td th:text="${alumno.salita}"></td>
+				<td><a th:href="@{/padre/actividades(dni=${alumno.dni})}">Ver Actividades <i
+                                class="far fa-eye"></i></a>
+
+			</tr>
+		</tbody>
+
+	</table>
+
+
+
+	<footer>
+
+		<div class="container-fluid p-0">
+			<div class="row text-left">
+
+				<div class="col-md-5 col-md-5">
+					<h1 class="text-light">Sobre Nosotros</h1>
+					<p class="text">Lorem ipsum dolor sit amet consectetur,
+						adipisicing elit. Ullam ipsa aut.</p>
+					<p class="pt-4 text">
+						Copyright &copy;2019 Todos los derechos reservados | Esta
+						Plantilla ha sido creada por <span>Golden Kids</span>
+					</p>
+
+				</div>
+				<div class="col-md-5"></div>
+				<div class="col-md-2 col-sm-12">
+					<h4 class="text-light">Seguinos</h4>
+					<p class="text">Dejanos ser Sociables</p>
+					<div class="column ">
+						<i class="fab fa-facebook-f"></i> <i class="fab fa-instagram"></i>
+						<i class="fab fa-twitter"></i> <i class="fab fa-youtube"></i>
+					</div>
+				</div>
+
+			</div>
+		</div>
+
+	</footer>
+
+
+
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+	integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+	crossorigin="anonymous"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+	integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+	crossorigin="anonymous"></script>
+<script
+	src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+	integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+	crossorigin="anonymous"></script>
+</html>
