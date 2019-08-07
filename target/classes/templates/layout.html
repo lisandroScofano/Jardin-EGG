@@ -81,9 +81,8 @@
                                 <div class="dropdown">
                                     <a th:href="@{/actividades/tipousuario}" class="nav-link">Actividades</a>
                                     <div class="dropdown-content">
-<!--                                        <a th:href="@{#}">Ver Actividades</a>
-                                        <a th:href="@{#}">Crear Actividades</a> 
-                                    </div>-->
+                                        <a sec:authorize="hasAuthority('DIRECTIVO')" th:href="@{/actividades/directivo/cargar}">Cargar Actividades</a>
+                                    </div>
                                 </div>
                             </li>
                             <li class="nav-item dropdown">

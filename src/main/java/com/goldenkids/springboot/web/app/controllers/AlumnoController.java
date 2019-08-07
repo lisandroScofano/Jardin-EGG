@@ -16,16 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenkids.springboot.web.app.models.Alumno;
+import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
+import com.goldenkids.springboot.web.app.services.PadreService;
 import com.goldenkids.springboot.web.app.services.SalitaService;
 import com.goldenkids.springboot.web.app.services.UploadService;
-import java.io.IOException;
-import java.nio.file.Files;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.UUID;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import java.util.ArrayList;
+
 import org.slf4j.LoggerFactory;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -43,6 +40,9 @@ public class AlumnoController {
 
     @Autowired
     private UploadService uploadService;
+
+    @Autowired
+    private PadreService padreService;
 
     @RequestMapping("/listaralumnos")
     public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
@@ -79,16 +79,16 @@ public class AlumnoController {
 
     @PostMapping("/guardar")
     public ModelAndView guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
-            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaNacimiento, String accion, String selectSalitaId, MultipartFile file) {
+            @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaNacimiento, String accion, String selectSalitaId, Integer selectPadreDni, MultipartFile file) {
         ModelAndView modelo = new ModelAndView();
 
         String uniqueFileName = uploadService.cargarArchivo(file);//cargo el archivo a la carpeta y devuelvo el nombre del archivo para persistir en la BD
 
         if (accion.equals("crear")) {
-            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, uniqueFileName);
+            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, selectPadreDni, uniqueFileName);
             modelo.addObject("success", "El Alumno ha sido creado con éxito.");
         } else if (accion.equals("modificar")) {
-            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, uniqueFileName);
+            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, selectPadreDni, uniqueFileName);
             modelo.addObject("success", "El Alumno ha sido modificado con éxito.");
         }
 
@@ -103,14 +103,18 @@ public class AlumnoController {
     @GetMapping("/modificar")
     public String modificar(@RequestParam Integer dni, ModelMap model) {
 
+        List<Usuario> padres = padreService.buscarPadres();
+
         if (dni != null) {
             Alumno alumno = alumnoServicio.buscarAlumno(dni);
             model.put("alumno", alumno);
             model.put("accion", "modificar");
             model.put("salitas", salitaService.buscarSalitas());
             model.put("salitaActual", alumno.getSalita());
+            model.put("padres", padres);
         } else {
             model.put("alumno", new Alumno());
+            model.put("padres", padres);
             model.put("accion", "crear");
             model.put("salitas", salitaService.buscarSalitas());
         }
@@ -123,8 +127,11 @@ public class AlumnoController {
 
         Alumno alumno = new Alumno();
 
+        List<Usuario> padres = padreService.buscarPadres();
+
         modelMap.put("alumno", alumno);
         modelMap.put("accion", "crear");
+        modelMap.put("padres", padres);
         modelMap.put("salitas", salitaService.buscarSalitas());
         modelMap.put("tituloPagina", "Registro de Alumnos");
 

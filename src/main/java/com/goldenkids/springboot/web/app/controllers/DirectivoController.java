@@ -16,6 +16,7 @@ import com.goldenkids.springboot.web.app.services.UsuarioService;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 @RequestMapping("actividades")
@@ -38,6 +39,22 @@ public class DirectivoController {
         modelo.addAttribute("tituloPagina", "Informacion relativa a los alumnos");
 
         return "padre-vista";
+    }
+
+    @GetMapping("directivo/cargar")
+    public String cargarActividades(Model modelo, @RequestParam(required = false) String q) {
+
+        List<Alumno> alumnos = null;
+        if (q != null) {
+            alumnos = alumnoService.buscarAlumnos(q);
+        } else {
+            alumnos = alumnoService.buscarAlumnos();
+        }
+
+        modelo.addAttribute("alumnos", alumnos);
+        modelo.addAttribute("tituloPagina", "Cargar Actividades a los alumnos");
+
+        return "actividades-sala";
     }
 
 }
