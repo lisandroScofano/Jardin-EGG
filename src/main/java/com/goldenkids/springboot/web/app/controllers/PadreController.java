@@ -1,45 +1,74 @@
 package com.goldenkids.springboot.web.app.controllers;
 
+import com.goldenkids.springboot.web.app.models.Actividad;
+import com.goldenkids.springboot.web.app.models.Alumno;
+import com.goldenkids.springboot.web.app.models.Usuario;
+import com.goldenkids.springboot.web.app.services.ActividadService;
+import com.goldenkids.springboot.web.app.services.AlumnoService;
 import java.util.List;
 
 import javax.persistence.Query;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
-import com.goldenkids.springboot.web.app.models.Alumno;
 import com.goldenkids.springboot.web.app.services.PadreService;
+import com.goldenkids.springboot.web.app.services.UsuarioService;
+import java.util.Date;
+import org.springframework.security.core.Authentication;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
-@RequestMapping("/padre")
+@RequestMapping("actividades")
 public class PadreController {
 
-	@Autowired
-	private PadreService padreServicio;
+    @Autowired
+    private PadreService padreServicio;
 
-	@RequestMapping({ "/", "" })
-	public String bienvenida(@RequestParam(required = true) String q, ModelMap modelMap) {
+    @Autowired
+    private UsuarioService usuarioService;
 
-		ModelAndView model = new ModelAndView();
-		
-		Query alumnos;
-		
-		try {
-			alumnos = padreServicio.buscarHijo(q);
-			modelMap.addAttribute("alumnos", alumnos);
-		} catch (Exception e) {
-		}
-		
-		String error = "Error al buscar el alumno";
-		
-		model.addObject("error", error);
-		
+    @Autowired
+    private ActividadService actividadService;
 
-		return "padre-vista";
-	}
+    @Autowired
+    private AlumnoService alumnoService;
+
+    @GetMapping("/padre")
+    public String bienvenida(Model modelo, Authentication authenticated) {
+
+        Usuario usuario = usuarioService.buscarUsuarioPorUserName(authenticated.getName());
+
+        List<Alumno> hijos = padreServicio.buscarHijos(usuario);
+
+        modelo.addAttribute("hijos", hijos);
+        modelo.addAttribute("tituloPagina", "Informacion relativa a sus hijos");
+
+        return "padre-vista";
+    }
+
+    @GetMapping("/padre/detalle")
+    public String verDetalle(@RequestParam(required = true) Integer dni, @RequestParam(required = false) Date fechaSolicitada, Model modelo, Authentication authenticated) {
+
+//        Date fecha = null;
+//
+//        if (fechaSolicitada != null) {
+//            fecha = fechaSolicitada;
+//        } else {
+//            fecha = new Date();
+//        }
+
+        Alumno alumno = alumnoService.buscarAlumno(dni);
+
+        List<Actividad> actividades = actividadService.buscarActividadesPorAlumno(alumno);
+        
+        modelo.addAttribute("actividades", actividades);
+        modelo.addAttribute("tituloPagina", "Informacion relativa a sus hijos");
+
+        return "detalle-alumno";
+    }
 
 }

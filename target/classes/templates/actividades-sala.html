@@ -5,18 +5,7 @@
         <header th:replace="/layout :: header"></header>
         <div th:replace="/layout :: errordisplay"></div>
         <div th:replace="/layout :: successdisplay"></div>
-
         <div class="container">
-            <!--            <nav class="navbar navbar-expand-lg navbar-light">
-                            <form class="form-inline my-2 my-lg-0" action="" method="GET">
-                                <input class="form-control mr-sm-2" type="search"
-                                       placeholder="DNI docente" aria-label="DNI docente" name="q"
-                                       th:value="${q}">
-                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">
-                                        DNI docente <i class="fa fa-search"></i>
-                                    </button>
-                            </form>
-                        </nav>-->
             <div class="col-md-8">
                 <table class="table">
                     <thead class="thead-dark">
@@ -30,7 +19,7 @@
                                 <div class="card mb-2">
                                     <div class="row no-gutters">
                                         <div class="col-md-2">
-                                            <img th:if="${alumno.foto !=null}" class="card-img rounded" th:src="@{'/uploads/' + ${alumno.foto}}" th:alt="${alumno.foto}" />
+                                            <a th:href="@{'actividades/docente/alumno?dni=' + ${alumno.dni}}"><img th:if="${alumno.foto !=null}" class="card-img rounded" th:src="@{'/uploads/' + ${alumno.foto}}" th:alt="${alumno.foto}" /></a>
                                         </div>
                                         <div class="col-md-10">
                                             <div class="card-body">
@@ -61,12 +50,6 @@
                                                     <a href="#" data-toggle="modal" th:data-target="'#comidas' + ${alumno.dni}"><img
                                                             th:src="@{/Iconos/comida.png}" alt="comida"
                                                             style="width: 50px; height: 50px; margin-right: 10px;" /></a>
-
-                                                    <!-- 												<a class="eBtn"><img  -->
-                                                    <!-- 													th:src="@{/Iconos/comida.png}" alt="comida" -->
-                                                    <!-- 													style="width: 50px; height: 50px; margin-right: 10px;" /> -->
-                                                    <!-- 												</a> -->
-
                                                     <div class="modal fade" th:id="'comidas' + ${alumno.dni}" tabindex="-1"
                                                          role="dialog" aria-labelledby="exampleModalLabel"
                                                          aria-hidden="true">
@@ -209,7 +192,7 @@
                                                                            role="button">Pis</a> <a class="btn btn-info"
                                                                            th:href="@{/actividades/registraactividad(tipoActividad='PANIAL',tipoPanial='CACA', dni=${alumno.dni})}"
                                                                            role="button">Caca</a> <a class="btn btn-info"
-                                                                           th:href="@{/actividades/registraactividad(tipoActividad='PANIAL',tipoPanial='PISYCACA', dni=${alumno.dni})}"
+                                                                           th:href="@{/actividades/registraactividad(tipoActividad='PANIAL',tipoPanial='PIS_Y_CACA', dni=${alumno.dni})}"
                                                                            role="button">Ambos</a>
                                                                     </div>
                                                                 </div>
@@ -252,10 +235,6 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-
                                                 </ul>
                                             </div>
                                         </div>
@@ -266,63 +245,6 @@
                     </tbody>
                 </table>
             </div>
-
-            <!-- 		<div class="myForm"> -->
-            <!-- 			<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" -->
-            <!-- 				aria-labelledby="exampleModalLabel" aria-hidden="true"> -->
-            <!-- 				<div class="modal-dialog" role="document"> -->
-            <!-- 					<div class="modal-content"> -->
-            <!-- 						<div class="modal-header"> -->
-            <!-- 							<h5 class="modal-title" id="exampleModalLabel">Registro de -->
-            <!-- 								comidas</h5> -->
-            <!-- 							<button type="button" class="close" data-dismiss="modal" -->
-            <!-- 								aria-label="Close"> -->
-            <!-- 								<span aria-hidden="true">&times;</span> -->
-            <!-- 							</button> -->
-            <!-- 						</div> -->
-            <!-- 						<div class="modal-body"> -->
-            <!-- 							<ul class="list-group list-group-horizontal-lg"> -->
-            <!-- 								<li class="list-group-item list-group-item-dark">DESAYUNO</li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='DESAYUNO',tipoCantidad='NADA',dni)}"><button -->
-            <!-- 											type="submit" class="btn btn-danger">Nada</button></a></li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='DESAYUNO',tipoCantidad='POCO',dni=${alumno.dni})}"><button -->
-            <!-- 											type="button" class="btn btn-warning">Poco</button></a></li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='DESAYUNO',tipoCantidad='TODO',dni=${alumno.dni})}"><button -->
-            <!-- 											type="button" class="btn btn-success">Todo</button></a></li> -->
-            <!-- 							</ul> -->
-            <!-- 							<ul class="list-group list-group-horizontal-lg"> -->
-            <!-- 								<li class="list-group-item list-group-item-dark">ALMUERZO</li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='ALMUERZO',tipoCantidad='NADA',dni=${alumno.dni})}"><button -->
-            <!-- 											type="submit" class="btn btn-danger">Nada</button></a></li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='ALMUERZO',tipoCantidad='POCO',dni=${alumno.dni})}"><button -->
-            <!-- 											type="button" class="btn btn-warning">Poco</button></a></li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='ALMUERZO',tipoCantidad='TODO',dni=${alumno.dni})}"><button -->
-            <!-- 											type="button" class="btn btn-success">Todo</button></a></li> -->
-            <!-- 							</ul> -->
-            <!-- 							<ul class="list-group list-group-horizontal-lg"> -->
-            <!-- 								<li class="list-group-item list-group-item-dark">MERIENDA</li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='MERIENDA',tipoCantidad='NADA',dni=${alumno.dni})}"><button -->
-            <!-- 											type="submit" class="btn btn-danger">Nada</button></a></li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='MERIENDA',tipoCantidad='POCO',dni=${alumno.dni})}"><button -->
-            <!-- 											type="button" class="btn btn-warning">Poco</button></a></li> -->
-            <!-- 								<li class="list-group-item"><a -->
-            <!-- 									th:href="@{/actividades/registraactividad(tipoActividad='MERIENDA',tipoCantidad='TODO',dni=${alumno.dni})}"><button -->
-            <!-- 											type="button" class="btn btn-success">Todo</button></a></li> -->
-            <!-- 							</ul> -->
-            <!-- 						</div> -->
-            <!-- 					</div> -->
-            <!-- 				</div> -->
-            <!-- 			</div> -->
-            <!-- 		</div> -->
-
         </div>
         <footer th:replace="/layout :: footer"> </footer>
         <script type="text/javascript" th:src="@{/js/main.js}"></script>

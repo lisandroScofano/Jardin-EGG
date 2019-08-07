@@ -24,13 +24,11 @@ public class Alumno {
     @Temporal(TemporalType.DATE)
     private Date fechaBaja;
     @OneToOne
-    private List<Usuario> contacto;
+    private Usuario contacto;
     @ManyToOne
     private Salita salita;
-    
+
     private String foto;
-
-
 
     public int getDni() {
         return dni;
@@ -64,7 +62,6 @@ public class Alumno {
         this.fechaNacimiento = fechaNacimiento;
     }
 
-
     public Salita getSalita() {
         return salita;
     }
@@ -72,7 +69,6 @@ public class Alumno {
     public void setSalita(Salita salita) {
         this.salita = salita;
     }
-
 
     public Date getFechaBaja() {
         return fechaBaja;
@@ -90,22 +86,17 @@ public class Alumno {
         this.foto = foto;
     }
 
-    public List<Usuario> getContacto() {
+    public Usuario getContacto() {
         return contacto;
     }
 
-    public void setContacto(List<Usuario> contacto) {
+    public void setContacto(Usuario contacto) {
         this.contacto = contacto;
     }
-    
-    
 
     @Override
     public String toString() {
         return "Alumno{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento + ", fechaBaja=" + fechaBaja + ", salita=" + salita + ", foto=" + foto + '}';
     }
-    
 
-
-    
 }

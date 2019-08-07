@@ -21,6 +21,7 @@ import com.goldenkids.springboot.web.app.models.TipoCantidad;
 import com.goldenkids.springboot.web.app.models.TipoPanial;
 import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.services.ActividadService;
+import com.goldenkids.springboot.web.app.services.AlumnoService;
 import com.goldenkids.springboot.web.app.services.DocenteService;
 import com.goldenkids.springboot.web.app.services.UsuarioService;
 import org.springframework.security.core.Authentication;
@@ -38,19 +39,27 @@ public class ActividadesController {
     @Autowired
     private DocenteService docenteService;
 
+    @Autowired
+    private AlumnoService alumnoService;
+
     Logger log = LoggerFactory.getLogger(ActividadesController.class);
 
     @GetMapping("/tipousuario")
     public String redireccionaSegunUsuario(Authentication authenticated) {
-        Usuario usuario = usuarioService.buscarUsuarioPorUserName(authenticated.getName());
-        String tipoUsuario = usuario.getRol().getPerfil().toString();
-        if (tipoUsuario.equals("DIRECTIVO")) {
-            return "redirect:/actividades/directivo/plantilla";
+        //Usuario usuario = usuarioService.buscarUsuarioPorUserName(authenticated.getName());
+        String tipoUsuario = authenticated.getAuthorities().toString();
+        log.info("El tipo de usuario logueado para ver actividades es: " + tipoUsuario);
+
+        if (tipoUsuario.equals("[DIRECTIVO]")) {
+            return "redirect:/actividades/directivo";
         }
-        if (tipoUsuario.equals("PADRE")) {
-            return "redirect:/actividades/padre/plantilla";
+        if (tipoUsuario.equals("[PADRE]")) {
+            return "redirect:/actividades/padre";
         }
-        return "redirect:/actividades/docente/plantilla";
+        if (tipoUsuario.equals("[DOCENTE]")) {
+            return "redirect:/actividades/docente/plantilla";
+        }
+        return null;
     }
 
     @GetMapping("/docente/plantilla")
@@ -77,11 +86,13 @@ public class ActividadesController {
 
         modelo.addAttribute("nombreSalita", salita.getNombre());
         modelo.addAttribute("alumnos", alumnos);
+        modelo.addAttribute("tituloPagina", "Actividades alumnos salita " + salita.getNombre());
+        modelo.addAttribute("subtituloPagina", "Utilice este modulo para cargar las Actividades de los alumnos de la salita " + salita.getNombre());
 
         return "actividades-sala";
     }
 
-    @RequestMapping("/registraactividad")
+    @GetMapping("/registraactividad")
     public String guardarActividad(@RequestParam(required = false) TipoActividad tipoActividad,
             @RequestParam(required = false) Integer cantidadLeche,
             @RequestParam(required = false) TipoCantidad tipoCantidad,
@@ -95,6 +106,13 @@ public class ActividadesController {
         }
 
         return "redirect:/actividades/tipousuario";
+    }
+
+    @GetMapping("/actividades/docente/alumno")
+    public String verDetalleAlumno(@RequestParam(required = true) Integer dni) {
+        Alumno alumno = alumnoService.buscarAlumno(dni);
+
+        return null;
     }
 
 }

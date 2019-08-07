@@ -9,7 +9,8 @@ import org.springframework.data.jpa.repository.Query;
 @Repository
 public interface UsuarioRepositorio extends JpaRepository<Usuario, String> {
 
-   
-    @Query("SELECT u FROM Usuario u WHERE u.nombreUsuario=?1 AND u.fechaBaja IS NULL")//no deja ingresar a usuarios con fecha de baja
+    public Usuario findByNombreUsuario(String nombreUsuario);
+    
+    @Query("SELECT u FROM Usuario u WHERE u.nombreUsuario=?1")
     public Usuario buscarUsuarioPorNombre(String nombre);
 }

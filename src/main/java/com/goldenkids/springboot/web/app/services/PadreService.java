@@ -9,27 +9,26 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.goldenkids.springboot.web.app.models.Alumno;
+import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.repository.AlumnoRepositorio;
+import java.util.ArrayList;
 
 @Service
 public class PadreService {
 
-	@Autowired
-	private EntityManager em;
+    @Autowired
+    private EntityManager em;
 
-	@Autowired
-	private AlumnoRepositorio ar;
+    @Autowired
+    private AlumnoRepositorio ar;
 
-	
-	public Query buscarHijo(String q) {
+    public List<Alumno> buscarHijos(Usuario padre) {
+        List<Alumno> hijos = new ArrayList<Alumno>();
 
-		Integer dni = Integer.parseInt(q);
+        hijos = em.createQuery("SELECT a FROM Alumno a WHERE a.contacto = :padre")
+                .setParameter("padre", padre).getResultList();
+        
+        return hijos;
+    }
 
-		Query alumnos = em.createQuery(
-				"SELECT a FROM Alumno a WHERE a.contacto = :dni")
-				.setParameter("dni", dni);
-
-		return alumnos;
-
-	}
 }
