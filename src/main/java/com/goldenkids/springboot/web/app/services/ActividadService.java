@@ -145,8 +145,6 @@ public class ActividadService {
 
         log.info("La fecha pasada es: " + fecha);
 
-//        
-//        System.out.println(diaPosterior);
         return em.createQuery("SELECT a FROM Actividad a WHERE (a.alumno = :alumno) AND (a.inicio >= :fecha) AND (a.inicio < :diaPosterior)")
                 .setParameter("fecha", fecha)
                 .setParameter("diaPosterior", diaPosterior)
