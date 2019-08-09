@@ -20,8 +20,8 @@ public class AutorizadosService {
 
     @Autowired
     private AutorizadosRepositorio ar;
-    
-     @Autowired
+
+    @Autowired
     private AlumnoService alumnoService;
 
     @PersistenceContext
@@ -29,7 +29,7 @@ public class AutorizadosService {
 
     @Transactional
     public void crearAutorizados(String nombre, String apellido, String telefono1, String telefono2, int dni,
-            String parentesco, String error, int alumno) throws Exception {
+            String parentesco, String error, Integer alumnoDni) throws Exception {
 
         Autorizados autorizados = new Autorizados();
 
@@ -39,22 +39,19 @@ public class AutorizadosService {
         autorizados.setTelefono1(telefono1);
         autorizados.setTelefono2(telefono2);
         autorizados.setParentesco(parentesco);
-        autorizados.setAlumno(alumnoService.buscarAlumno(alumno));
-
-        if (buscarAutorizados(dni) == null) {
-            em.persist(autorizados);
+        if (alumnoDni != null) {
+            autorizados.setAlumno(alumnoService.buscarAlumno(alumnoDni));
         } else {
-
-            error = "Usuario ingresado no valido";
-
+            autorizados.setAlumno(null);
         }
+        em.persist(autorizados);
     }
 
     @Transactional
-    public void modificarAutorizados(String nombre, String apellido, String telefono1, String telefono2, int dni,
-            String parentesco, String error, int alumno) {
+    public void modificarAutorizados(String nombre, String apellido, String telefono1, String telefono2, Integer dni,
+            String parentesco, String error, Integer alumnoDni, String id) {
 
-        Autorizados autorizados = buscarAutorizados(dni);
+        Autorizados autorizados = buscarAutorizadosPorId(id);
 
         autorizados.setApellido(apellido);
         autorizados.setNombre(nombre);
@@ -62,14 +59,19 @@ public class AutorizadosService {
         autorizados.setTelefono1(telefono1);
         autorizados.setTelefono2(telefono2);
         autorizados.setParentesco(parentesco);
-        autorizados.setAlumno(alumnoService.buscarAlumno(alumno));
+        if (alumnoDni != null) {
+            autorizados.setAlumno(alumnoService.buscarAlumno(alumnoDni));
+        } else {
+            autorizados.setAlumno(null);
+        }
+        autorizados.setFechaBaja(null);
 
         em.merge(autorizados);
 
     }
 
-    public Autorizados buscarAutorizados(Integer dni) {
-        return em.find(Autorizados.class, dni);
+    public Autorizados buscarAutorizadosPorId(String id) {
+        return em.find(Autorizados.class, id);
     }
 
     @SuppressWarnings("unchecked")
@@ -84,15 +86,15 @@ public class AutorizadosService {
     }
 
     @Transactional
-    public void eliminar(Integer dni) throws Exception {
-        Autorizados autorizados = buscarAutorizados(dni);
+    public void eliminar(String id) throws Exception {
+        Autorizados autorizados = buscarAutorizadosPorId(id);
         ar.delete(autorizados);
     }
 
     @Transactional
-    public void darDeBaja(Integer dni) throws Exception {
+    public void darDeBaja(String id) throws Exception {
 
-        Autorizados autorizadosBaja = em.find(Autorizados.class, dni);
+        Autorizados autorizadosBaja = em.find(Autorizados.class, id);
 
         autorizadosBaja.setFechaBaja(new Date());
 

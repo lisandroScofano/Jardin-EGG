@@ -19,6 +19,8 @@ import org.springframework.web.servlet.ModelAndView;
 import com.goldenkids.springboot.web.app.models.Salita;
 import com.goldenkids.springboot.web.app.repository.SalitaRepositorio;
 import com.goldenkids.springboot.web.app.services.SalitaService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @Controller
 @RequestMapping("/salita")
@@ -29,6 +31,8 @@ public class SalitaController {
 
     @Autowired
     private SalitaRepositorio salitaRepositorio;
+
+    Logger log = LoggerFactory.getLogger(ActividadesController.class);
 
     @RequestMapping("/listarsalitas")
     public String listar(@RequestParam(required = false) String q, Model model) {
@@ -56,8 +60,15 @@ public class SalitaController {
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
-        Date horaEntradaFormateada = formatter.parse(horaEntrada);
-        Date horaSalidaFormateada = formatter.parse(horaSalida);
+        Date horaEntradaFormateada = null;
+        Date horaSalidaFormateada = null;
+        log.info("La hora de entrada es: " + horaEntrada);
+        if (horaEntrada != "") {
+            horaEntradaFormateada = formatter.parse(horaEntrada);
+        }
+        if (horaSalida != "") {
+            horaSalidaFormateada = formatter.parse(horaSalida);
+        }
 
         if (accion.equals("crear")) {
             salitaService.crearSalita(nombre, horaEntradaFormateada, horaSalidaFormateada);

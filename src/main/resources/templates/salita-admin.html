@@ -8,18 +8,18 @@
             <form class="form" id="formulario" method="post" th:action="@{/salita/guardar}">
 
                 <div class="form-group">
-                    <label>Nombre: </label> <input type="text" class="form-control"
-                                                   name="nombre" th:value="${salita.nombre}" />
+                    <label>Nombre: </label> 
+                    <input type="text" class="form-control" name="nombre" th:value="${salita.nombre}" required/>
                 </div>
 
                 <div class="form-group">
-                    <label>Hora de Entrada: </label> <input type="time" class="form-control"
-                                                            name="horaEntrada" th:value="${salita.horaEntrada}" />
+                    <label>Hora de Entrada: </label>
+                    <input type="time" class="form-control" name="horaEntrada" th:value="${salita.horaEntrada}" />
                 </div>
 
                 <div class="form-group">
-                    <label>Hora de Salida: </label> <input type="time" class="form-control"
-                                                           name="horaSalida" th:value="${salita.horaSalida}" />
+                    <label>Hora de Salida: </label>
+                    <input type="time" class="form-control" name="horaSalida" th:value="${salita.horaSalida}" />
                 </div>
 
                 <input style="float: right; margin: 5px;" type="submit"

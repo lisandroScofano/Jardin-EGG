@@ -26,9 +26,9 @@
                     <td th:text="${autorizados.telefono1}"></td>
                     <td th:text="${autorizados.telefono2}"></td>
                     <td th:text="${autorizados.alumno.nombre} + ' ' + ${autorizados.alumno.apellido}"></td>
-                    <td><a th:href="@{/autorizados/baja(dni=${autorizados.dni})}"><i
+                    <td><a th:href="@{/autorizados/baja(id=${autorizados.id})}"><i
                                 class="fa fa-window-close"></i></a> - <a
-                            th:href="@{/autorizados/modificar(dni=${autorizados.dni})}"><i
+                            th:href="@{/autorizados/modificar(id=${autorizados.id})}"><i
                                 class="fa fa-edit"></i></a></td>
                 </tr>
             </tbody>

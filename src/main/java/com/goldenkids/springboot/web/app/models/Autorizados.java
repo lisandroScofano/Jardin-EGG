@@ -5,17 +5,21 @@ import javax.persistence.CascadeType;
 
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import org.hibernate.annotations.GenericGenerator;
 
 @Entity
 public class Autorizados {
 
     @Id
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    private String id;
     private int dni;
-
     @ManyToOne(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     private Alumno alumno;
     private String telefono1;
@@ -88,6 +92,14 @@ public class Autorizados {
 
     public void setFechaBaja(Date fechaBaja) {
         this.fechaBaja = fechaBaja;
+    }
+
+    public String getId() {
+        return id;
+    }
+
+    public void setId(String id) {
+        this.id = id;
     }
 
 }

@@ -23,7 +23,8 @@
                     <td th:text="${alumno.apellido}"></td>
                     <td th:text="${alumno.dni}"></td>
                     <td th:text="${#dates.format(alumno.fechaNacimiento,'dd/MM/YYYY')}"></td>
-                    <td th:text="${alumno.salita.nombre}"></td>
+                    <td th:if="${alumno.salita != null}" th:text="${alumno.salita.nombre}"></td>
+                    <td th:unless="${alumno.salita != null}"></td>
                     <td><a th:href="@{/alumno/baja(dni=${alumno.dni})}"><i
                                 class="fa fa-window-close"></i></a> - <a
                             th:href="@{/alumno/modificar(dni=${alumno.dni})}"><i

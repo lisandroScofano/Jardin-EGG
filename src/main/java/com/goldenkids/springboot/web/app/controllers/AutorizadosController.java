@@ -53,14 +53,14 @@ public class AutorizadosController {
 
     @PostMapping("/guardar")
     public ModelAndView guardar(@RequestParam String nombre, String apellido, String telefono1,
-            String telefono2, int dni, String parentesco, String accion, String error, Integer alumnoAutorizado) throws Exception {
+            String telefono2, Integer dni, String parentesco, String accion, String error, Integer alumnoAutorizado, String id) throws Exception {
         ModelAndView modelo = new ModelAndView();
 
         if (accion.equals("crear")) {
             autorizadosServicio.crearAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error, alumnoAutorizado);
             modelo.addObject("success", "La Autorizacion ha sido creada con éxito.");
         } else if (accion.equals("modificar")) {
-            autorizadosServicio.modificarAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error, alumnoAutorizado);
+            autorizadosServicio.modificarAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error, alumnoAutorizado, id);
             modelo.addObject("success", "La Autorizacion ha sido modificada con éxito.");
         }
 
@@ -75,29 +75,28 @@ public class AutorizadosController {
     }
 
     @GetMapping("/modificar")
-    public String modificar(@RequestParam Integer dni, ModelMap model) {
+    public String modificar(@RequestParam String id, ModelMap model) {
 
-        if (dni != null) {
-            Autorizados autorizados = autorizadosServicio.buscarAutorizados(dni);
+        if (id != null) {
+            Autorizados autorizados = autorizadosServicio.buscarAutorizadosPorId(id);
             model.put("autorizados", autorizados);
             model.put("accion", "modificar");
-            model.put("alumnoGuardado", autorizados.getAlumno());//ver como ponerlo por defecto
+            model.put("alumnoGuardado", autorizados.getAlumno());
             model.put("listadoAlumnos", alumnoService.buscarAlumnos());
         } else {
             model.put("autorizados", new Autorizados());
             model.put("accion", "crear");
             model.put("listadoAlumnos", alumnoService.buscarAlumnos());
-
         }
 
         return "autorizados-admin";
     }
 
     @GetMapping("/eliminar")
-    public String eliminar(@RequestParam Integer dni) {
+    public String eliminar(@RequestParam(required = true) String id) {
 
         try {
-            autorizadosServicio.eliminar(dni);
+            autorizadosServicio.eliminar(id);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -143,10 +142,10 @@ public class AutorizadosController {
     }
 
     @GetMapping("/baja")
-    public String darBaja(@RequestParam Integer dni) {
+    public String darBaja(@RequestParam String id) {
 
         try {
-            autorizadosServicio.darDeBaja(dni);
+            autorizadosServicio.darDeBaja(id);
         } catch (Exception e) {
             e.printStackTrace();
         }

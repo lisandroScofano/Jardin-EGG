@@ -1,18 +1,21 @@
 package com.goldenkids.springboot.web.app.controllers;
 
+import com.goldenkids.springboot.web.app.models.Actividad;
 import com.goldenkids.springboot.web.app.models.Alumno;
 import com.goldenkids.springboot.web.app.models.Usuario;
+import com.goldenkids.springboot.web.app.services.ActividadService;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
+import com.goldenkids.springboot.web.app.services.UsuarioService;
+import java.text.ParseException;
+import java.util.Date;
 import java.util.List;
-
-import javax.persistence.Query;
+import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.goldenkids.springboot.web.app.services.PadreService;
-import com.goldenkids.springboot.web.app.services.UsuarioService;
 import org.springframework.security.core.Authentication;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -22,11 +25,16 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("actividades")
 public class DirectivoController {
 
+    org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
+
     @Autowired
     private UsuarioService usuarioService;
 
     @Autowired
     private AlumnoService alumnoService;
+
+    @Autowired
+    private ActividadService actividadService;
 
     @GetMapping("/directivo")
     public String bienvenida(Model modelo, Authentication authenticated) {

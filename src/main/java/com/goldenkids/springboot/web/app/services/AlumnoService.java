@@ -38,7 +38,9 @@ public class AlumnoService {
         alumno.setApellido(apellido);
         alumno.setFechaNacimiento(fechaNacimiento);
         alumno.setSalita(salitaService.buscarSalita(salitaId));
-        alumno.setContacto(usuarioService.buscarUsuario(padreDni));
+        if (padreDni != null) {
+            alumno.setContacto(usuarioService.buscarUsuario(padreDni));
+        }
         alumno.setFoto(uniqueFileName);
 
         if (buscarAlumno(dni) == null) {

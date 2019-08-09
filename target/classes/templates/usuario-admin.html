@@ -18,7 +18,7 @@
                 </div>
 
                 <div class="form-group">
-                    <label>DNI: </label> <input type="number" class="form-control" name="dni" th:value="${usuario.dni}" />
+                    <label>DNI: </label> <input required type="text" class="form-control" name="dni" th:value="${usuario.dni}" pattern="[0-9]{7,9}"/>
                 </div>
 
                 <div class="form-group">

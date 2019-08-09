@@ -6,8 +6,8 @@
         <div class="col-sm-12">
             <form class="form" id="formulario" method="post" th:action="@{/inscripciones/guardar}">
                 <div class="form-group" id="alumno">
-                    <label>Alumno: </label> <select name="selectAlumnoDni"
-                                                    id="selectAlumnoDni">
+                    <label>Alumno: </label> 
+                    <select name="selectAlumnoDni" id="selectAlumnoDni" required>
                         <option selected="selected"></option>
                         <option th:if="${alumnoActual != null}"  selected="selected" th:value="${alumnoActual.dni}" th:text="${alumnoActual.nombre} + ' ' + ${alumnoActual.apellido}"></option>
                         <option th:each="alumnoLoop : ${alumnos}" th:value="${alumnoLoop.dni}"
@@ -15,8 +15,8 @@
                     </select>
                 </div>
                 <div class="form-group" id="salita">
-                    <label>Nombre Salita: </label> <select name="selectSalitaId"
-                                                           id="selectSalitaId">
+                    <label>Nombre Salita: </label>
+                    <select name="selectSalitaId" id="selectSalitaId" required>
                         <option selected="selected"></option>
                         <option th:if="${salitaActual != null}"  selected="selected" th:value="${salitaActual.id}" th:text="${salitaActual.nombre}"></option>
                         <option th:each="salitaLoop : ${salitas}" th:value="${salitaLoop.id}"

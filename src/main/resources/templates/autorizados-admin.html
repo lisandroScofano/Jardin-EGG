@@ -8,27 +8,27 @@
             <form autocomplete="off" class="form" id="formulario" method="POST" th:action="@{/autorizados/guardar}">
                 <div class="form-group">
                     <label>Nombre: </label> <input type="text" class="form-control"
-                                                   name="nombre" th:field="*{autorizados.nombre}" th:value="${autorizados.nombre}" />
+                                                   name="nombre" th:field="*{autorizados.nombre}" th:value="${autorizados.nombre}" required />
                 </div>
 
                 <div class="form-group">
                     <label>Apellido: </label> <input type="text" class="form-control"
-                                                     name="apellido" th:field="*{autorizados.apellido}" th:value="${autorizados.apellido}" />
+                                                     name="apellido" th:field="*{autorizados.apellido}" th:value="${autorizados.apellido}" required />
                 </div>
 
                 <div class="form-group">
-                    <label>DNI: </label> <input type="number" class="form-control"
-                                                name="dni" th:field="*{autorizados.dni}" th:value="${autorizados.dni}" />
+                    <label>DNI: </label> <input type="text" class="form-control"
+                                                name="dni" th:value="${autorizados.dni}" pattern="[0-9]{7,9}" />
                 </div>
 
 
                 <div class="form-group">
                     <label>Parentesco: </label> <input type="text" class="form-control"
-                                                       name="parentesco" th:field="*{autorizados.parentesco}" th:value="${autorizados.parentesco}" />
+                                                       name="parentesco" th:field="*{autorizados.parentesco}" th:value="${autorizados.parentesco}" required/>
                 </div>
                 <div class="form-group">
                     <label>Telefono Uno: </label> <input type="text" class="form-control"
-                                                         name="telefono1" th:field="*{autorizados.telefono1}" th:value="${autorizados.telefono1}" />
+                                                         name="telefono1" th:field="*{autorizados.telefono1}" th:value="${autorizados.telefono1}" required/>
                 </div>
                 <div class="form-group">
                     <label>Telefono Dos: </label> <input type="text" class="form-control"
@@ -36,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label>Seleccione el alumno a retirar: </label> 
-                    <select class="form-control" id="alumnoAutorizado" name="alumnoAutorizado">
+                    <select class="form-control" id="alumnoAutorizado" name="alumnoAutorizado" required>
                         <option selected="selected"></option>
                         <option th:if="${alumnoGuardado != null}"  selected="selected" th:value="${alumnoGuardado.dni}" th:text="${alumnoGuardado.nombre} + ' ' + ${alumnoGuardado.apellido}"></option>
                         <option th:each="alumno : ${listadoAlumnos}" th:value="${alumno.dni}" th:text="${alumno.nombre} + ' ' + ${alumno.apellido}"></option>
@@ -49,6 +49,7 @@
                     class="btn btn-danger" form="formulario"
                     formaction="/autorizados/listarautorizados">Volver</button>
             <input type="hidden" th:value="${accion}" name="accion"></input>
+            <input type="hidden" th:value="${autorizados.id}" name="id"></input>
             <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
             </form>
             </div>
