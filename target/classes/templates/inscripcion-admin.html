@@ -1,12 +1,12 @@
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es">
     <head th:replace="/layout :: head"></head>
-    <body>
+    <body style="background-color: #4286f4;">
         <header th:replace="/layout :: header"></header>
-        <div class="col-sm-12">
+        <div class="col-sm-12" style="width: 600px; margin-left: 370px; margin-top: 20px; margin-bottom: 20px;">
             <form class="form" id="formulario" method="post" th:action="@{/inscripciones/guardar}">
                 <div class="form-group" id="alumno">
-                    <label>Alumno: </label> 
+                    <label style="color: white;">Alumno: </label> 
                     <select name="selectAlumnoDni" id="selectAlumnoDni" required>
                         <option selected="selected"></option>
                         <option th:if="${alumnoActual != null}"  selected="selected" th:value="${alumnoActual.dni}" th:text="${alumnoActual.nombre} + ' ' + ${alumnoActual.apellido}"></option>
@@ -15,7 +15,7 @@
                     </select>
                 </div>
                 <div class="form-group" id="salita">
-                    <label>Nombre Salita: </label>
+                    <label style="color: white;">Nombre Salita: </label>
                     <select name="selectSalitaId" id="selectSalitaId" required>
                         <option selected="selected"></option>
                         <option th:if="${salitaActual != null}"  selected="selected" th:value="${salitaActual.id}" th:text="${salitaActual.nombre}"></option>
@@ -24,14 +24,15 @@
                     </select>
                 </div>
                 <div class="form-group">
-                    <label>Fecha de Alta: </label> <input type="date" class="form-control" name="fechaAlta" th:value="${inscripcion.fechaAlta}" />
+                    <label style="color: white;">Fecha de Alta: </label> 
+                    <input type="date" class="form-control" name="fechaAlta" th:value="${inscripcion.fechaAlta}" />
                 </div>
-
                 <div class="form-group">
-                    <label>Fecha de Baja: </label> <input type="date" class="form-control" name="fechaBaja" th:value="${inscripcion.fechaBaja}" />
+                    <label style="color: white;">Fecha de Baja: </label> 
+                    <input type="date" class="form-control" name="fechaBaja" th:value="${inscripcion.fechaBaja}" />
                 </div> 
-                <input type="submit" style="float: right; margin: 5px;"  class="btn btn-primary" value="Guardar" />
-                <a th:href="@{inscripciones/listarinscripciones}" style="float: right; margin: 5px;" class="btn btn-danger" >Volver</a>
+                <input type="submit" style="margin: 5px;"  class="btn btn-primary" value="Guardar" />
+                <a th:href="@{inscripciones/listarinscripciones}" style="float: left; margin: 5px;" class="btn btn-danger" >Volver</a>
                 <input type="hidden" th:value="${accion}" name="accion"/>
                 <input type="hidden" th:if="${inscripcion.id != null} " th:value="${inscripcion.id}" name="inscripcionId" />
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

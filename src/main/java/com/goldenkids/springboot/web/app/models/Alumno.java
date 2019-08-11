@@ -1,7 +1,6 @@
 package com.goldenkids.springboot.web.app.models;
 
 import java.util.Date;
-import java.util.List;
 
 import javax.persistence.Entity;
 import javax.persistence.Id;
@@ -9,6 +8,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToOne;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 @Entity
 public class Alumno {
@@ -29,6 +29,12 @@ public class Alumno {
     private Salita salita;
 
     private String foto;
+
+    @Transient
+    private boolean enClase = false;
+
+    @Transient
+    private boolean durmiendo = false;
 
     public int getDni() {
         return dni;
@@ -94,9 +100,25 @@ public class Alumno {
         this.contacto = contacto;
     }
 
+    public boolean isEnClase() {
+        return enClase;
+    }
+
+    public void setEnClase(boolean enClase) {
+        this.enClase = enClase;
+    }
+
+    public boolean isDurmiendo() {
+        return durmiendo;
+    }
+
+    public void setDurmiendo(boolean durmiendo) {
+        this.durmiendo = durmiendo;
+    }
+
     @Override
     public String toString() {
-        return "Alumno{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento + ", fechaBaja=" + fechaBaja + ", salita=" + salita + ", foto=" + foto + '}';
+        return "Alumno{" + "dni=" + dni + ", nombre=" + nombre + ", apellido=" + apellido + ", fechaNacimiento=" + fechaNacimiento + ", fechaBaja=" + fechaBaja + ", contacto=" + contacto + ", salita=" + salita + ", foto=" + foto + ", enClase=" + enClase + ", durmiendo=" + durmiendo + '}';
     }
 
 }

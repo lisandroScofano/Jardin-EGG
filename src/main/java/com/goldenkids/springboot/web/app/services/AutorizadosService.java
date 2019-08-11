@@ -1,6 +1,5 @@
 package com.goldenkids.springboot.web.app.services;
 
-import com.goldenkids.springboot.web.app.models.Alumno;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,14 +11,10 @@ import org.springframework.stereotype.Service;
 
 import com.goldenkids.springboot.web.app.models.Autorizados;
 
-import com.goldenkids.springboot.web.app.repository.AutorizadosRepositorio;
 import java.util.Date;
 
 @Service
 public class AutorizadosService {
-
-    @Autowired
-    private AutorizadosRepositorio ar;
 
     @Autowired
     private AlumnoService alumnoService;
@@ -76,7 +71,7 @@ public class AutorizadosService {
 
     @SuppressWarnings("unchecked")
     public List<Autorizados> buscarAutorizados(String q) {
-        return em.createQuery("SELECT c FROM Autorizados c WHERE c.nombre LIKE :q OR c.dni LIKE :q")
+        return em.createQuery("SELECT c FROM Autorizados c WHERE c.nombre LIKE :q OR c.dni LIKE :q OR c.alumno.nombre LIKE :q OR c.alumno.apellido LIKE :q")
                 .setParameter("q", "%" + q + "%").getResultList();
     }
 
@@ -88,7 +83,7 @@ public class AutorizadosService {
     @Transactional
     public void eliminar(String id) throws Exception {
         Autorizados autorizados = buscarAutorizadosPorId(id);
-        ar.delete(autorizados);
+        em.remove(autorizados);
     }
 
     @Transactional

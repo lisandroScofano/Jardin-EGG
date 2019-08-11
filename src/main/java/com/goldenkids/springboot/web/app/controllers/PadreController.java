@@ -30,12 +30,6 @@ public class PadreController {
     @Autowired
     private UsuarioService usuarioService;
 
-    @Autowired
-    private ActividadService actividadService;
-
-    @Autowired
-    private AlumnoService alumnoService;
-
     @GetMapping("/padre")
     public String bienvenida(Model modelo, Authentication authenticated) {
 

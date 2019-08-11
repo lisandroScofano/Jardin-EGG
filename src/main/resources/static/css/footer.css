@@ -1,11 +1,10 @@
 footer {
-    background: #ffff;
     background: var(--bggradient);
     overflow-x: hidden;
     padding: 14vmin 18vmin;
 }
 
-.text {
+footer .text {
     color: darkgrey;
 }
 
@@ -26,18 +25,15 @@ footer .input-group .input-group-text {
     border: none
 }
 
-footer .column i {
+footer .icono .fab{
+    padding: 0 0.5em;
     color: white;
 }
 
-footer .column i+i {
-    padding: 0 0.5em;
-}
-
-:root {
+footer {
     --Sniglet-font: "Sniglet", cursive;
     --Rubik: "Rubik", cursive;
     --Patua: "Patua One", cursive;
     --Lobster: "lobster", cursive;
-    --bggradient: linear-gradient(to bottom, #373b44, #4286f4);
+    --bggradient: linear-gradient(to bottom, #4286f4, #373b44);
 }

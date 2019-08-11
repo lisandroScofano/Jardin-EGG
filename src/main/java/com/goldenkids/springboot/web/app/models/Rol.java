@@ -6,7 +6,6 @@
 package com.goldenkids.springboot.web.app.models;
 
 import javax.persistence.Entity;
-import javax.persistence.EnumType;
 import javax.persistence.Enumerated;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -23,7 +22,7 @@ public class Rol {
     @GeneratedValue(generator = "uuid")
     @GenericGenerator(name = "uuid", strategy = "uuid2")
     private String id;
-    
+
     @Enumerated
     private TipoPerfil perfil;
 

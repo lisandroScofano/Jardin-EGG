@@ -13,14 +13,10 @@ import org.springframework.stereotype.Service;
 
 import com.goldenkids.springboot.web.app.models.TipoPerfil;
 import com.goldenkids.springboot.web.app.models.Usuario;
-import com.goldenkids.springboot.web.app.repository.UsuarioRepositorio;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Service
 public class UsuarioService {
-
-    @Autowired
-    private UsuarioRepositorio us;
 
     @PersistenceContext
     private EntityManager em;
@@ -82,7 +78,7 @@ public class UsuarioService {
     @Transactional
     public void eliminar(Integer dni) throws Exception {
         Usuario usuario = buscarUsuario(dni);
-        us.delete(usuario);
+        em.remove(usuario);
     }
 
     @Transactional
@@ -103,7 +99,6 @@ public class UsuarioService {
         return em.createQuery("SELECT c FROM Usuario c WHERE c.nombre LIKE :q OR c.dni LIKE :q OR c.apellido LIKE :q")
                 .setParameter("q", "%" + q + "%").getResultList();
     }
-
 
     @SuppressWarnings("unchecked")
     public List<Usuario> buscarUsuarios() {

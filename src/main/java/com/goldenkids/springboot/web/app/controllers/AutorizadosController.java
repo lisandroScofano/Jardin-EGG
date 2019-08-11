@@ -1,6 +1,5 @@
 package com.goldenkids.springboot.web.app.controllers;
 
-import com.goldenkids.springboot.web.app.models.Alumno;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,7 +14,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenkids.springboot.web.app.models.Autorizados;
 
-import com.goldenkids.springboot.web.app.repository.AutorizadosRepositorio;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
 
 import com.goldenkids.springboot.web.app.services.AutorizadosService;
@@ -28,9 +26,6 @@ public class AutorizadosController {
 
     @Autowired
     private AutorizadosService autorizadosServicio;
-
-    @Autowired
-    private AutorizadosRepositorio autorizadosRepositorio;
 
     @Autowired
     private AlumnoService alumnoService;
@@ -64,7 +59,7 @@ public class AutorizadosController {
             modelo.addObject("success", "La Autorizacion ha sido modificada con éxito.");
         }
 
-        List<Autorizados> autorizados = autorizadosRepositorio.findAll();
+        List<Autorizados> autorizados = autorizadosServicio.buscarAutorizados();
 
         modelo.addObject("error", error);
 

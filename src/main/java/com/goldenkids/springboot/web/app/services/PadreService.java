@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.goldenkids.springboot.web.app.models.Alumno;
 import com.goldenkids.springboot.web.app.models.Usuario;
-import com.goldenkids.springboot.web.app.repository.AlumnoRepositorio;
 import java.util.ArrayList;
 
 @Service
@@ -17,9 +16,6 @@ public class PadreService {
 
     @Autowired
     private EntityManager em;
-
-    @Autowired
-    private AlumnoRepositorio ar;
 
     public List<Alumno> buscarHijos(Usuario padre) {
         List<Alumno> hijos = new ArrayList<Alumno>();

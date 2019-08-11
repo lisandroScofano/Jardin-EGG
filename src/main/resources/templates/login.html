@@ -2,7 +2,6 @@
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
     <head>
         <title>Golden Kids</title>
-
         <!--JQUERY-->
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
 
@@ -16,7 +15,6 @@
 
         <!-- Nuestro css-->
         <link rel="stylesheet" type="text/css" th:href="@{/css/index.css}" />
-
     </head>
     <body>
         <div class="modal-dialog text-center">
@@ -35,9 +33,6 @@
                         <button type="submit" class="btn btn-primary"><i class="fas fa-sign-in-alt"></i>  Ingresar </button>
                         <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />
                     </form>
-                    <!--                    <div class="col-12 forgot">
-                                            <a href="#">Recordar contrasena?</a>
-                                        </div>-->
                     <div th:if="${error != null}"
                          th:text="${error}" class="alert alert-danger" role="alert">
                     </div>

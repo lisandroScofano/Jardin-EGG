@@ -125,27 +125,41 @@
 
                     <div class="col-md-5 col-md-5">
                         <h1 class="text-light">Sobre Nosotros</h1>
-                        <p class="text">Lorem ipsum dolor sit amet consectetur, adipisicing elit. Ullam ipsa aut.
-                        </p>
-                        <p class="pt-4 text">
-                            Copyright &copy;2019 Todos los derechos reservados | Esta Plantilla ha sido creada por
-                            <span>Golden Kids</span>
-                        </p>
+                        <p class="text">Somos un jardín que se enfoca en ser lo más
+                            eficientes e informativos para con nuestros alumnos, padres,
+                            docentes y directivos. Para lograr esto armamos esta web,
+                            Disfrútala!</p>
                     </div>
-                    <div class="col-md-5">
-                    </div>
+                    <div class="col-md-5"></div>
                     <div class="col-md-2 col-sm-12">
                         <h4 class="text-light">Seguinos</h4>
                         <p class="text">Dejanos ser Sociables</p>
-                        <div class="column ">
-                            <i><a href="https://www.facebook.com/GoldenKidsJardinMaternal/" class="fab fa-facebook-f"></a></i>
-                            <i><a href="https://www.instagram.com/goldenkidsjardinmaternal/" class="fab fa-instagram"></a></i>
-                            <i class="fab fa-twitter"></i>
-                            <i class="fab fa-youtube"></i>
+
+                        <div class="icono">
+                            <i> <a
+                                    href="https://www.facebook.com/GoldenKidsJardinMaternal/"
+                                    class="fab fa-facebook-f" target="_blank"> </a>
+                            </i> <i> <a
+                                    href="https://www.instagram.com/goldenkidsjardinmaternal/"
+                                    class="fab fa-instagram" target="_blank"> </a>
+                            </i> <i class="fab fa-twitter"> </i> <i class="fab fa-youtube"> </i>
                         </div>
                     </div>
+                    <div class="col-md-12" style="text-align: center">
+                        <p class="pt-4 text">
+                            <span>Golden Kids</span> - Lisandro de la Torre 249, Ciudad Mendoza - <a class='text-decoration-none' href="tel:2615136724" style="color: #A9A9A9">0261 513-6724</a> - <a href="mailto:jardinmaternalgoldenkids@gmail.com" style="color: #A9A9A9">jardinmaternalgoldenkids@gmail.com</a>
+                        </p>
+                        <p class="pt-2 text">
+                            Copyright &copy;2019 Todos los derechos reservados | Esta
+                            Plantilla ha sido creada por <span>Golden Kids</span>
+                        </p>
+                        <!--  borrar este parrafo cuando el sistema este en produccion-->
+                        <p class="text"> 
+                            El Nombre del usuario logueado es: <span sec:authentication="name"></span>
+                            y su ROL es : <span sec:authentication="principal.authorities"></span>
+                        </p>
+                    </div>
                 </div>
-                El Nombre del usuario logueado es: <span sec:authentication="name"></span> y su ROL es : <span sec:authentication="principal.authorities"></span>
             </div>
             <script th:src="@{/js/jquery-3.3.1.slim.min.js}"></script>
             <script

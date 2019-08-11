@@ -1,4 +1,3 @@
-/Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/repository/AutorizadosRepositorio.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Docente.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/ActividadService.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/RolService.java
@@ -7,7 +6,6 @@
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/UsuarioService.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/TipoDocente.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/SalitaController.java
-/Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/repository/SalitaRepositorio.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/TipoPerfil.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/JpaUserSecurityService.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/UsuarioController.java
@@ -25,7 +23,6 @@
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Autorizados.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/services/AutorizadosService.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/ActividadesController.java
-/Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/repository/UsuarioRepositorio.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/controllers/PadreController.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Alumno.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/TipoCantidad.java
@@ -38,4 +35,3 @@
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/models/Actividad.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/SpringSecurityConfiguracion.java
 /Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/SprimvMvcConfiguracion.java
-/Users/lisandroscofano/Desktop/NuevaCarpeta/SPRINGMVC/Jardin-EGG/src/main/java/com/goldenkids/springboot/web/app/repository/AlumnoRepositorio.java

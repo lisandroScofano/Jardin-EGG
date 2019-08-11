@@ -57,8 +57,6 @@ public class UsuarioController {
             usuarios = usuarioServicio.buscarUsuarios();
         }
 
-        //log.info(usuarios.get(1).getRol().getPerfil().toString());
-        // log.info(authentication.getPrincipal().toString());
         log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
         modelo.addAttribute("q", q);
         modelo.addAttribute("usuarios", usuarios);
@@ -105,7 +103,7 @@ public class UsuarioController {
 
             log.info("El Perfil original es: " + rolOriginal);
             log.info("El nuevo perfil es: " + tipoPerfil.toString());
-            
+
             if (((rolOriginal.equals("PADRE")) || (rolOriginal.equals("DIRECTIVO"))) && (tipoPerfil.toString().equals("DOCENTE"))) {//si cambio de padre o directivo a docente
                 docenteService.modificarNoDocenteADocente(usuarioOriginal, selectSalitaId, selectTipoDocente);
             }

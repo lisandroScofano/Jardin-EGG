@@ -40,7 +40,13 @@ public class InscripcionController {
     @RequestMapping("/listarinscripciones")
     public String listar(@RequestParam(required = false) String q, Model model) {
 
-        List<Inscripcion> inscripciones = inscripcionService.buscarInscripciones();
+        List<Inscripcion> inscripciones;
+
+        if (q != null) {
+            inscripciones = inscripcionService.buscarInscripciones(q);
+        } else {
+            inscripciones = inscripcionService.buscarInscripciones();
+        }
 
         model.addAttribute("inscripciones", inscripciones);
         model.addAttribute("titulo", "Administracion de Inscripciones");

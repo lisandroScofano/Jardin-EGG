@@ -17,7 +17,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenkids.springboot.web.app.models.Salita;
-import com.goldenkids.springboot.web.app.repository.SalitaRepositorio;
 import com.goldenkids.springboot.web.app.services.SalitaService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -29,13 +28,11 @@ public class SalitaController {
     @Autowired
     private SalitaService salitaService;
 
-    @Autowired
-    private SalitaRepositorio salitaRepositorio;
-
     Logger log = LoggerFactory.getLogger(ActividadesController.class);
 
     @RequestMapping("/listarsalitas")
     public String listar(@RequestParam(required = false) String q, Model model) {
+
         List<Salita> salitas;
         if (q != null) {
             salitas = salitaService.buscarSalitas(q);
@@ -78,7 +75,7 @@ public class SalitaController {
             modelo.addObject("success", "La Salita ha sido modificada con éxito.");
         }
 
-        List<Salita> salitas = salitaRepositorio.findAll();
+        List<Salita> salitas = salitaService.buscarSalitas();
 
         modelo.addObject("salitas", salitas);
         modelo.setViewName("salita-listado.html");

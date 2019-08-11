@@ -28,7 +28,7 @@
                     <th>Hora de Inicio</th>
                     <th>Hora de Fin</th>
                     <th>Observacion</th>
-                    <th>Eliminar</th>
+                    <th sec:authorize="hasAuthority('DIRECTIVO')">Eliminar</th>
                     <th></th>
                 </tr>
             </thead>
@@ -38,11 +38,11 @@
                     <td th:if="${actividad.cantidad}" th:text="'Cantidad de comida: ' + ${actividad.cantidad}"></td>
                     <td th:if="${actividad.tipoPanial}" th:text="'Motivo del cambio de pañal: ' + ${actividad.tipoPanial}"></td>
                     <td th:if="${actividad.cantidadLeche}" th:text="${actividad.cantidadLeche} + ' ML'"></td>
-                    <td th:unless="${actividad.cantidadLeche != null and actividad.tipoPanial != null and actividad.cantidad != null}"></td>
+                    <td th:unless="${actividad.cantidadLeche != null or actividad.tipoPanial != null or actividad.cantidad != null}"></td>
                     <td th:text="${#dates.format(actividad.inicio,'dd/MM/YYYY HH:mm')}"></td>
                     <td th:text="${#dates.format(actividad.fin,'dd/MM/YYYY HH:mm')}"></td>
                     <td th:text="${actividad.observacion}"></td>
-                    <td><a th:href="@{/actividades/directivo/eliminar(id=${actividad.id},dniAlumno=${actividad.alumno.dni})}"><i class="fa fa-window-close"></i></td>
+                    <td sec:authorize="hasAuthority('DIRECTIVO')"><a th:href="@{/actividades/directivo/eliminar(id=${actividad.id},dniAlumno=${actividad.alumno.dni})}"><i class="fa fa-window-close"></i></td>
                 </tr>
             </tbody>
         </table>

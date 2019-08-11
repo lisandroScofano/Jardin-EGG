@@ -14,7 +14,6 @@ import java.util.UUID;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.core.io.Resource;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -48,11 +47,10 @@ public class UploadService {
             }
             return uniqueFileName;
 
-        }else{
+        } else {
             return null;
         }
 
     }
-
 
 }

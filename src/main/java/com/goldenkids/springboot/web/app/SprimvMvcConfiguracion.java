@@ -16,13 +16,13 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  */
 @Configuration
 public class SprimvMvcConfiguracion implements WebMvcConfigurer {
-    
+
     @Override
-    public void addResourceHandlers(ResourceHandlerRegistry registry){
-        
+    public void addResourceHandlers(ResourceHandlerRegistry registry) {
+
         String resourcePath = Paths.get("uploads").toAbsolutePath().toUri().toString();
         registry.addResourceHandler("/uploads/**")
-        .addResourceLocations(resourcePath);
+                .addResourceLocations(resourcePath);
     }
-    
+
 }

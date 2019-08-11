@@ -17,8 +17,6 @@ public class Usuario {
     @Id
     private int dni;
 
-//    @Enumerated(value = EnumType.STRING)
-//    private TipoPerfil tipoPerfil;
     @ManyToOne(cascade = CascadeType.ALL)
     private Rol rol;
     @Column(unique = true)

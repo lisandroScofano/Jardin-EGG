@@ -1,10 +1,8 @@
 com/goldenkids/springboot/web/app/models/Usuario.class
 com/goldenkids/springboot/web/app/services/AlumnoService.class
 com/goldenkids/springboot/web/app/controllers/UsuarioController.class
-com/goldenkids/springboot/web/app/repository/AlumnoRepositorio.class
 com/goldenkids/springboot/web/app/services/AutorizadosService.class
 com/goldenkids/springboot/web/app/controllers/AutorizadosController.class
-com/goldenkids/springboot/web/app/repository/UsuarioRepositorio.class
 com/goldenkids/springboot/web/app/models/Autorizados.class
 com/goldenkids/springboot/web/app/models/Alumno.class
 com/goldenkids/springboot/web/app/GoldenKidsApplication.class
@@ -22,12 +20,10 @@ com/goldenkids/springboot/web/app/controllers/AlumnoController.class
 com/goldenkids/springboot/web/app/models/Inscripcion.class
 com/goldenkids/springboot/web/app/models/TipoDocente.class
 com/goldenkids/springboot/web/app/models/TipoActividad.class
-com/goldenkids/springboot/web/app/repository/AutorizadosRepositorio.class
 com/goldenkids/springboot/web/app/models/Docente.class
 com/goldenkids/springboot/web/app/services/ActividadService.class
 com/goldenkids/springboot/web/app/controllers/LoginController.class
 com/goldenkids/springboot/web/app/models/Actividad.class
 com/goldenkids/springboot/web/app/services/JpaUserSecurityService.class
-com/goldenkids/springboot/web/app/repository/SalitaRepositorio.class
 com/goldenkids/springboot/web/app/services/DocenteService.class
 com/goldenkids/springboot/web/app/SpringSecurityConfiguracion.class

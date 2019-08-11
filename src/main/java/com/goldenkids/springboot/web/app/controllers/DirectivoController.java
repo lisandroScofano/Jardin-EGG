@@ -1,18 +1,15 @@
 package com.goldenkids.springboot.web.app.controllers;
 
-import com.goldenkids.springboot.web.app.models.Actividad;
 import com.goldenkids.springboot.web.app.models.Alumno;
-import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.services.ActividadService;
+
 import com.goldenkids.springboot.web.app.services.AlumnoService;
-import com.goldenkids.springboot.web.app.services.UsuarioService;
 import java.text.ParseException;
-import java.util.Date;
+
 import java.util.List;
 import org.slf4j.LoggerFactory;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -25,10 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 @RequestMapping("actividades")
 public class DirectivoController {
 
-    org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    private UsuarioService usuarioService;
+    org.slf4j.Logger log = LoggerFactory.getLogger(DirectivoController.class);
 
     @Autowired
     private AlumnoService alumnoService;
@@ -37,11 +31,14 @@ public class DirectivoController {
     private ActividadService actividadService;
 
     @GetMapping("/directivo")
-    public String bienvenida(Model modelo, Authentication authenticated) {
+    public String bienvenida(Model modelo, Authentication authenticated, String q) {
+        List<Alumno> hijos;
 
-        Usuario usuario = usuarioService.buscarUsuarioPorUserName(authenticated.getName());
-
-        List<Alumno> hijos = alumnoService.buscarAlumnos();
+        if (q != null) {
+            hijos = alumnoService.buscarAlumnos(q);
+        } else {
+            hijos = alumnoService.buscarAlumnos();
+        }
 
         modelo.addAttribute("hijos", hijos);
         modelo.addAttribute("tituloPagina", "Informacion relativa a los alumnos");
@@ -50,7 +47,7 @@ public class DirectivoController {
     }
 
     @GetMapping("directivo/cargar")
-    public String cargarActividades(Model modelo, @RequestParam(required = false) String q) {
+    public String cargarActividades(Model modelo, @RequestParam(required = false) String q, @RequestParam(required = false) String registrado) throws ParseException {
 
         List<Alumno> alumnos = null;
         if (q != null) {
@@ -59,8 +56,31 @@ public class DirectivoController {
             alumnos = alumnoService.buscarAlumnos();
         }
 
-        modelo.addAttribute("alumnos", alumnos);
-        modelo.addAttribute("tituloPagina", "Cargar Actividades a los alumnos");
+        if (registrado != null) {
+            modelo.addAttribute("success", "La Actividad fue registrada exitosamente");
+        }
+
+        for (Alumno alumno : alumnos) {//valido si esta en el jardin y si esta durmiendo y lo guardo en campo transient de la entidad
+            if ((actividadService.estaEnClase(alumno)) == null) {
+                log.info("La consulta dice que NO esta en clase");
+                alumno.setEnClase(false);
+            } else {
+                log.info("La consulta dice que esta en clase");
+                alumno.setEnClase(true);
+            }
+            if ((actividadService.estaDurmiendo(alumno)) == null) {
+                log.info("La consulta dice que NO esta durmiendo");
+                alumno.setDurmiendo(false);
+            } else {
+                log.info("La consulta dice que esta en durmiendo");
+                alumno.setDurmiendo(true);
+            }
+        }
+
+        modelo.addAttribute(
+                "alumnos", alumnos);
+        modelo.addAttribute(
+                "tituloPagina", "Cargar Actividades a los alumnos");
 
         return "actividades-sala";
     }

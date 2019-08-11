@@ -5,7 +5,6 @@
  */
 package com.goldenkids.springboot.web.app;
 
-import com.goldenkids.springboot.web.app.models.TipoPerfil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
@@ -16,7 +15,6 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 import com.goldenkids.springboot.web.app.services.JpaUserSecurityService;
 import org.springframework.context.annotation.Bean;
-import org.springframework.http.HttpMethod;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.User.UserBuilder;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -43,12 +41,10 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
                 .antMatchers("/salita/**").hasAuthority("DIRECTIVO")
                 .antMatchers("/actividades/directivo/**").hasAuthority("DIRECTIVO")
                 .antMatchers("/actividades/padre/**").hasAuthority("PADRE")
-                .antMatchers("/actividades/detalle").hasAnyAuthority("DIRECTIVO", "PADRE")
+                .antMatchers("/actividades/detalle").hasAnyAuthority("DIRECTIVO", "PADRE", "DOCENTE")
                 .antMatchers("/actividades/tipousuario").hasAnyAuthority("DIRECTIVO", "PADRE", "DOCENTE")
                 .antMatchers("/actividades/docente/**").hasAuthority("DOCENTE")
                 .antMatchers("/actividades/registraactividad").hasAnyAuthority("DIRECTIVO", "DOCENTE")
-                // /actividades/docente/alumno ver mapeo
-
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
