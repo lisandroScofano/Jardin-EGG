@@ -28,6 +28,7 @@ import java.text.ParseException;
 import java.util.Date;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.security.core.Authentication;
+import org.springframework.web.bind.annotation.PostMapping;
 
 @Controller
 @RequestMapping("/actividades")
@@ -155,6 +156,32 @@ public class ActividadesController {
         }
 
         log.info("Estado del alumno: " + alumnoService.buscarAlumno(dni).isEnClase());
+
+        String tipoUsuario = authenticated.getAuthorities().toString();
+
+        if (tipoUsuario.equals("[DIRECTIVO]")) {
+            return "redirect:/actividades/directivo/cargar?registrado=ok";
+        }
+        if (tipoUsuario.equals("[DOCENTE]")) {
+            return "redirect:/actividades/docente/plantilla?registrado=ok";
+        }
+
+        return "redirect:/actividades/tipousuario";
+    }
+
+    @PostMapping("/registraactividad/observacion")
+    public String guardarActividadObservacion(
+            @RequestParam(required = true) String txtObservacion,
+            @RequestParam(required = true) Integer dniAlumno,
+            ModelMap modelMap,
+            Authentication authenticated) {
+        log.info("La observacion es:" + txtObservacion);
+
+        try {
+            actividadService.crearActividadObservacion(txtObservacion, dniAlumno);
+        } catch (Exception e) {
+            e.getMessage();
+        }
 
         String tipoUsuario = authenticated.getAuthorities().toString();
 

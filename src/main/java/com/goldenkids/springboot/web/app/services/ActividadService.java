@@ -32,103 +32,96 @@ public class ActividadService {
     private EntityManager em;
 
     @Transactional
+    public void crearActividadObservacion(String observacion, Integer dniAlumno) {
+        Actividad actividad = new Actividad();
+        Alumno alumno = em.find(Alumno.class, dniAlumno);
+        actividad.setTipoActividad(TipoActividad.OBSERVACION);
+        actividad.setObservacion(observacion);
+        actividad.setAlumno(alumno);
+        actividad.setInicio(new Date());
+        actividad.setFin(new Date());
+        em.persist(actividad);
+    }
+
+    @Transactional
     public void crearActividad(TipoActividad tipoActividad, Integer cantidadLeche, TipoCantidad tipoCantidad,
             TipoPanial tipoPanial, String observacion, int dni) throws Exception {
 
-        Actividad actividad = new Actividad();
         Alumno alumno = em.find(Alumno.class, dni);
+        Actividad actividad = new Actividad();
 
-        if (tipoActividad.equals(tipoActividad.ENTRADA)) {
-            actividad.setTipoActividad(tipoActividad.ASISTENCIA);
-            actividad.setInicio(new Date());
-            actividad.setAlumno(alumno);
-            em.persist(actividad);
-        } else {
-            if (tipoActividad.equals(tipoActividad.SALIDA)) {
-                Actividad salida = estaEnClase(alumno);
-                salida.setTipoActividad(tipoActividad.ASISTENCIA);
-                salida.setFin(new Date());
-                salida.setAlumno(alumno);
+        switch (tipoActividad) {
+
+            case ENTRADA:
+                actividad.setTipoActividad(tipoActividad.ASISTENCIA);
+                actividad.setInicio(new Date());
+                actividad.setAlumno(alumno);
                 em.persist(actividad);
-            } else {
-                if (tipoActividad.equals(tipoActividad.DESPIERTO)) {
-                    Actividad siesta = estaDurmiendo(alumno);
-                    siesta.setTipoActividad(tipoActividad.SUEÑO);
-                    siesta.setAlumno(alumno);
-                    siesta.setFin(new Date());
-                    em.persist(actividad);
-                } else {
-                    if (tipoActividad.equals(tipoActividad.DORMIDO)) {
-                        actividad.setTipoActividad(tipoActividad.SUEÑO);
-                        actividad.setAlumno(alumno);
-                        actividad.setInicio(new Date());
-                        em.persist(actividad);
-                    } else {
-                        if (tipoActividad.equals(tipoActividad.DESAYUNO)) {
-                            actividad.setTipoActividad(tipoActividad);
-                            actividad.setCantidad(tipoCantidad);
-                            actividad.setAlumno(alumno);
-                            actividad.setInicio(new Date());
-                            actividad.setFin(new Date());
-                            em.persist(actividad);
-                        } else {
-                            if (tipoActividad.equals(tipoActividad.ALMUERZO)) {
-                                actividad.setTipoActividad(tipoActividad);
-                                actividad.setCantidad(tipoCantidad);
-                                actividad.setAlumno(alumno);
-                                actividad.setInicio(new Date());
-                                actividad.setFin(new Date());
-                                em.persist(actividad);
-                            } else {
-                                if (tipoActividad.equals(tipoActividad.MERIENDA)) {
-                                    actividad.setTipoActividad(tipoActividad);
-                                    actividad.setCantidad(tipoCantidad);
-                                    actividad.setAlumno(alumno);
-                                    actividad.setInicio(new Date());
-                                    actividad.setFin(new Date());
-                                    em.persist(actividad);
-                                } else {
-                                    if (tipoActividad.equals(tipoActividad.LECHE)) {
-                                        actividad.setTipoActividad(tipoActividad);
-                                        actividad.setCantidadLeche(cantidadLeche);
-                                        actividad.setAlumno(alumno);
-                                        actividad.setInicio(new Date());
-                                        actividad.setFin(new Date());
-                                        em.persist(actividad);
-                                    } else {
-                                        if (tipoActividad.equals(tipoActividad.PANIAL)) {
-                                            actividad.setTipoActividad(tipoActividad);
-                                            actividad.setTipoPanial(tipoPanial);
-                                            actividad.setAlumno(alumno);
-                                            actividad.setInicio(new Date());
-                                            actividad.setFin(new Date());
-                                            em.persist(actividad);
-                                        } else {
-                                            if (tipoActividad.equals(tipoActividad.OBSERVACION)) {
-                                                actividad.setTipoActividad(tipoActividad);
-                                                actividad.setObservacion(observacion);
-                                                actividad.setAlumno(alumno);
-                                                actividad.setInicio(new Date());
-                                                actividad.setFin(new Date());
-                                                em.persist(actividad);
-                                            } else {
+                break;
 
-                                            }
+            case SALIDA:
+                Actividad salida = estaEnClase(alumno);
+                salida.setFin(new Date());
+                em.merge(salida);
+                break;
 
-                                        }
-                                    }
+            case DESPIERTO:
+                Actividad siesta = estaDurmiendo(alumno);
+                siesta.setFin(new Date());
+                em.merge(siesta);
+                break;
 
-                                }
+            case DORMIDO:
+                actividad.setTipoActividad(tipoActividad.SUEÑO);
+                actividad.setAlumno(alumno);
+                actividad.setInicio(new Date());
+                em.persist(actividad);
+                break;
 
-                            }
+            case DESAYUNO:
+                actividad.setTipoActividad(tipoActividad.DESAYUNO);
+                actividad.setCantidad(tipoCantidad);
+                actividad.setAlumno(alumno);
+                actividad.setInicio(new Date());
+                actividad.setFin(new Date());
+                em.persist(actividad);
+                break;
 
-                        }
-                    }
+            case ALMUERZO:
+                actividad.setTipoActividad(tipoActividad.ALMUERZO);
+                actividad.setCantidad(tipoCantidad);
+                actividad.setAlumno(alumno);
+                actividad.setInicio(new Date());
+                actividad.setFin(new Date());
+                em.persist(actividad);
+                break;
 
-                }
+            case MERIENDA:
+                actividad.setTipoActividad(tipoActividad.MERIENDA);
+                actividad.setCantidad(tipoCantidad);
+                actividad.setAlumno(alumno);
+                actividad.setInicio(new Date());
+                actividad.setFin(new Date());
+                em.persist(actividad);
+                break;
 
-            }
+            case LECHE:
+                actividad.setTipoActividad(tipoActividad.LECHE);
+                actividad.setCantidadLeche(cantidadLeche);
+                actividad.setAlumno(alumno);
+                actividad.setInicio(new Date());
+                actividad.setFin(new Date());
+                em.persist(actividad);
+                break;
 
+            case PANIAL:
+                actividad.setTipoActividad(tipoActividad.PANIAL);
+                actividad.setTipoPanial(tipoPanial);
+                actividad.setAlumno(alumno);
+                actividad.setInicio(new Date());
+                actividad.setFin(new Date());
+                em.persist(actividad);
+                break;
         }
 
     }
@@ -166,8 +159,10 @@ public class ActividadService {
         return fechaFormateadaParaJpql(diaPosterior);
     }
 
-    public Actividad buscarActividad(String id) {
-        return em.find(Actividad.class, id);
+    public Actividad
+            buscarActividad(String id) {
+        return em.find(Actividad.class,
+                 id);
     }
 
     @Transactional

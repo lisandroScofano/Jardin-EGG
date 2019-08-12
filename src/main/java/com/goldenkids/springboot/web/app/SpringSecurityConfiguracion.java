@@ -45,6 +45,7 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
                 .antMatchers("/actividades/tipousuario").hasAnyAuthority("DIRECTIVO", "PADRE", "DOCENTE")
                 .antMatchers("/actividades/docente/**").hasAuthority("DOCENTE")
                 .antMatchers("/actividades/registraactividad").hasAnyAuthority("DIRECTIVO", "DOCENTE")
+                .antMatchers("/actividades/registraactividad/observacion").hasAnyAuthority("DIRECTIVO", "DOCENTE")
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
@@ -73,7 +74,7 @@ public class SpringSecurityConfiguracion extends WebSecurityConfigurerAdapter {
         UserBuilder users = User.builder().passwordEncoder(encoder::encode);
 
         builder.inMemoryAuthentication()
-                .withUser(users.username("lisandros").password("1234").authorities("DIRECTIVO"));
+                .withUser(users.username("golden").password("kids2019").authorities("DIRECTIVO"));
 
     }
 }

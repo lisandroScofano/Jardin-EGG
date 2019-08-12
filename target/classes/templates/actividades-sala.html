@@ -204,20 +204,20 @@
                                             <div class="modal-content">
                                                 <div class="modal-header">
                                                     <h5 class="modal-title" id="exampleModalLabel">Observaciones:</h5>
-                                                    <button type="button" class="close" data-dismiss="modal"
-                                                            aria-label="Close">
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                         <span aria-hidden="true">&times;</span>
                                                     </button>
                                                 </div>
                                                 <div class="modal-body">
-                                                    <form class="form" id="formulario" method="get" action="">
+                                                    <form class="form" id="formulario" method="post" th:action="@{/actividades/registraactividad/observacion}">
                                                         <div class="form-group">
-                                                            <textarea class="form-control" id="txtobs" name="txtobs" onchange="devolverText()"></textarea>
+                                                            <textarea class="form-control" id="txtObservacion" name="txtObservacion"></textarea>
                                                         </div>
-                                                </div>
-                                                <div class="modal-footer">
-                                                    <a class="btn btn-info" onclick="href='/actividades/registraactividad?tipoActividad=OBSERVACION&dni=' + ${alumno.dni} + '">Guardar</a>
-                                                    <!--<a class="btn btn-info" th:href="@{/actividades/registraactividad(tipoActividad='OBSERVACION',observacion='+ document.getElementById('txtobs').value;+',dni=${alumno.dni})}" role="button">Guardar</a>-->
+                                                        <input type="hidden" th:value="${alumno.dni}" name="dniAlumno" id="dniAlumno" />
+                                                        <div class="modal-footer">
+                                                            <input class="btn btn-info" type="submit" value="Guardar" />
+                                                        </div>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
@@ -231,12 +231,5 @@
         </div>
         <footer th:replace="/layout :: footer"> </footer>
         <script type="text/javascript" th:src="@{/js/main.js}"></script>
-        <script th:inline="javascript">
-            function devolverText(){
-                //var dni = [[${alumno.dni}]];
-                var texto = document.getElementById('txtobs').value;
-                alert(texto);
-            };
-            </script>
     </body>
 </html>
