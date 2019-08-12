@@ -29,6 +29,11 @@
                                     style="width: 70%; padding: 10px; margin-left: 10px;" th:if="${alumno.foto !=null}"
                                     class="card-img rounded" th:src="@{'/uploads/' + ${alumno.foto}}"
                                     th:alt="${alumno.foto}" /></a>
+                            <!--Si no hay ninguna foto cargada para el alumno, cargo una por defecto-->
+                            <a th:href="@{'/actividades/detalle?dni=' + ${alumno.dni}}"><img
+                                    style="width: 70%; padding: 10px; margin-left: 10px;" th:unless="${alumno.foto !=null}"
+                                    class="card-img rounded" th:src="@{'/images/default.jpeg'}"
+                                    th:alt="${alumno.foto}" /></a>
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
