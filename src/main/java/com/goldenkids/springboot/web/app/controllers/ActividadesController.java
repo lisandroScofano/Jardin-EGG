@@ -23,6 +23,7 @@ import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.services.ActividadService;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
 import com.goldenkids.springboot.web.app.services.DocenteService;
+import com.goldenkids.springboot.web.app.services.InscripcionService;
 import com.goldenkids.springboot.web.app.services.UsuarioService;
 import java.text.ParseException;
 import java.util.Date;
@@ -33,6 +34,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequestMapping("/actividades")
 public class ActividadesController {
+
+    @Autowired
+    private InscripcionService inscripcionService;
 
     @Autowired
     private ActividadService actividadService;
@@ -50,7 +54,6 @@ public class ActividadesController {
 
     @GetMapping("/tipousuario")
     public String redireccionaSegunUsuario(Authentication authenticated) {
-        //Usuario usuario = usuarioService.buscarUsuarioPorUserName(authenticated.getName());
         String tipoUsuario = authenticated.getAuthorities().toString();
         log.info("El tipo de usuario logueado para ver actividades es: " + tipoUsuario);
 
@@ -110,7 +113,7 @@ public class ActividadesController {
         modelo.addAttribute("titulo", "Listado de alumnos");
         List<Alumno> alumnos;
 
-        alumnos = actividadService.buscarAlumnnosPorSala(salita);
+        alumnos = actividadService.buscarAlumnnosPorSalita(salita);
 
         for (Alumno alumno : alumnos) {//valido si esta en el jardin y si esta durmiendo y lo guardo en campo transient de la entidad
             if ((actividadService.estaEnClase(alumno)) == null) {

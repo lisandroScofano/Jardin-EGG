@@ -25,10 +25,13 @@ public class Alumno {
     private Date fechaBaja;
     @OneToOne
     private Usuario contacto;
-    @ManyToOne
-    private Salita salita;
+//    @ManyToOne
+//    private Salita salita;
 
     private String foto;
+
+    @Transient
+    private Salita salita;
 
     @Transient
     private boolean enClase = false;

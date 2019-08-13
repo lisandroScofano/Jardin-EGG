@@ -9,7 +9,7 @@
         <div th:replace="/layout :: successdisplay"></div>
         <div class="container">
             <nav class="navbar navbar-expand-lg navbar-light">
-                <form class="form-inline my-2 my-lg-0" action="" method="GET">
+                <form sec:authorize="hasAuthority('DIRECTIVO')" class="form-inline my-2 my-lg-0" action="" method="GET">
                     <label class="form-check-label" style="color: white; padding: 10px; margin-left: -10px;margin-bottom: 10px;">
                         Seleccione el nombre del alumno a buscar: </label>
                     <input class="form-control mr-sm-2" type="text" placeholder="Buscar" aria-label="Buscar" name="q" id="q" th:value="${q}" />

@@ -12,16 +12,19 @@ import org.springframework.stereotype.Service;
 
 import com.goldenkids.springboot.web.app.models.Actividad;
 import com.goldenkids.springboot.web.app.models.Alumno;
+import com.goldenkids.springboot.web.app.models.Inscripcion;
 import com.goldenkids.springboot.web.app.models.Salita;
 import com.goldenkids.springboot.web.app.models.TipoActividad;
 import com.goldenkids.springboot.web.app.models.TipoCantidad;
 import com.goldenkids.springboot.web.app.models.TipoPanial;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 
 @Service
 public class ActividadService {
@@ -30,6 +33,12 @@ public class ActividadService {
 
     @PersistenceContext
     private EntityManager em;
+
+    @Autowired
+    private AlumnoService alumnoService;
+
+    @Autowired
+    private InscripcionService inscripcionService;
 
     @Transactional
     public void crearActividadObservacion(String observacion, Integer dniAlumno) {
@@ -128,9 +137,30 @@ public class ActividadService {
 
     @SuppressWarnings("unchecked")
     public List<Alumno> buscarAlumnnosPorSala(Salita salita) {
+
         return em.createQuery("SELECT a FROM Alumno a WHERE a.salita = :salita")
                 .setParameter("salita", salita).getResultList();
+    }
 
+    @SuppressWarnings("unchecked")
+    public List<Alumno> buscarAlumnnosPorSalita(Salita salita) {
+
+        List<Alumno> alumnos = alumnoService.buscarAlumnos();
+        for (Alumno alumno : alumnos) {
+            Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
+            if (inscripcion != null) {
+                alumno.setSalita(inscripcion.getSalita());
+            }
+        }
+
+        List<Alumno> alumnosDeLaSalita = new ArrayList<Alumno>();
+
+        for (Alumno alumno : alumnos) {
+            if (alumno.getSalita() == salita) {
+                alumnosDeLaSalita.add(alumno);
+            }
+        }
+        return alumnosDeLaSalita;
     }
 
     @SuppressWarnings("unchecked")
@@ -162,7 +192,7 @@ public class ActividadService {
     public Actividad
             buscarActividad(String id) {
         return em.find(Actividad.class,
-                 id);
+                id);
     }
 
     @Transactional
