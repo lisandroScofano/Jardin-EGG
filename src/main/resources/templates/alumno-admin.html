@@ -31,14 +31,9 @@
                                 th:text="${padre.nombre} + ' ' + ${padre.apellido}"></option>
                     </select>
                 </div>
-                <div class="form-group" id="salita">
+                <div th:if="${alumno.salita != null}" class="form-group" id="salita">
                     <label style="color: white;">Nombre Salita: </label>
-                    <select name="selectSalitaId" id="selectSalitaId" required>
-                        <option selected="selected"></option>
-                        <option th:if="${salitaActual != null}"  selected="selected" th:value="${salitaActual.id}" th:text="${salitaActual.nombre}"></option>
-                        <option th:each="salitaLoop : ${salitas}" th:value="${salitaLoop.id}"
-                                th:text="${salitaLoop.nombre}"></option>
-                    </select>
+                    <input type="text" disabled="disabled" th:value="${alumno.salita.nombre}"/>
                 </div>
                 <div class="form-group">
                     <label for="file" style="color: white;">Foto: </label> <input type="file" class="form-control" name="file" />

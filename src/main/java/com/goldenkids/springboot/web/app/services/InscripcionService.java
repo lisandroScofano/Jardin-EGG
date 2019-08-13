@@ -8,14 +8,20 @@ import java.util.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
+import javax.persistence.NonUniqueResultException;
 import javax.persistence.PersistenceContext;
 import javax.transaction.Transactional;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import org.springframework.stereotype.Service;
 
 @Service
 public class InscripcionService {
+
+    Logger log = LoggerFactory.getLogger(SalitaService.class);
 
     @PersistenceContext
     private EntityManager em;
@@ -96,6 +102,23 @@ public class InscripcionService {
     @SuppressWarnings("unchecked")
     public List<Inscripcion> buscarInscripcionesEliminadas() {
         return em.createQuery("SELECT i FROM Inscripcion i WHERE i.fechaBaja is not null").getResultList();
+    }
+
+    public Inscripcion buscarInscripcionActual(Alumno alumno) {
+        Inscripcion inscripcion;
+        try {
+            inscripcion = (Inscripcion) em.createQuery("SELECT i FROM Inscripcion i WHERE (i.alumno = :alumno) AND (i.fechaBaja = null)")
+                    .setParameter("alumno", alumno)
+                    .setMaxResults(1)
+                    .getSingleResult();
+        } catch (NoResultException nre) {
+            log.error("No hay resultados para el query de Inscripcion" + nre.getMessage());
+            inscripcion = null;
+        } catch (NonUniqueResultException nure) {
+            log.error("Hay mas de un resultado para el query de Inscripcion" + nure.getMessage());
+            inscripcion = null;
+        }
+        return inscripcion;
     }
 
 }

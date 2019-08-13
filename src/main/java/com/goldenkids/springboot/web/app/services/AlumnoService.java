@@ -20,16 +20,13 @@ public class AlumnoService {
     Logger log = LoggerFactory.getLogger(AlumnoService.class);
 
     @Autowired
-    private SalitaService salitaService;
-
-    @Autowired
     private UsuarioService usuarioService;
 
     @PersistenceContext
     private EntityManager em;
 
     @Transactional
-    public void crearAlumno(Integer dni, String nombre, String apellido, Date fechaNacimiento, String salitaId, Integer padreDni, String uniqueFileName) {
+    public void crearAlumno(Integer dni, String nombre, String apellido, Date fechaNacimiento, Integer padreDni, String uniqueFileName) {
 
         Alumno alumno = new Alumno();
 
@@ -37,7 +34,6 @@ public class AlumnoService {
         alumno.setNombre(nombre);
         alumno.setApellido(apellido);
         alumno.setFechaNacimiento(fechaNacimiento);
-        alumno.setSalita(salitaService.buscarSalita(salitaId));
         if (padreDni != null) {
             alumno.setContacto(usuarioService.buscarUsuario(padreDni));
         }
@@ -52,14 +48,13 @@ public class AlumnoService {
     }
 
     @Transactional
-    public void modificarAlumno(Integer dni, String nombre, String apellido, Date fechaNacimiento, String salitaId, Integer padreDni, String uniqueFileName) {
+    public void modificarAlumno(Integer dni, String nombre, String apellido, Date fechaNacimiento, Integer padreDni, String uniqueFileName) {
 
         Alumno alumno = buscarAlumno(dni);
 
         alumno.setNombre(nombre);
         alumno.setApellido(apellido);
         alumno.setFechaNacimiento(fechaNacimiento);
-        alumno.setSalita(salitaService.buscarSalita(salitaId));
         alumno.setContacto(usuarioService.buscarUsuario(padreDni));
 
         log.info("nombre de archivo " + uniqueFileName);

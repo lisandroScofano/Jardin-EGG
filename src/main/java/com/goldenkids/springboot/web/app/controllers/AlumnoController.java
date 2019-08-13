@@ -16,10 +16,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.goldenkids.springboot.web.app.models.Alumno;
+import com.goldenkids.springboot.web.app.models.Inscripcion;
 import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
+import com.goldenkids.springboot.web.app.services.InscripcionService;
 import com.goldenkids.springboot.web.app.services.PadreService;
-import com.goldenkids.springboot.web.app.services.SalitaService;
 import com.goldenkids.springboot.web.app.services.UploadService;
 
 import org.slf4j.LoggerFactory;
@@ -32,7 +33,7 @@ public class AlumnoController {
     org.slf4j.Logger log = LoggerFactory.getLogger(AlumnoController.class);
 
     @Autowired
-    private SalitaService salitaService;
+    private InscripcionService inscripcionService;
 
     @Autowired
     private AlumnoService alumnoServicio;
@@ -53,6 +54,14 @@ public class AlumnoController {
             alumnos = alumnoServicio.buscarAlumnos();
         }
 
+        for (Alumno alumno : alumnos) {
+            Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
+
+            if (inscripcion != null) {
+                alumno.setSalita(inscripcion.getSalita());
+            }
+        }
+
         modelo.addAttribute("alumnos", alumnos);
         modelo.addAttribute("q", q);
         modelo.addAttribute("pagina", "Alumnos");
@@ -69,6 +78,14 @@ public class AlumnoController {
 
         List<Alumno> alumnosEliminados = alumnoServicio.buscarAlumnosEliminados();
 
+        for (Alumno alumno : alumnosEliminados) {
+            Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
+
+            if (inscripcion != null) {
+                alumno.setSalita(inscripcion.getSalita());
+            }
+        }
+
         modelo.addAttribute("alumnos", alumnosEliminados);
         modelo.addAttribute("tituloPagina", "Administración de Alumnos");
         modelo.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Alumnos del jardin.");
@@ -84,10 +101,10 @@ public class AlumnoController {
         String uniqueFileName = uploadService.cargarArchivo(file);//cargo el archivo a la carpeta y devuelvo el nombre del archivo para persistir en la BD
 
         if (accion.equals("crear")) {
-            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, selectPadreDni, uniqueFileName);
+            alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectPadreDni, uniqueFileName);
             modelo.addObject("success", "El Alumno ha sido creado con éxito.");
         } else if (accion.equals("modificar")) {
-            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectSalitaId, selectPadreDni, uniqueFileName);
+            alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectPadreDni, uniqueFileName);
             modelo.addObject("success", "El Alumno ha sido modificado con éxito.");
         }
 
@@ -106,16 +123,19 @@ public class AlumnoController {
 
         if (dni != null) {
             Alumno alumno = alumnoServicio.buscarAlumno(dni);
+
+            Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
+            if (inscripcion != null) {
+                alumno.setSalita(inscripcion.getSalita());
+            }
             model.put("alumno", alumno);
             model.put("accion", "modificar");
-            model.put("salitas", salitaService.buscarSalitas());
             model.put("salitaActual", alumno.getSalita());
             model.put("padres", padres);
         } else {
             model.put("alumno", new Alumno());
             model.put("padres", padres);
             model.put("accion", "crear");
-            model.put("salitas", salitaService.buscarSalitas());
         }
 
         return "alumno-admin";
@@ -128,10 +148,15 @@ public class AlumnoController {
 
         List<Usuario> padres = padreService.buscarPadres();
 
+        Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
+
+        if (inscripcion != null) {
+            alumno.setSalita(inscripcion.getSalita());
+        }
+
         modelMap.put("alumno", alumno);
         modelMap.put("accion", "crear");
         modelMap.put("padres", padres);
-        modelMap.put("salitas", salitaService.buscarSalitas());
         modelMap.put("tituloPagina", "Registro de Alumnos");
 
         return "alumno-admin";

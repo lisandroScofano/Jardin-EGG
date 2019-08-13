@@ -4,6 +4,7 @@ import com.goldenkids.springboot.web.app.models.Alumno;
 import com.goldenkids.springboot.web.app.services.ActividadService;
 
 import com.goldenkids.springboot.web.app.services.AlumnoService;
+import com.goldenkids.springboot.web.app.services.InscripcionService;
 import java.text.ParseException;
 
 import java.util.List;
@@ -30,6 +31,9 @@ public class DirectivoController {
     @Autowired
     private ActividadService actividadService;
 
+    @Autowired
+    private InscripcionService inscripcionService;
+
     @GetMapping("/directivo")
     public String bienvenida(Model modelo, Authentication authenticated, String q) {
         List<Alumno> hijos;
@@ -38,6 +42,10 @@ public class DirectivoController {
             hijos = alumnoService.buscarAlumnos(q);
         } else {
             hijos = alumnoService.buscarAlumnos();
+        }
+
+        for (Alumno hijo : hijos) {
+            hijo.setSalita(inscripcionService.buscarInscripcionActual(hijo).getSalita());
         }
 
         modelo.addAttribute("hijos", hijos);
@@ -60,6 +68,10 @@ public class DirectivoController {
             modelo.addAttribute("success", "La Actividad fue registrada exitosamente");
         }
 
+        for (Alumno alumno : alumnos) {
+            alumno.setSalita(inscripcionService.buscarInscripcionActual(alumno).getSalita());
+        }
+
         for (Alumno alumno : alumnos) {//valido si esta en el jardin y si esta durmiendo y lo guardo en campo transient de la entidad
             if ((actividadService.estaEnClase(alumno)) == null) {
                 log.info("La consulta dice que NO esta en clase");
@@ -77,10 +89,8 @@ public class DirectivoController {
             }
         }
 
-        modelo.addAttribute(
-                "alumnos", alumnos);
-        modelo.addAttribute(
-                "tituloPagina", "Cargar Actividades a los alumnos");
+        modelo.addAttribute("alumnos", alumnos);
+        modelo.addAttribute("tituloPagina", "Cargar Actividades a los alumnos");
 
         return "actividades-sala";
     }
