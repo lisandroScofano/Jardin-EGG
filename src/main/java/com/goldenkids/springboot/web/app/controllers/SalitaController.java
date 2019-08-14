@@ -31,13 +31,29 @@ public class SalitaController {
     Logger log = LoggerFactory.getLogger(ActividadesController.class);
 
     @RequestMapping("/listarsalitas")
-    public String listar(@RequestParam(required = false) String q, Model model) {
+    public String listar(@RequestParam(required = false) String q, Model model, String msg) {
 
         List<Salita> salitas;
         if (q != null) {
             salitas = salitaService.buscarSalitas(q);
         } else {
             salitas = salitaService.buscarSalitas();
+        }
+
+        if (msg != null) {
+            switch (msg) {
+                case "guardadoOk":
+                    model.addAttribute("success", "La Salita ha sido creada con éxito.");
+                    break;
+                case "modificadoOk":
+                    model.addAttribute("success", "La Salita ha sido modificada con éxito.");
+                    break;
+                case "error":
+                    model.addAttribute("error", "Ha ocurrido un error con la salita.");
+                    break;
+                default:
+                    break;
+            }
         }
 
         model.addAttribute("salitas", salitas);
@@ -53,7 +69,6 @@ public class SalitaController {
     @PostMapping("/guardar")
     public String guardar(@ModelAttribute("salita") @RequestParam String nombre, String horaEntrada, String horaSalida,
             String accion, String salitaId) throws ParseException {
-        ModelAndView modelo = new ModelAndView();
 
         SimpleDateFormat formatter = new SimpleDateFormat("HH:mm");
 
@@ -69,17 +84,12 @@ public class SalitaController {
 
         if (accion.equals("crear")) {
             salitaService.crearSalita(nombre, horaEntradaFormateada, horaSalidaFormateada);
-            modelo.addObject("success", "La Salita ha sido creada con éxito.");
+            return "redirect:/salita/listarsalitas?msg=guardadoOk";
         } else if (accion.equals("modificar")) {
             salitaService.modificarSalita(nombre, horaEntradaFormateada, horaSalidaFormateada, salitaId);
-            modelo.addObject("success", "La Salita ha sido modificada con éxito.");
+            return "redirect:/salita/listarsalitas?msg=modificadoOk";
         }
-
-        List<Salita> salitas = salitaService.buscarSalitas();
-
-        modelo.addObject("salitas", salitas);
-
-        return "redirect:/salita/listarsalitas";
+        return "redirect:/salita/listarsalitas?msg=error";
     }
 
     @GetMapping("/modificar")

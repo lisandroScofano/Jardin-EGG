@@ -44,8 +44,8 @@ public class AlumnoController {
     @Autowired
     private PadreService padreService;
 
-    @RequestMapping("/listaralumnos")
-    public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
+    @GetMapping("/listaralumnos")
+    public String listar(@RequestParam(required = false) String q, String error, Model modelo, String msg) {
 
         List<Alumno> alumnos;
         if (q != null) {
@@ -56,9 +56,24 @@ public class AlumnoController {
 
         for (Alumno alumno : alumnos) {
             Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
-
             if (inscripcion != null) {
                 alumno.setSalita(inscripcion.getSalita());
+            }
+        }
+
+        if (msg != null) {
+            switch (msg) {
+                case "guardadoOk":
+                    modelo.addAttribute("success", "El Alumno ha sido creado con éxito.");
+                    break;
+                case "modificadoOk":
+                    modelo.addAttribute("success", "El Alumno ha sido modificado con éxito.");
+                    break;
+                case "error":
+                    modelo.addAttribute("error", "Ha ocurrido un error con el Alumno.");
+                    break;
+                default:
+                    break;
             }
         }
 
@@ -71,7 +86,7 @@ public class AlumnoController {
         return "alumno-listado";
     }
 
-    @RequestMapping("/listaralumnoseliminados")
+    @GetMapping("/listaralumnoseliminados")
     public String listarEliminados(Model modelo) {
 
         modelo.addAttribute("titulo", "Listado de Alumnos Eliminados : ");
@@ -80,7 +95,6 @@ public class AlumnoController {
 
         for (Alumno alumno : alumnosEliminados) {
             Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
-
             if (inscripcion != null) {
                 alumno.setSalita(inscripcion.getSalita());
             }
@@ -94,26 +108,19 @@ public class AlumnoController {
     }
 
     @PostMapping("/guardar")
-    public ModelAndView guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
+    public String guardar(@ModelAttribute("alumno") @RequestParam Integer dni, String nombre, String apellido,
             @DateTimeFormat(pattern = "yyyy-MM-dd") Date fechaNacimiento, String accion, String selectSalitaId, Integer selectPadreDni, MultipartFile file) {
-        ModelAndView modelo = new ModelAndView();
 
         String uniqueFileName = uploadService.cargarArchivo(file);//cargo el archivo a la carpeta y devuelvo el nombre del archivo para persistir en la BD
 
         if (accion.equals("crear")) {
             alumnoServicio.crearAlumno(dni, nombre, apellido, fechaNacimiento, selectPadreDni, uniqueFileName);
-            modelo.addObject("success", "El Alumno ha sido creado con éxito.");
+            return "redirect:/alumno/listaralumnos?msg=guardadoOk";
         } else if (accion.equals("modificar")) {
             alumnoServicio.modificarAlumno(dni, nombre, apellido, fechaNacimiento, selectPadreDni, uniqueFileName);
-            modelo.addObject("success", "El Alumno ha sido modificado con éxito.");
+            return "redirect:/alumno/listaralumnos?msg=modificadoOk";
         }
-
-        List<Alumno> alumnos = alumnoServicio.buscarAlumnos();
-
-        modelo.addObject("alumnos", alumnos);
-        modelo.setViewName("alumno-listado.html");
-
-        return modelo;
+        return "redirect:/alumno/listaralumnos?msg=error";
     }
 
     @GetMapping("/modificar")

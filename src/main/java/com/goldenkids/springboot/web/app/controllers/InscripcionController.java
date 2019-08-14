@@ -38,7 +38,7 @@ public class InscripcionController {
     Logger log = LoggerFactory.getLogger(InscripcionController.class);
 
     @RequestMapping("/listarinscripciones")
-    public String listar(@RequestParam(required = false) String q, Model model) {
+    public String listar(@RequestParam(required = false) String q, Model model, String msg) {
 
         List<Inscripcion> inscripciones;
 
@@ -46,6 +46,25 @@ public class InscripcionController {
             inscripciones = inscripcionService.buscarInscripciones(q);
         } else {
             inscripciones = inscripcionService.buscarInscripciones();
+        }
+
+        if (msg != null) {
+            switch (msg) {
+                case "guardadoOk":
+                    model.addAttribute("success", "La Inscripcion ha sido creada con éxito.");
+                    break;
+                case "modificadoOk":
+                    model.addAttribute("success", "La Inscripcion ha sido modificada con éxito.");
+                    break;
+                case "error":
+                    model.addAttribute("error", "Ha ocurrido un error con la Inscripcion.");
+                    break;
+                case "errorAlumno":
+                    model.addAttribute("error", "El alumno seleccionado tiene una inscripcion abierta. Por favor ingresar fecha de baja antes de realizar una nueva inscripcion.");
+                    break;
+                default:
+                    break;
+            }
         }
 
         model.addAttribute("inscripciones", inscripciones);
@@ -73,25 +92,16 @@ public class InscripcionController {
 
         if (accion.equals("crear")) {
             if (inscripcionService.yaInscripto(selectAlumnoDni)) {
-                model.addAttribute("error", "El alumno seleccionado tiene una inscripcion abierta. Por favor ingresar fecha de baja antes de realizar nueva inscripcion");
+                return "redirect:/inscripciones/listarinscripciones?msg=errorAlumno";
             } else {
                 inscripcionService.crearInscripcion(selectAlumnoDni, selectSalitaId, fechaAlta, fechaBaja);
-                model.addAttribute("success", "La Inscripcion ha sido creada con éxito.");
+                return "redirect:/inscripciones/listarinscripciones?msg=guardadoOk";
             }
-
         } else if (accion.equals("modificar")) {
             inscripcionService.modificarInscripcion(selectAlumnoDni, selectSalitaId, fechaAlta, fechaBaja, inscripcionId);
-            model.addAttribute("success", "La Inscripcion ha sido modificada con éxito.");
+            return "redirect:/inscripciones/listarinscripciones?msg=modificadoOk";
         }
-
-        List<Inscripcion> inscripciones = inscripcionService.buscarInscripciones();
-
-        model.addAttribute("inscripciones", inscripciones);
-        model.addAttribute("titulo", "Administracion de Inscripciones");
-        model.addAttribute("tituloPagina", "Administración de Inscripciones");
-        model.addAttribute("subtituloPagina", "Utilice este modulo para administrar los registros de Inscripciones del jardin.");
-
-        return "inscripcion-listado";
+        return "redirect:/inscripciones/listarinscripciones?msg=error";
     }
 
     @GetMapping("/modificar")

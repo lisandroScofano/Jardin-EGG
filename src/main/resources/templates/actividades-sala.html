@@ -37,8 +37,8 @@
                         </div>
                         <div class="col-md-8">
                             <div class="card-body">
-                                <h5 class="card-title"
-                                    th:text="'Salita: ' + ${alumno.salita.nombre} +', '+ ${alumno.nombre} + ' ' + ${alumno.apellido}"
+                                <span class="card-title"
+                                    th:if="${alumno.salita}" th:text="'Salita: ' + ${alumno.salita.nombre}"></span><h5 class="card-title" th:text="'Alumno: ' + ${alumno.nombre} + ' ' + ${alumno.apellido}"
                                     th:value="${alumno.nombre}">Alumno:</h5>
                                 <ul class="list-group list-group-horizontal-lg">
                                     <a th:if="${alumno.enClase == false}" th:id="entrada" th:href="@{/actividades/registraactividad(tipoActividad='ENTRADA',dni=${alumno.dni})}"><img

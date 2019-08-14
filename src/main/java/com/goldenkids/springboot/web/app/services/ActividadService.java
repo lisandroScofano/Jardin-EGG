@@ -17,6 +17,7 @@ import com.goldenkids.springboot.web.app.models.Salita;
 import com.goldenkids.springboot.web.app.models.TipoActividad;
 import com.goldenkids.springboot.web.app.models.TipoCantidad;
 import com.goldenkids.springboot.web.app.models.TipoPanial;
+import com.goldenkids.springboot.web.app.models.Usuario;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -25,6 +26,7 @@ import javax.persistence.NoResultException;
 import javax.persistence.NonUniqueResultException;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 
 @Service
 public class ActividadService {
@@ -40,6 +42,9 @@ public class ActividadService {
     @Autowired
     private InscripcionService inscripcionService;
 
+    @Autowired
+    private UsuarioService usuarioService;
+     
     @Transactional
     public void crearActividadObservacion(String observacion, Integer dniAlumno) {
         Actividad actividad = new Actividad();
@@ -54,29 +59,36 @@ public class ActividadService {
 
     @Transactional
     public void crearActividad(TipoActividad tipoActividad, Integer cantidadLeche, TipoCantidad tipoCantidad,
-            TipoPanial tipoPanial, String observacion, int dni) throws Exception {
+            TipoPanial tipoPanial, String observacion, int dni, Authentication userAuth) throws Exception {
 
+        
         Alumno alumno = em.find(Alumno.class, dni);
         Actividad actividad = new Actividad();
 
+        String userName = userAuth.getName();
+        Usuario usuarioLogueado = usuarioService.buscarUsuarioPorUserName(userName);
+        String UserLog = usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido();
         switch (tipoActividad) {
 
             case ENTRADA:
                 actividad.setTipoActividad(tipoActividad.ASISTENCIA);
                 actividad.setInicio(new Date());
                 actividad.setAlumno(alumno);
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
 
             case SALIDA:
                 Actividad salida = estaEnClase(alumno);
                 salida.setFin(new Date());
+                salida.setUsuarioLog(UserLog);
                 em.merge(salida);
                 break;
 
             case DESPIERTO:
                 Actividad siesta = estaDurmiendo(alumno);
                 siesta.setFin(new Date());
+                siesta.setUsuarioLog(UserLog);
                 em.merge(siesta);
                 break;
 
@@ -84,6 +96,7 @@ public class ActividadService {
                 actividad.setTipoActividad(tipoActividad.SUEÑO);
                 actividad.setAlumno(alumno);
                 actividad.setInicio(new Date());
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
 
@@ -93,6 +106,7 @@ public class ActividadService {
                 actividad.setAlumno(alumno);
                 actividad.setInicio(new Date());
                 actividad.setFin(new Date());
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
 
@@ -102,6 +116,7 @@ public class ActividadService {
                 actividad.setAlumno(alumno);
                 actividad.setInicio(new Date());
                 actividad.setFin(new Date());
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
 
@@ -111,6 +126,7 @@ public class ActividadService {
                 actividad.setAlumno(alumno);
                 actividad.setInicio(new Date());
                 actividad.setFin(new Date());
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
 
@@ -120,6 +136,7 @@ public class ActividadService {
                 actividad.setAlumno(alumno);
                 actividad.setInicio(new Date());
                 actividad.setFin(new Date());
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
 
@@ -129,6 +146,7 @@ public class ActividadService {
                 actividad.setAlumno(alumno);
                 actividad.setInicio(new Date());
                 actividad.setFin(new Date());
+                actividad.setUsuarioLog(UserLog);
                 em.persist(actividad);
                 break;
         }

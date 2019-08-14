@@ -45,8 +45,8 @@ public class UsuarioController {
 
     Logger log = LoggerFactory.getLogger(UsuarioController.class);
 
-    @RequestMapping("/listarusuarios")
-    public String listar(@RequestParam(required = false) String q, Model modelo, Authentication authentication) {
+    @GetMapping("/listarusuarios")
+    public String listar(@RequestParam(required = false) String q, Model modelo, Authentication authentication, String msg) {
 
         log.info(TipoPerfil.DIRECTIVO.toString());
 
@@ -55,6 +55,25 @@ public class UsuarioController {
             usuarios = usuarioServicio.buscarUsuarios(q);
         } else {
             usuarios = usuarioServicio.buscarUsuarios();
+        }
+
+        if (msg != null) {
+            switch (msg) {
+                case "guardadoOk":
+                    modelo.addAttribute("success", "El Usuario ha sido creado con éxito.");
+                    break;
+                case "modificadoOk":
+                    modelo.addAttribute("success", "El Usuario ha sido modificado con éxito.");
+                    break;
+                case "error":
+                    modelo.addAttribute("error", "Ha ocurrido un error con el Usuario.");
+                    break;
+                case "errorUsuario":
+                    modelo.addAttribute("error", "El usuario ingresado ya existe. Por favor revise el DNI.");
+                    break;
+                default:
+                    break;
+            }
         }
 
         log.info("El Nombre del usuario logueado es: " + authentication.getName() + " y su ROL es : " + authentication.getPrincipal().toString());
@@ -67,7 +86,7 @@ public class UsuarioController {
         return "usuario-listado";
     }
 
-    @RequestMapping("/listarusuarioseliminados")
+    @GetMapping("/listarusuarioseliminados")
     public String listarEliminados(Model modelo) {
 
         modelo.addAttribute("titulo", "Listado de Usuarios: ");
@@ -83,19 +102,18 @@ public class UsuarioController {
     }
 
     @PostMapping("/guardar")
-    public ModelAndView guardar(@ModelAttribute("usuario") @RequestParam String nombre, String apellido, String password,
+    public String guardar(@ModelAttribute("usuario") @RequestParam String nombre, String apellido, String password,
             String mail, String telefono, String nombreUsuario, int dni, TipoPerfil tipoPerfil, String accion, String selectSalitaId, TipoDocente selectTipoDocente) {
-        ModelAndView modelo = new ModelAndView();
         if (accion.equals("crear")) {
             if (usuarioServicio.buscarUsuario(dni) == null) {
                 usuarioServicio.crearUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);
                 if (tipoPerfil.toString().equals("DOCENTE")) {
                     docenteService.crearDocente(usuarioServicio.buscarUsuario(dni), selectSalitaId, selectTipoDocente);
                 }
-                modelo.addObject("success", "El usuario ha sido guardado con éxito.");
+                return "redirect:/usuario/listarusuarios?msg=guardadoOk";
             } else {
-                modelo.addObject("error", "El usuario ingresado ya existe. Por favor revise el DNI.");
                 log.error("Ya existe un usuario ingresado con ese DNI");
+                return "redirect:/usuario/listarusuarios?msg=errorUsuario";
             }
         } else if (accion.equals("modificar")) {
             Usuario usuarioOriginal = usuarioServicio.buscarUsuario(dni);
@@ -115,15 +133,10 @@ public class UsuarioController {
             }
 
             usuarioServicio.modificarUsuario(nombre, apellido, password, mail, telefono, nombreUsuario, dni, tipoPerfil);//puede cambiar entre padre y directivo
-            modelo.addObject("success", "El usuario ha sido modificado con éxito.");
+            return "redirect:/usuario/listarusuarios?msg=modificadoOk";
         }
 
-        List<Usuario> usuarios = usuarioServicio.buscarUsuarios();
-
-        modelo.addObject("usuarios", usuarios);
-        modelo.setViewName("usuario-listado.html");
-
-        return modelo;
+        return "redirect:/usuario/listarusuarios?msg=error";
     }
 
     @GetMapping("/modificar")

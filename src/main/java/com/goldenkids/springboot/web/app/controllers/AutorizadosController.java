@@ -53,19 +53,12 @@ public class AutorizadosController {
 
         if (accion.equals("crear")) {
             autorizadosServicio.crearAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error, alumnoAutorizado);
-            modelo.addObject("success", "La Autorizacion ha sido creada con éxito.");
+            return "redirect:/autorizados/listarautorizados?msg=guardadoOk";
         } else if (accion.equals("modificar")) {
             autorizadosServicio.modificarAutorizados(nombre, apellido, telefono1, telefono2, dni, parentesco, error, alumnoAutorizado, id);
-            modelo.addObject("success", "La Autorizacion ha sido modificada con éxito.");
+            return "redirect:/autorizados/listarautorizados?msg=modificadoOk";
         }
-
-        List<Autorizados> autorizados = autorizadosServicio.buscarAutorizados();
-
-        modelo.addObject("error", error);
-
-        modelo.addObject("autorizados", autorizados);
-
-        return "redirect:/autorizados/listarautorizados";
+        return "redirect:/autorizados/listarautorizados?msg=error";
     }
 
     @GetMapping("/modificar")
@@ -99,8 +92,8 @@ public class AutorizadosController {
 
     }
 
-    @RequestMapping("/listarautorizados")
-    public String listar(@RequestParam(required = false) String q, String error, Model modelo) {
+    @GetMapping("/listarautorizados")
+    public String listar(@RequestParam(required = false) String q, String error, Model modelo, String msg) {
 
         modelo.addAttribute("titulo", "Listado de Autorizados: ");
 
@@ -109,6 +102,22 @@ public class AutorizadosController {
             autorizados = autorizadosServicio.buscarAutorizados(q);
         } else {
             autorizados = autorizadosServicio.buscarAutorizados();
+        }
+
+        if (msg != null) {
+            switch (msg) {
+                case "guardadoOk":
+                    modelo.addAttribute("success", "La Autorizacion ha sido creada con éxito.");
+                    break;
+                case "modificadoOk":
+                    modelo.addAttribute("success", "La Autorizacion ha sido modificada con éxito.");
+                    break;
+                case "error":
+                    modelo.addAttribute("error", "Ha ocurrido un error con la autorización.");
+                    break;
+                default:
+                    break;
+            }
         }
 
         modelo.addAttribute("error", error);
@@ -121,7 +130,7 @@ public class AutorizadosController {
         return "autorizados-lista";
     }
 
-    @RequestMapping("/listarautorizadoseliminados")
+    @GetMapping("/listarautorizadoseliminados")
     public String listarEliminados(Model modelo) {
 
         modelo.addAttribute("titulo", "Listado de Autorizados Eliminados : ");

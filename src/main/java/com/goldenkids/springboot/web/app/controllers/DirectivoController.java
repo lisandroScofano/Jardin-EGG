@@ -1,6 +1,7 @@
 package com.goldenkids.springboot.web.app.controllers;
 
 import com.goldenkids.springboot.web.app.models.Alumno;
+import com.goldenkids.springboot.web.app.models.Inscripcion;
 import com.goldenkids.springboot.web.app.services.ActividadService;
 
 import com.goldenkids.springboot.web.app.services.AlumnoService;
@@ -45,7 +46,10 @@ public class DirectivoController {
         }
 
         for (Alumno hijo : hijos) {
-            hijo.setSalita(inscripcionService.buscarInscripcionActual(hijo).getSalita());
+            Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(hijo);
+            if (inscripcion != null) {
+                hijo.setSalita(inscripcion.getSalita());
+            }
         }
 
         modelo.addAttribute("hijos", hijos);
@@ -67,10 +71,16 @@ public class DirectivoController {
         if (registrado != null) {
             modelo.addAttribute("success", "La Actividad fue registrada exitosamente");
         }
-
+        
         for (Alumno alumno : alumnos) {
-            alumno.setSalita(inscripcionService.buscarInscripcionActual(alumno).getSalita());
+            Inscripcion inscripcion = inscripcionService.buscarInscripcionActual(alumno);
+            if (inscripcion != null) {
+                alumno.setSalita(inscripcion.getSalita());
+            }else{
+                alumno.setSalita(null);
+            }
         }
+
 
         for (Alumno alumno : alumnos) {//valido si esta en el jardin y si esta durmiendo y lo guardo en campo transient de la entidad
             if ((actividadService.estaEnClase(alumno)) == null) {

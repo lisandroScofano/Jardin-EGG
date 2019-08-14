@@ -23,7 +23,6 @@ import com.goldenkids.springboot.web.app.models.Usuario;
 import com.goldenkids.springboot.web.app.services.ActividadService;
 import com.goldenkids.springboot.web.app.services.AlumnoService;
 import com.goldenkids.springboot.web.app.services.DocenteService;
-import com.goldenkids.springboot.web.app.services.InscripcionService;
 import com.goldenkids.springboot.web.app.services.UsuarioService;
 import java.text.ParseException;
 import java.util.Date;
@@ -34,9 +33,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 @Controller
 @RequestMapping("/actividades")
 public class ActividadesController {
-
-    @Autowired
-    private InscripcionService inscripcionService;
 
     @Autowired
     private ActividadService actividadService;
@@ -153,7 +149,7 @@ public class ActividadesController {
             Authentication authenticated) {
         log.info("El dni del alumno es:" + dni);
         try {
-            actividadService.crearActividad(tipoActividad, cantidadLeche, tipoCantidad, tipoPanial, observacion, dni);
+            actividadService.crearActividad(tipoActividad, cantidadLeche, tipoCantidad, tipoPanial, observacion, dni, authenticated);
         } catch (Exception e) {
             e.getMessage();
         }

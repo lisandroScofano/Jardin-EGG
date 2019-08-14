@@ -40,6 +40,8 @@ public class Actividad {
 
     private String observacion;
 
+    private String UsuarioLog;
+
     @ManyToOne
     private Alumno alumno;
 
@@ -113,6 +115,14 @@ public class Actividad {
 
     public void setAlumno(Alumno alumno) {
         this.alumno = alumno;
+    }
+
+    public String getUsuarioLog() {
+        return UsuarioLog;
+    }
+
+    public void setUsuarioLog(String UsuarioLog) {
+        this.UsuarioLog = UsuarioLog;
     }
 
 }
