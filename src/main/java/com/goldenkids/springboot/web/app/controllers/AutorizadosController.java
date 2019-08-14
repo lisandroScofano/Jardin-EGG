@@ -47,7 +47,7 @@ public class AutorizadosController {
     }
 
     @PostMapping("/guardar")
-    public ModelAndView guardar(@RequestParam String nombre, String apellido, String telefono1,
+    public String guardar(@RequestParam String nombre, String apellido, String telefono1,
             String telefono2, Integer dni, String parentesco, String accion, String error, Integer alumnoAutorizado, String id) throws Exception {
         ModelAndView modelo = new ModelAndView();
 
@@ -64,9 +64,8 @@ public class AutorizadosController {
         modelo.addObject("error", error);
 
         modelo.addObject("autorizados", autorizados);
-        modelo.setViewName("autorizados-lista.html");
 
-        return modelo;
+        return "redirect:/autorizados/listarautorizados";
     }
 
     @GetMapping("/modificar")
