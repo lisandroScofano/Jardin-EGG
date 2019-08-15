@@ -22,7 +22,8 @@
                     <td th:text="${hijo.apellido}"></td>
                     <td th:text="${hijo.dni}"></td>
                     <td th:text="${#dates.format(hijo.fechaNacimiento,'dd/MM/YYYY')}"></td>
-                    <td th:text="${hijo.salita.nombre}"></td>
+                    <td th:if="${hijo.salita} != null" th:text="${hijo.salita.nombre}"></td>
+                    <td th:unless="${hijo.salita} != null"></td>
                     <td><a th:href="@{/actividades/detalle(dni=${hijo.dni})}">Ver Actividades <i class="far fa-eye"></i></a>            
                 </tr>
             </tbody>

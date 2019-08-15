@@ -43,21 +43,21 @@
                                 <ul class="list-group list-group-horizontal-lg">
                                     <a th:if="${alumno.enClase == false}" th:id="entrada" th:href="@{/actividades/registraactividad(tipoActividad='ENTRADA',dni=${alumno.dni})}"><img
                                             th:src="@{/Iconos/ingreso.png}" alt="entrada"
-                                            style="width: 70px; height: 70px; margin-top: 25px;" /></a>
+                                            style="width: 70px; height: 70px; margin-top: 25px; margin-right: 10px;" /></a>
                                     <a th:if="${alumno.enClase == true}" th:href="@{/actividades/registraactividad(tipoActividad='SALIDA',dni=${alumno.dni})}"><img
                                             th:src="@{/Iconos/salida.png}" alt="salida"
-                                            style="width: 70px; height: 70px; margin-top: 25px;" /></a>
+                                            style="width: 70px; height: 70px; margin-top: 25px; margin-right: 10px;" /></a>
                                     <a th:if="${alumno.durmiendo == false} and ${alumno.enClase == true}" th:href="@{/actividades/registraactividad(tipoActividad='DORMIDO',dni=${alumno.dni})}"><img
                                             th:src="@{/Iconos/sleep.png}" alt="sueño"
-                                            style="width: 70px; height: 70px; margin-top: 25px;" /></a>
+                                            style="width: 70px; height: 70px; margin-top: 25px; margin-right: 10px;" /></a>
                                     <a th:if="${alumno.durmiendo == true} and ${alumno.enClase == true}" th:href="@{/actividades/registraactividad(tipoActividad='DESPIERTO',dni=${alumno.dni})}"><img
                                             th:src="@{/Iconos/despierto.png}" alt="despierto"
-                                            style="width: 70px; height: 70px; margin-top: 25px;" /></a>
+                                            style="width: 70px; height: 70px; margin-top: 25px; margin-right: 10px;" /></a>
                                     <!--POPUP-->
                                     <a th:if="${alumno.enClase == true}" href="#" data-toggle="modal"
                                        th:data-target="'#comidas' + ${alumno.dni}"><img
                                             th:src="@{/Iconos/comida.png}" alt="comida"
-                                            style="width: 70px; height: 70px; margin-top: 25px;" /></a>
+                                            style="width: 70px; height: 70px; margin-top: 25px; margin-right: 10px;" /></a>
                                     <div class="modal fade" th:id="'comidas' + ${alumno.dni}"
                                          tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
                                          aria-hidden="true">
@@ -201,7 +201,7 @@
                                     <a th:if="${alumno.enClase == true}" href="#" data-toggle="modal" th:data-target="'#observacion' + ${alumno.dni}"
                                        th:value="${alumno.dni}"><img th:src="@{/Iconos/obs.png}"
                                                                   alt="observaciones"
-                                                                  style="width: 70px; height: 70px; margin-top: 25px;" /></a>
+                                                                  style="width: 70px; height: 70px; margin-top: 25px; margin-right: 10px;" /></a>
                                     <div class="modal fade" th:id="'observacion' + ${alumno.dni}" tabindex="-1"
                                          role="dialog" aria-labelledby="exampleModalLabel"
                                          aria-hidden="true">

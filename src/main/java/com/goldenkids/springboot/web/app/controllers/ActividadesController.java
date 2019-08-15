@@ -177,7 +177,7 @@ public class ActividadesController {
         log.info("La observacion es:" + txtObservacion);
 
         try {
-            actividadService.crearActividadObservacion(txtObservacion, dniAlumno);
+            actividadService.crearActividadObservacion(txtObservacion, dniAlumno, authenticated);
         } catch (Exception e) {
             e.getMessage();
         }

@@ -43,17 +43,20 @@ public class ActividadService {
     private InscripcionService inscripcionService;
 
     @Autowired
-    private UsuarioService usuarioService;
+    private JpaUserSecurityService jpaUserSecurityService;
 
     @Transactional
-    public void crearActividadObservacion(String observacion, Integer dniAlumno) {
+    public void crearActividadObservacion(String observacion, Integer dniAlumno, Authentication userAuth) {
         Actividad actividad = new Actividad();
         Alumno alumno = em.find(Alumno.class, dniAlumno);
+        String UserLog = jpaUserSecurityService.nombreApellidoUsuarioLogueado(userAuth);
+
         actividad.setTipoActividad(TipoActividad.OBSERVACION);
         actividad.setObservacion(observacion);
         actividad.setAlumno(alumno);
         actividad.setInicio(new Date());
         actividad.setFin(new Date());
+        actividad.setUsuarioLog(UserLog);
         em.persist(actividad);
     }
 
@@ -64,14 +67,7 @@ public class ActividadService {
         Alumno alumno = em.find(Alumno.class, dni);
         Actividad actividad = new Actividad();
 
-        String userName = userAuth.getName();
-        Usuario usuarioLogueado = usuarioService.buscarUsuarioPorUserName(userName);
-        String UserLog = null;
-        if (usuarioLogueado != null) {
-            UserLog = usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido();
-        } else {
-            UserLog = "Super Admin Golden";
-        }
+        String UserLog = jpaUserSecurityService.nombreApellidoUsuarioLogueado(userAuth);
 
         log.info("Probando el usuario logueado es " + UserLog);
 

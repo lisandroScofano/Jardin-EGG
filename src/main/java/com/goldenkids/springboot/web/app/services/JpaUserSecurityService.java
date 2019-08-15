@@ -11,6 +11,7 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
@@ -47,6 +48,18 @@ public class JpaUserSecurityService implements UserDetailsService {
 
         authorities.add(new SimpleGrantedAuthority(usuario.getRol().getPerfil().toString()));
         return new User(usuario.getNombreUsuario(), usuario.getPassword(), true, true, true, true, authorities);
+    }
+
+    public String nombreApellidoUsuarioLogueado(Authentication userAuth) {
+        String userName = userAuth.getName();
+        Usuario usuarioLogueado = usuarioService.buscarUsuarioPorUserName(userName);
+        String UserLog = null;
+        if (usuarioLogueado != null) {
+            UserLog = usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido();
+        } else {
+            UserLog = "Super Admin Golden";
+        }
+        return UserLog;
     }
 
 }
