@@ -1,4 +1,4 @@
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org" lang="es" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">  
     <head th:fragment="head">
         <meta charset="UTF-8" />
@@ -79,8 +79,9 @@
                             </li>
                             <li class="nav-item dropdown">
                                 <div class="dropdown">
-                                    <a th:href="@{/actividades/tipousuario}" class="nav-link">Actividades</a>
+                                    <a href="#" class="nav-link">Actividades</a>
                                     <div class="dropdown-content">
+                                        <a th:href="@{/actividades/tipousuario}">Ver</a>
                                         <a sec:authorize="hasAuthority('DIRECTIVO')" th:href="@{/actividades/directivo/cargar}">Cargar Actividades</a>
                                     </div>
                                 </div>

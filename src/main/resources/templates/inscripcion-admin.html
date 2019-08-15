@@ -32,7 +32,7 @@
                     <input type="date" class="form-control" name="fechaBaja" th:value="${inscripcion.fechaBaja}" />
                 </div> 
                 <input type="submit" style="margin: 5px;"  class="btn btn-primary" value="Guardar" />
-                <a th:href="@{inscripciones/listarinscripciones}" style="float: left; margin: 5px;" class="btn btn-danger" >Volver</a>
+                <a th:href="@{/inscripciones/listarinscripciones}" style="float: left; margin: 5px;" class="btn btn-danger" >Volver</a>
                 <input type="hidden" th:value="${accion}" name="accion"/>
                 <input type="hidden" th:if="${inscripcion.id != null} " th:value="${inscripcion.id}" name="inscripcionId" />
                 <input type="hidden" th:name="${_csrf.parameterName}" th:value="${_csrf.token}" />

@@ -40,7 +40,7 @@ public class Actividad {
 
     private String observacion;
 
-    private String UsuarioLog;
+    private String usuarioLog;
 
     @ManyToOne
     private Alumno alumno;
@@ -118,11 +118,11 @@ public class Actividad {
     }
 
     public String getUsuarioLog() {
-        return UsuarioLog;
+        return usuarioLog;
     }
 
-    public void setUsuarioLog(String UsuarioLog) {
-        this.UsuarioLog = UsuarioLog;
+    public void setUsuarioLog(String usuarioLog) {
+        this.usuarioLog = usuarioLog;
     }
 
 }

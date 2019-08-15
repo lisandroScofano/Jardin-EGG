@@ -44,7 +44,7 @@ public class ActividadService {
 
     @Autowired
     private UsuarioService usuarioService;
-     
+
     @Transactional
     public void crearActividadObservacion(String observacion, Integer dniAlumno) {
         Actividad actividad = new Actividad();
@@ -61,13 +61,20 @@ public class ActividadService {
     public void crearActividad(TipoActividad tipoActividad, Integer cantidadLeche, TipoCantidad tipoCantidad,
             TipoPanial tipoPanial, String observacion, int dni, Authentication userAuth) throws Exception {
 
-        
         Alumno alumno = em.find(Alumno.class, dni);
         Actividad actividad = new Actividad();
 
         String userName = userAuth.getName();
         Usuario usuarioLogueado = usuarioService.buscarUsuarioPorUserName(userName);
-        String UserLog = usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido();
+        String UserLog = null;
+        if (usuarioLogueado != null) {
+            UserLog = usuarioLogueado.getNombre() + " " + usuarioLogueado.getApellido();
+        } else {
+            UserLog = "Super Admin Golden";
+        }
+
+        log.info("Probando el usuario logueado es " + UserLog);
+
         switch (tipoActividad) {
 
             case ENTRADA:

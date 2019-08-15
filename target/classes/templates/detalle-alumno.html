@@ -28,6 +28,7 @@
                     <th>Hora de Inicio</th>
                     <th>Hora de Fin</th>
                     <th>Observacion</th>
+                    <th sec:authorize="hasAuthority('DIRECTIVO')">Cargado por:</th>
                     <th sec:authorize="hasAuthority('DIRECTIVO')">Eliminar</th>
                     <th></th>
                 </tr>
@@ -42,6 +43,8 @@
                     <td th:text="${#dates.format(actividad.inicio,'dd/MM/YYYY HH:mm')}"></td>
                     <td th:text="${#dates.format(actividad.fin,'dd/MM/YYYY HH:mm')}"></td>
                     <td th:text="${actividad.observacion}"></td>
+                    <td sec:authorize="hasAuthority('DIRECTIVO')" th:if="${actividad.usuarioLog != null}" th:text="${actividad.usuarioLog}"></td>
+                    <td sec:authorize="hasAuthority('DIRECTIVO')" th:unless="${actividad.usuarioLog != null}"></td>
                     <td sec:authorize="hasAuthority('DIRECTIVO')"><a th:href="@{/actividades/directivo/eliminar(id=${actividad.id},dniAlumno=${actividad.alumno.dni})}"><i class="fa fa-window-close"></i></td>
                 </tr>
             </tbody>
